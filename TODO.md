@@ -86,7 +86,7 @@
     - **Verification:**
         1. Check the file content for correct YAML structure and keys.
     - **Depends‑on:** [T002, C001]
-- [ ] **T010 · Feature · P2: define proficiency scale in data/skill_matrix.yml comments or README.md**
+- [x] **T010 · Feature · P2: define proficiency scale in data/skill_matrix.yml comments or README.md**
     - **Context:** Detailed Build Steps - Phase 1: 4. Populate Technical Skills
     - **Action:**
         1. Document the definitions for the chosen proficiency scale (e.g., 1-5) as comments within `skill_matrix.yml` or in `README.md`.

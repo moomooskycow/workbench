@@ -6,12 +6,60 @@
 # Structure:
 # - name: Full name of the skill (e.g., "TypeScript", "React")
 # - category: Category classification (e.g., "Languages", "Frameworks", "Tools")
-# - proficiency: Expertise level (detailed scale to be defined in T010)
+# - proficiency: Expertise level (see scale below)
 # - acquired_on: Date when the skill was first learned (YYYY-MM format)
 # - versions: Array of specific versions used professionally
 # - used_in_projects_ids: Array of project IDs where this skill was applied
 #   (references project_index.yml)
 # - education_refs: Array of courses, books, or resources used to learn the skill
+#
+# -------------------------------------------------------------------------
+# Proficiency Scale (1-5)
+# -------------------------------------------------------------------------
+#
+# 1: Beginner/Foundational
+#    - 0-1 years of experience
+#    - Basic understanding of core concepts
+#    - Can complete simple tasks with guidance
+#    - Requires supervision and clear instructions
+#    - Familiar with fundamental syntax and patterns
+#    - Learning primarily through tutorials and documentation
+#
+# 2: Intermediate
+#    - 1-2 years of experience
+#    - Working knowledge of most common features
+#    - Can implement standard solutions independently
+#    - Occasionally needs guidance on complex tasks
+#    - Understands best practices but may not consistently apply them
+#    - Can explain the technology to beginners
+#
+# 3: Advanced
+#    - 2-4 years of experience
+#    - Comprehensive understanding of the technology
+#    - Implements complex solutions with minimal guidance
+#    - Understands internal workings and design decisions
+#    - Applies best practices consistently
+#    - Can debug difficult issues effectively
+#    - May provide mentorship to junior practitioners
+#
+# 4: Expert
+#    - 4-7 years of experience
+#    - Deep knowledge of advanced features and edge cases
+#    - Develops complex architectures and systems
+#    - Anticipates problems before they arise
+#    - Contributes to the community (blog posts, talks, libraries)
+#    - Recognized resource within an organization
+#    - Can effectively teach and mentor others
+#
+# 5: Master/Specialist
+#    - 7+ years of experience
+#    - Authoritative knowledge with specialization in specific areas
+#    - Contributes to the evolution of the technology
+#    - Develops novel approaches and architectures
+#    - Shapes organizational standards and frameworks
+#    - Recognized beyond organizational boundaries
+#    - Advances the state of the art in the field
+#    - May have contributed to core libraries or related innovations
 
 ---
 skills:
