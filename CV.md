@@ -793,6 +793,110 @@ This section details my educational background and ongoing learning:
 - Key learning milestones and significant educational experiences
 - Skills acquired through specific educational experiences
 
+### Formal Education
+
+#### University of California, Berkeley
+**Program/Course:** Bachelor of Science in Computer Science
+**Date Range:** August 2010 - May 2014
+**Status:** Completed
+
+**Focus Areas:** Algorithms, Data Structures, Artificial Intelligence, Database Systems, Computer Architecture
+**Projects:** 
+- Developed a neural network-based image classification system for handwritten digit recognition
+- Created a distributed key-value store with fault tolerance capabilities
+- Implemented a compiler for a subset of C with optimizations
+
+**Outcomes:** 
+- Graduated with honors (3.8 GPA)
+- Gained strong theoretical foundation in computer science principles
+- Developed problem-solving skills and algorithmic thinking
+- Acquired fundamentals of machine learning and artificial intelligence
+
+#### MongoDB University
+**Program/Course:** MongoDB for JavaScript Developers
+**Date Range:** January 2020 - March 2020
+**Status:** Completed
+
+**Focus Areas:** NoSQL database concepts, MongoDB query optimization, Schema design
+**Projects:** 
+- Built a complete backend system with MongoDB for a social media application
+- Implemented data migration tools and indexing strategies
+
+**Outcomes:** 
+- Earned MongoDB Developer Certification
+- Developed expertise in document database design patterns
+- Gained practical skills in database performance optimization
+- Applied learning directly to production systems at Memory Labs
+
+#### Linux Foundation
+**Program/Course:** Advanced Node.js Development
+**Date Range:** September 2019 - November 2019
+**Status:** Completed
+
+**Focus Areas:** Performance optimization, Security best practices, Microservices architecture
+**Projects:** 
+- Created a high-performance RESTful API with comprehensive security measures
+- Implemented a logging and monitoring system for distributed applications
+
+**Outcomes:** 
+- Certified Node.js Developer certification
+- Enhanced knowledge of production-ready Node.js applications
+- Improved ability to design scalable backend architectures
+- Applied advanced debugging and profiling techniques
+
+### Self-Directed Learning
+
+#### Fast.ai Deep Learning Course
+**Program/Course:** Practical Deep Learning for Coders
+**Date Range:** June 2021 - August 2021
+**Status:** Completed
+
+**Focus Areas:** Neural Networks, Computer Vision, Natural Language Processing, Practical ML Implementation
+**Projects:** 
+- Developed a content recommendation system using collaborative filtering
+- Built an image classification model for identifying plant diseases
+- Implemented a sentiment analysis system for product reviews
+
+**Outcomes:** 
+- Gained hands-on experience with PyTorch and deep learning architectures
+- Developed ability to train and deploy practical ML models
+- Applied transfer learning techniques to real-world problems
+- Contributed learnings to AI initiatives at Memory Labs
+
+#### Rust Programming Language
+**Program/Course:** Self-study with "The Rust Programming Language" book
+**Date Range:** March 2022 - Present
+**Status:** In Progress
+
+**Focus Areas:** Memory safety, Concurrency without data races, Performance optimization, Systems programming
+**Projects:** 
+- Created Ponder, a command-line note-taking application
+- Developed Rust Tac Toe, an implementation of the classic game with AI
+- Built Switchboard, a proxy service for AI APIs
+
+**Outcomes:** 
+- Mastered Rust's ownership model and memory management
+- Developed skills in writing high-performance, safe code
+- Created several successful open-source tools using Rust
+- Applied systems programming techniques to improve application performance
+
+#### Bitcoin Protocol Development
+**Program/Course:** Self-study through Bitcoin Core documentation and resources
+**Date Range:** January 2020 - Present
+**Status:** In Progress
+
+**Focus Areas:** Blockchain technology, Cryptocurrency protocols, Lightning Network, Bitcoin scripting
+**Projects:** 
+- Contributed to BlueWallet and BTCPay Server (open source Bitcoin projects)
+- Implemented Bitcoin payment processing in Brainstorm Press
+- Created Bitcoin Price Tag Chrome extension
+
+**Outcomes:** 
+- Developed deep understanding of Bitcoin protocol and cryptocurrency ecosystem
+- Gained practical experience implementing Lightning Network payment channels
+- Created several Bitcoin-related projects and tools
+- Contributed meaningful improvements to established Bitcoin open source projects
+
 ## Domain Knowledge
 
 This section organizes my expertise by industry and specialized domains:

@@ -173,7 +173,7 @@
     - **Verification:**
         1. Review the section for content and adherence to anonymization (once defined).
     - **Depends‑on:** [T004, C005]
-- [ ] **T019 · Feature · P2: populate CV.md Learning Journey section**
+- [x] **T019 · Feature · P2: populate CV.md Learning Journey section**
     - **Context:** Detailed Build Steps - Phase 1: 7. Populate Learning Journey (Manual)
     - **Action:**
         1. Add content to the "Learning Journey" section in `CV.md` for Formal Education and Self-Directed Learning.
