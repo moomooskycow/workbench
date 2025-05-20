@@ -366,6 +366,71 @@ This section catalogs my technical capabilities, organized by:
 - Project connections
 - Continuing education related to each skill
 
+### Technical Skills Taxonomy
+
+This taxonomy organizes my technical skills by category, based on the comprehensive data in `skill_matrix.yml`. Skills are listed with their proficiency level on a scale of 1-5, where 1 represents foundational knowledge and 5 represents mastery.
+
+#### Languages
+
+Experienced polyglot programmer with expertise across multiple programming paradigms, focused primarily on JavaScript/TypeScript ecosystem while maintaining proficiency in Ruby, Python, and system languages.
+
+- **JavaScript** (5/5): 8+ years of experience with deep specialization in modern ES6+ features, async patterns, and functional programming techniques.
+- **TypeScript** (5/5): 6+ years of expertise, including advanced type system features, generics, and maintaining strict type safety in large codebases.
+- **Ruby** (4/5): 7+ years working with Ruby, particularly in Rails applications, with emphasis on clean, maintainable code.
+- **Python** (3/5): 5+ years using Python for data analysis, scripting, and automation tasks.
+- **Rust** (3/5): 3+ years exploring Rust for performance-critical components, with focus on memory safety and concurrency.
+- **Go** (2/5): 2+ years of experience building backend services and CLI tools, focusing on simplicity and performance.
+
+#### Frameworks
+
+Extensive experience with modern web frameworks, specializing in JavaScript/TypeScript ecosystems with strong expertise in both frontend and backend technologies.
+
+- **React** (5/5): 7+ years building complex UIs with modern patterns (hooks, context, Suspense), state management solutions, and performance optimization.
+- **Node.js** (5/5): 7+ years developing scalable server applications, including REST APIs, real-time systems, and microservices.
+- **Express** (4/5): 7+ years building and optimizing web server applications with middleware patterns, route organization, and security best practices.
+- **Ruby on Rails** (4/5): 7+ years developing full-stack web applications with focus on MVC architecture, ActiveRecord, and testing.
+- **Next.js** (3/5): 4+ years building production applications with SSR, SSG, and hybrid rendering strategies.
+
+#### Databases
+
+Worked extensively with both SQL and NoSQL databases, with skills in data modeling, optimization, and scaling strategies.
+
+- **MongoDB** (4/5): 7+ years designing schemas, indexes, and query optimization for document-based workloads.
+- **PostgreSQL** (4/5): 7+ years working with relational data, complex queries, and performance tuning.
+- **Redis** (3/5): 5+ years implementing caching, session storage, job queues, and real-time features.
+- **DynamoDB** (3/5): 3+ years creating NoSQL data models optimized for AWS environments and scalable applications.
+
+#### Cloud Services & Infrastructure
+
+Strong cloud engineering background with focus on AWS services, containerization, and infrastructure as code.
+
+- **AWS** (4/5): 6+ years designing and implementing cloud architectures using EC2, S3, Lambda, API Gateway, DynamoDB, and other services.
+- **Docker** (4/5): 5+ years containerizing applications, creating custom images, and optimizing multi-stage builds.
+- **Terraform** (3/5): 3+ years defining infrastructure as code with emphasis on modular, maintainable configurations.
+
+#### Testing & Development Tools
+
+Advocate for comprehensive testing strategies and efficient development workflows.
+
+- **Jest** (4/5): 5+ years creating unit and integration tests with mocking, snapshots, and coverage analysis.
+- **React Testing Library** (4/5): 4+ years implementing component tests focused on user behavior rather than implementation details.
+- **Cypress** (3/5): 3+ years building end-to-end tests for critical user journeys.
+- **Git** (5/5): 8+ years with advanced branching strategies, history manipulation, and workflow optimization.
+- **GitHub** (5/5): 8+ years leveraging GitHub Actions, code reviews, and project management features.
+
+#### AI & Machine Learning
+
+Recent focus on integrating AI capabilities into applications and products.
+
+- **OpenAI GPT** (3/5): 2+ years working with GPT models for content generation, summarization, and conversational interfaces.
+
+#### Project Management
+
+Experienced with agile methodologies and modern project management tools.
+
+- **Agile/Scrum** (4/5): 6+ years implementing and refining agile processes for software development teams.
+- **Linear** (4/5): 3+ years using Linear for issue tracking, sprint planning, and roadmap management.
+
 ## GitHub Projects
 
 This section documents my personal and open-source projects, including:

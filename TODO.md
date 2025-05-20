@@ -102,7 +102,7 @@
     - **Verification:**
         1. Review `skill_matrix.yml` for data accuracy and completeness.
     - **Depends‑on:** [T009]
-- [ ] **T012 · Feature · P2: populate CV.md Technical Skills Taxonomy section**
+- [x] **T012 · Feature · P2: populate CV.md Technical Skills Taxonomy section**
     - **Context:** Detailed Build Steps - Phase 1: 4. Populate Technical Skills
     - **Action:**
         1. In `CV.md` under the "Technical Skills" H2 heading, create an H3 "Technical Skills Taxonomy" sub-section.
