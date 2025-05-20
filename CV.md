@@ -13,6 +13,117 @@ This section contains detailed information about my professional roles, includin
 - Problem-solution frameworks
 - Cross-functional collaboration experiences
 
+### Director of Engineering, Memory Labs
+*San Francisco, CA (Remote) | September 2022 - Present*
+
+Brief overview of role and key responsibilities.
+
+#### Learning Engine API Product
+<!-- Detailed content to be added in T008 -->
+
+#### Client Relations and Custom Solutions
+<!-- Detailed content to be added in T008 -->
+
+#### Team Management and Leadership
+<!-- Detailed content to be added in T008 -->
+
+#### Infrastructure and Cost Optimization
+<!-- Detailed content to be added in T008 -->
+
+### Senior Software Engineer, Memory Labs
+*San Francisco, CA (Remote) | January 2022 - September 2022*
+
+Brief overview of role and key responsibilities.
+
+#### Automated Testing Implementation
+<!-- Detailed content to be added in T008 -->
+
+#### Analytics and Reporting Features
+<!-- Detailed content to be added in T008 -->
+
+#### Custom Client Infrastructure
+<!-- Detailed content to be added in T008 -->
+
+### Software Engineer, Memory Labs
+*San Francisco, CA (Remote) | January 2020 - January 2022*
+
+Brief overview of role and key responsibilities.
+
+#### Mobile App Development
+<!-- Detailed content to be added in T008 -->
+
+#### API Development and Management
+<!-- Detailed content to be added in T008 -->
+
+#### Legacy Application Maintenance and Refactoring
+<!-- Detailed content to be added in T008 -->
+
+### Developer, Novacoast
+*Santa Barbara, CA | February 2018 - January 2020*
+
+Brief overview of role and key responsibilities.
+
+#### PCI Compliance Consulting
+<!-- Detailed content to be added in T008 -->
+
+#### Cyber Security Platform Engineering
+<!-- Detailed content to be added in T008 -->
+
+### Co-founder, Betterment Labs
+*San Francisco, CA | June 2017 - November 2017*
+
+Brief overview of role and key responsibilities.
+
+#### Luna Sleep Chatbot
+<!-- Detailed content to be added in T008 -->
+
+### Independent Study
+*Los Angeles, CA | December 2016 - June 2017*
+
+Brief overview of self-directed learning and projects.
+
+#### Deep Learning and AI Coursework
+<!-- Detailed content to be added in T008 -->
+
+#### Personal Project Development
+<!-- Detailed content to be added in T008 -->
+
+### Software Engineer, Administrative Software Applications
+*San Francisco, CA | December 2014 - December 2016*
+
+Brief overview of role and key responsibilities.
+
+#### Insights Analytics Product
+<!-- Detailed content to be added in T008 -->
+
+#### Performance Optimization
+<!-- Detailed content to be added in T008 -->
+
+#### Database Architecture and Management
+<!-- Detailed content to be added in T008 -->
+
+### Associate Data Engineer, Administrative Software Applications
+*San Francisco, CA | August 2014 - December 2014*
+
+Brief overview of role and key responsibilities.
+
+#### Invoice Recalculator
+<!-- Detailed content to be added in T008 -->
+
+#### SQL School Training Program
+<!-- Detailed content to be added in T008 -->
+
+#### Technical Support Leadership
+<!-- Detailed content to be added in T008 -->
+
+### Founder, Farm Plus
+*Santa Barbara, CA | August 2013 - May 2014*
+
+Brief overview of role and key responsibilities.
+
+#### Turnkey Gardens Aquaponics
+<!-- Detailed content to be added in T008 -->
+
 ## Technical Skills
 
 This section catalogs my technical capabilities, organized by:

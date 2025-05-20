@@ -57,7 +57,7 @@
     - **Verification:**
         1. Review the documented guidelines for clarity and completeness.
     - **Depends‑on:** [T004, T005]
-- [ ] **T007 · Feature · P2: populate CV.md Professional Experience section structure**
+- [x] **T007 · Feature · P2: populate CV.md Professional Experience section structure**
     - **Context:** Detailed Build Steps - Phase 1: 3. Populate Professional Experience (Manual)
     - **Action:**
         1. For each professional role, add an H3 heading for Role/Company.
