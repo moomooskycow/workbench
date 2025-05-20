@@ -93,7 +93,7 @@
     - **Done‑when:**
         1. Proficiency scale definitions are documented.
     - **Depends‑on:** [T009]
-- [ ] **T011 · Feature · P2: populate data/skill_matrix.yml with initial skills data**
+- [x] **T011 · Feature · P2: populate data/skill_matrix.yml with initial skills data**
     - **Context:** Detailed Build Steps - Phase 1: 4. Populate Technical Skills
     - **Action:**
         1. Add known skills to `skill_matrix.yml`, including categories, proficiency, versions, and acquisition dates.

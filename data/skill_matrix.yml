@@ -63,9 +63,7 @@
 
 ---
 skills:
-  # This file currently defines only the base structure.
-  # Actual skill entries will be populated in task T011.
-  # Below is an example entry for reference:
+  # Programming Languages
   
   - name: JavaScript
     category: Languages
@@ -73,8 +71,393 @@ skills:
     acquired_on: 2015-06
     versions:
       - ES6
+      - ES2019
       - ES2021
     used_in_projects_ids: []
     education_refs:
       - "Eloquent JavaScript by Marijn Haverbeke"
+      - "JavaScript: The Good Parts by Douglas Crockford"
       - "MDN Web Docs"
+
+  - name: TypeScript
+    category: Languages
+    proficiency: 5
+    acquired_on: 2017-03
+    versions:
+      - 3.0
+      - 4.0
+      - 4.5
+    used_in_projects_ids: []
+    education_refs:
+      - "TypeScript Documentation"
+      - "Programming TypeScript by Boris Cherny"
+      - "Advanced TypeScript Masterclass (Udemy)"
+
+  - name: Ruby
+    category: Languages
+    proficiency: 4
+    acquired_on: 2016-01
+    versions:
+      - 2.6
+      - 2.7
+      - 3.0
+    used_in_projects_ids: []
+    education_refs:
+      - "The Ruby Programming Language by David Flanagan & Yukihiro Matsumoto"
+      - "Ruby on Rails Tutorial by Michael Hartl"
+      - "Practical Object-Oriented Design in Ruby by Sandi Metz"
+
+  - name: Python
+    category: Languages
+    proficiency: 3
+    acquired_on: 2018-05
+    versions:
+      - 3.7
+      - 3.8
+      - 3.9
+    used_in_projects_ids: []
+    education_refs:
+      - "Python Crash Course by Eric Matthes"
+      - "Real Python tutorials"
+      - "Python for Data Science Handbook by Jake VanderPlas"
+
+  - name: Rust
+    category: Languages
+    proficiency: 3
+    acquired_on: 2020-07
+    versions:
+      - 1.45
+      - 1.55
+      - 1.60
+    used_in_projects_ids: []
+    education_refs:
+      - "The Rust Programming Language (official book)"
+      - "Rust in Action by Tim McNamara"
+      - "Zero To Production In Rust by Luca Palmieri"
+
+  - name: Go
+    category: Languages
+    proficiency: 2
+    acquired_on: 2021-02
+    versions:
+      - 1.16
+      - 1.17
+    used_in_projects_ids: []
+    education_refs:
+      - "The Go Programming Language by Alan A. A. Donovan & Brian W. Kernighan"
+      - "Go by Example"
+      - "Learn Go with Tests"
+
+  # Web Frameworks & Libraries
+
+  - name: React
+    category: Frameworks
+    proficiency: 5
+    acquired_on: 2016-09
+    versions:
+      - 16.8
+      - 17.0
+      - 18.0
+    used_in_projects_ids: []
+    education_refs:
+      - "Official React Documentation"
+      - "React Patterns by Kent C. Dodds"
+      - "Epic React by Kent C. Dodds"
+
+  - name: Node.js
+    category: Frameworks
+    proficiency: 5
+    acquired_on: 2016-02
+    versions:
+      - 12.x
+      - 14.x
+      - 16.x
+    used_in_projects_ids: []
+    education_refs:
+      - "Node.js Design Patterns by Mario Casciaro"
+      - "Node.js Documentation"
+      - "Advanced Node.js (Frontend Masters)"
+
+  - name: Express
+    category: Frameworks
+    proficiency: 4
+    acquired_on: 2016-03
+    versions:
+      - 4.x
+    used_in_projects_ids: []
+    education_refs:
+      - "Express Documentation"
+      - "Web Development with Node & Express by Ethan Brown"
+
+  - name: Ruby on Rails
+    category: Frameworks
+    proficiency: 4
+    acquired_on: 2016-01
+    versions:
+      - 5.2
+      - 6.0
+      - 6.1
+    used_in_projects_ids: []
+    education_refs:
+      - "Ruby on Rails Tutorial by Michael Hartl"
+      - "Agile Web Development with Rails 6 by Sam Ruby"
+      - "Rails Guides (Official Documentation)"
+
+  - name: Next.js
+    category: Frameworks
+    proficiency: 3
+    acquired_on: 2019-07
+    versions:
+      - 9.x
+      - 11.x
+      - 12.x
+    used_in_projects_ids: []
+    education_refs:
+      - "Next.js Documentation"
+      - "Mastering Next.js (Lee Robinson)"
+      - "Fullstack React with TypeScript (Newline)"
+
+  # State Management and UI
+
+  - name: Redux
+    category: Libraries
+    proficiency: 4
+    acquired_on: 2017-01
+    versions:
+      - 4.x
+      - "Redux Toolkit"
+    used_in_projects_ids: []
+    education_refs:
+      - "Redux Documentation"
+      - "Redux Fundamentals by Mark Erikson"
+      - "Building React Applications with Redux (Pluralsight)"
+
+  - name: GraphQL
+    category: Libraries
+    proficiency: 3
+    acquired_on: 2018-09
+    versions:
+      - "Apollo Client 3.x"
+      - "Apollo Server 2.x"
+    used_in_projects_ids: []
+    education_refs:
+      - "GraphQL Documentation"
+      - "The Road to GraphQL by Robin Wieruch"
+      - "Production Ready GraphQL by Marc-André Giroux"
+
+  # Database Technologies
+
+  - name: MongoDB
+    category: Databases
+    proficiency: 4
+    acquired_on: 2016-04
+    versions:
+      - 4.2
+      - 4.4
+      - 5.0
+    used_in_projects_ids: []
+    education_refs:
+      - "MongoDB University courses"
+      - "MongoDB: The Definitive Guide"
+      - "MongoDB Documentation"
+
+  - name: PostgreSQL
+    category: Databases
+    proficiency: 4
+    acquired_on: 2016-03
+    versions:
+      - 10
+      - 12
+      - 13
+    used_in_projects_ids: []
+    education_refs:
+      - "PostgreSQL Documentation"
+      - "PostgreSQL: Up and Running by Regina Obe"
+      - "Practical PostgreSQL by John C. Worsley"
+
+  - name: Redis
+    category: Databases
+    proficiency: 3
+    acquired_on: 2017-08
+    versions:
+      - 5.0
+      - 6.0
+    used_in_projects_ids: []
+    education_refs:
+      - "Redis Documentation"
+      - "Redis in Action by Josiah L. Carlson"
+
+  - name: DynamoDB
+    category: Databases
+    proficiency: 3
+    acquired_on: 2019-02
+    versions:
+      - "Amazon DynamoDB"
+    used_in_projects_ids: []
+    education_refs:
+      - "AWS DynamoDB Documentation"
+      - "The DynamoDB Book by Alex DeBrie"
+
+  # Cloud Services & Infrastructure
+
+  - name: AWS
+    category: Cloud Services
+    proficiency: 4
+    acquired_on: 2017-05
+    versions:
+      - "EC2"
+      - "S3"
+      - "Lambda"
+      - "API Gateway"
+      - "RDS"
+      - "DynamoDB"
+      - "SageMaker"
+    used_in_projects_ids: []
+    education_refs:
+      - "AWS Documentation"
+      - "AWS Certified Developer Associate course"
+      - "AWS: The Good Parts (Internal Training)"
+
+  - name: Docker
+    category: DevOps
+    proficiency: 4
+    acquired_on: 2018-01
+    versions:
+      - "Docker Engine 19.x"
+      - "Docker Compose"
+    used_in_projects_ids: []
+    education_refs:
+      - "Docker Documentation"
+      - "Docker Deep Dive by Nigel Poulton"
+      - "Docker in Practice by Ian Miell"
+
+  - name: Terraform
+    category: Infrastructure
+    proficiency: 3
+    acquired_on: 2019-06
+    versions:
+      - 0.12
+      - 0.14
+      - 1.0
+    used_in_projects_ids: []
+    education_refs:
+      - "Terraform Documentation"
+      - "Terraform: Up & Running by Yevgeniy Brikman"
+      - "HashiCorp Learn Terraform"
+
+  # Testing & Build Tools
+
+  - name: Jest
+    category: Testing
+    proficiency: 4
+    acquired_on: 2017-10
+    versions:
+      - 26.x
+      - 27.x
+    used_in_projects_ids: []
+    education_refs:
+      - "Jest Documentation"
+      - "Testing JavaScript by Kent C. Dodds"
+
+  - name: React Testing Library
+    category: Testing
+    proficiency: 4
+    acquired_on: 2019-01
+    versions:
+      - 11.x
+      - 12.x
+    used_in_projects_ids: []
+    education_refs:
+      - "React Testing Library Documentation"
+      - "Testing JavaScript by Kent C. Dodds"
+
+  - name: Cypress
+    category: Testing
+    proficiency: 3
+    acquired_on: 2019-05
+    versions:
+      - 6.x
+      - 9.x
+    used_in_projects_ids: []
+    education_refs:
+      - "Cypress Documentation"
+      - "Testing Your Frontend Code (Frontend Masters)"
+
+  # Development Tools & Version Control
+
+  - name: Git
+    category: Development Tools
+    proficiency: 5
+    acquired_on: 2015-08
+    versions:
+      - 2.x
+    used_in_projects_ids: []
+    education_refs:
+      - "Pro Git by Scott Chacon and Ben Straub"
+      - "Git Documentation"
+      - "Advanced Git Techniques (Internal Workshop)"
+
+  - name: GitHub
+    category: Development Tools
+    proficiency: 5
+    acquired_on: 2015-08
+    versions:
+      - "GitHub Actions"
+      - "GitHub API"
+    used_in_projects_ids: []
+    education_refs:
+      - "GitHub Documentation"
+      - "GitHub Actions: Up and Running"
+
+  - name: CircleCI
+    category: CI/CD
+    proficiency: 3
+    acquired_on: 2018-09
+    versions:
+      - 2.1
+    used_in_projects_ids: []
+    education_refs:
+      - "CircleCI Documentation"
+      - "Continuous Integration (Internal Training)"
+
+  # AI & Machine Learning
+
+  - name: OpenAI GPT
+    category: AI & ML
+    proficiency: 3
+    acquired_on: 2021-03
+    versions:
+      - "GPT-3"
+      - "GPT-3.5"
+      - "GPT-4"
+    used_in_projects_ids: []
+    education_refs:
+      - "OpenAI Documentation"
+      - "GPT-3: Creative Potential of NLP"
+      - "Prompt Engineering Best Practices"
+
+  # Project Management & Productivity
+
+  - name: Agile/Scrum
+    category: Project Management
+    proficiency: 4
+    acquired_on: 2016-09
+    versions:
+      - "Scrum Framework"
+      - "Kanban"
+    used_in_projects_ids: []
+    education_refs:
+      - "Scrum Guide"
+      - "Agile Project Management with Scrum by Ken Schwaber"
+      - "Certified ScrumMaster Course"
+
+  - name: Linear
+    category: Project Management
+    proficiency: 4
+    acquired_on: 2020-01
+    versions:
+      - "Web Application"
+    used_in_projects_ids: []
+    education_refs:
+      - "Linear Documentation"
+      - "Linear Workflow Best Practices (Internal)"
