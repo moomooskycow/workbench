@@ -48,7 +48,7 @@
     - **Done‑when:**
         1. Formatting rules are clearly defined.
     - **Depends‑on:** none
-- [ ] **T006 · Documentation · P1: document CV.md structure and formatting guidelines**
+- [x] **T006 · Documentation · P1: document CV.md structure and formatting guidelines**
     - **Context:** Detailed Build Steps - Phase 1: 2. Define `CV.md` Core Structure; Documentation - `README.md` (Root)
     - **Action:**
         1. Add a section to `README.md` (or `CONTRIBUTING.md`) detailing the `CV.md` heading hierarchy (H1-H5) and content formatting rules.

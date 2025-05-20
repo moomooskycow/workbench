@@ -67,6 +67,8 @@ chmod +x .githooks/*
 - **`/docs/`**: Documentation on development philosophy, best practices, and prompt templates
   - **`/docs/prompts/`**: Templates that power Claude Code commands
   - **`/docs/professional/`**: Professional document templates (CV, resume)
+- **`CV.md`**: Comprehensive curriculum vitae with structured sections
+- **`CV_FORMATTING.md`**: Detailed formatting guidelines for CV content
 - **`BACKLOG.md`**: Planned enhancements and features
 
 ## Claude Code Commands
@@ -98,6 +100,39 @@ The repository includes several helper utilities in the `bin` directory:
   - Simplifies finding and including context files (glance.md, DEVELOPMENT_PHILOSOPHY*.md)
   - Provides consistent command-line flags for common operations
   - Makes thinktank invocation from scripts and commands more consistent
+
+## CV Structure and Formatting
+
+This repository contains a structured approach to creating and maintaining a comprehensive curriculum vitae (`CV.md`), which serves as a master document from which more focused resumes can be generated.
+
+### Document Structure
+
+The CV document follows a consistent heading hierarchy:
+
+- **H1 (`#`)**: Document title (used once)
+- **H2 (`##`)**: Main sections, including:
+  - Professional Experience
+  - Technical Skills
+  - GitHub Projects
+  - Hidden Experience
+  - Learning Journey
+  - Domain Knowledge
+  - Specialized Sections
+- **H3 (`###`)**: Sub-sections (roles, skill categories, projects)
+- **H4 (`####`)**: Components (projects within roles, specific skills)
+- **H5 (`#####`)**: Detailed aspects of components
+
+### Formatting Conventions
+
+The CV follows standardized formatting conventions for consistency:
+
+- **Section Structure**: Each section uses predefined templates with consistent organization
+- **Key-Value Pairs**: Structured as `**Key:** Value` with standardized key names
+- **Lists**: Bullet points with parallel structure and consistent capitalization
+- **Time Formatting**: Consistent date format (Month YYYY - Month YYYY)
+- **Links and References**: Standard formats for internal cross-references
+
+For complete formatting guidelines, refer to [CV_FORMATTING.md](CV_FORMATTING.md), which provides detailed templates and examples for each section type.
 
 ## Development Philosophy
 
