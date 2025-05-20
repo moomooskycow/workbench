@@ -1,0 +1,37 @@
+# Project Index
+# This file contains structured information about GitHub projects for CV
+# generation. Each project entry includes metadata, technical details, and
+# impact measures.
+#
+# Structure:
+# - id: Unique identifier for the project (used for cross-referencing)
+# - name: Project name
+# - type: Project type (personal, professional, open-source, etc.)
+# - repo_url: URL to the GitHub repository
+# - description: Brief description of the project
+# - tech_stack_ids: Array of technology IDs used in the project
+#   (references skill_matrix.yml)
+# - metrics: Quantifiable measurements of project success
+# - impact_summary: Summary of project's impact and significance
+
+---
+# This is a base structure - populate with actual projects in later tasks
+projects:
+  # Example entry (placeholder for reference)
+  - id: example-project
+    name: Example Project
+    type: personal
+    repo_url: https://github.com/username/example-project
+    description: |
+      A brief description of the project, explaining its purpose,
+      key features, and any other relevant information about what it does.
+    tech_stack_ids: []  # Will be filled with skill_matrix.yml references
+    metrics:
+      stars: 0
+      forks: 0
+      contributors: 1
+      downloads: 0
+      users: 0
+    impact_summary: |
+      A concise description of the project's impact, including its
+      significance, reach, and value delivered to users or the community.

@@ -112,7 +112,7 @@
     - **Verification:**
         1. Review the section in `CV.md` for clarity and correct referencing.
     - **Depends‑on:** [T004, T011]
-- [ ] **T013 · Feature · P1: create data/project_index.yml file and define base structure**
+- [x] **T013 · Feature · P1: create data/project_index.yml file and define base structure**
     - **Context:** Detailed Build Steps - Phase 1: 5. Populate GitHub Projects
     - **Action:**
         1. Create the `data/project_index.yml` file.
