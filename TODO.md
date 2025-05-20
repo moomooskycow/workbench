@@ -229,7 +229,7 @@
     - **Verification:**
         1. Review `skill_matrix.yml` to confirm `used_in_projects_ids` are populated.
     - **Depends‑on:** [T011, T014]
-- [ ] **T025 · Feature · P2: update data/project_index.yml with tech_stack_ids**
+- [x] **T025 · Feature · P2: update data/project_index.yml with tech_stack_ids**
     - **Context:** Detailed Build Steps - Phase 2: 11. Cross-Referencing Strategy
     - **Action:**
         1. For each project in `project_index.yml`, populate the `tech_stack_ids` field with corresponding skill names/IDs from `skill_matrix.yml`.

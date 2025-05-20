@@ -26,7 +26,7 @@ projects:
       The extension allows users to set their hourly wage and automatically
       annotates prices across the web, helping users make more informed
       purchasing decisions by seeing costs in terms of their time investment.
-    tech_stack_ids: []
+    tech_stack_ids: ["JavaScript", "Git", "GitHub"]
     metrics:
       stars: 5
       forks: 3
@@ -48,7 +48,7 @@ projects:
       allowing content creators to monetize their work through micropayments.
       Features include user authentication, content management, subscription
       models, and seamless integration with Lightning payment channels.
-    tech_stack_ids: []
+    tech_stack_ids: ["TypeScript", "React", "Node.js", "Express", "MongoDB", "Git"]
     metrics:
       stars: 2
       forks: 1
@@ -72,7 +72,7 @@ projects:
       Thinktank allows developers to simultaneously query different AI models
       (like GPT-4, Claude, Gemini) and synthesize their responses for more
       robust solutions to programming challenges.
-    tech_stack_ids: []
+    tech_stack_ids: ["Go", "OpenAI GPT", "Git"]
     metrics:
       stars: 1
       forks: 0
@@ -94,7 +94,7 @@ projects:
       their equivalent value in Bitcoin. This gives users perspective on prices
       in terms of Bitcoin, helping Bitcoin holders make purchasing decisions by
       considering the opportunity cost of spending versus holding Bitcoin.
-    tech_stack_ids: []
+    tech_stack_ids: ["TypeScript"]
     metrics:
       stars: 2
       forks: 1
@@ -116,7 +116,7 @@ projects:
       any topic using AI. Users can specify topics, style preferences, and
       podcast length to receive custom-generated podcast episodes complete
       with natural-sounding voice narration and structured content.
-    tech_stack_ids: []
+    tech_stack_ids: ["TypeScript", "Node.js", "Express", "OpenAI GPT"]
     metrics:
       stars: 4
       forks: 1
@@ -138,7 +138,7 @@ projects:
       lists. Whetstone helps users maintain reading habits by tracking books
       in progress, completed books, and reading statistics. Features include
       reading session tracking, goal setting, and progress visualization.
-    tech_stack_ids: []
+    tech_stack_ids: ["TypeScript", "React"]
     metrics:
       stars: 3
       forks: 1
@@ -161,7 +161,7 @@ projects:
       who prefer keyboard-driven workflows. It supports markdown formatting,
       tagging, search, and organization features while maintaining minimal
       resource usage.
-    tech_stack_ids: []
+    tech_stack_ids: ["Rust"]
     metrics:
       stars: 2
       forks: 0
@@ -184,7 +184,7 @@ projects:
       The extension analyzes content being viewed and suggests articles with
       alternative perspectives, helping users develop a more balanced
       understanding of complex topics.
-    tech_stack_ids: []
+    tech_stack_ids: ["JavaScript"]
     metrics:
       stars: 2
       forks: 0
@@ -207,7 +207,7 @@ projects:
       learning process. StudyMode helps users learn any subject more
       efficiently through personalized study plans, intelligent flashcards,
       and progress tracking.
-    tech_stack_ids: []
+    tech_stack_ids: ["TypeScript", "React", "Node.js", "MongoDB", "OpenAI GPT", "React Testing Library"]
     metrics:
       stars: 3
       forks: 0
@@ -230,7 +230,7 @@ projects:
       custom keybindings, and optimizations that transform Neovim into a
       full-featured IDE while maintaining its performance and minimalist
       philosophy.
-    tech_stack_ids: []
+    tech_stack_ids: ["GitHub"]
     metrics:
       stars: 3
       forks: 0
@@ -252,7 +252,7 @@ projects:
       in Rust. The game features a clean interface, an unbeatable AI opponent
       using the minimax algorithm, and multiple difficulty levels. The project
       demonstrates Rust's capabilities for game logic implementation.
-    tech_stack_ids: []
+    tech_stack_ids: ["Rust"]
     metrics:
       stars: 2
       forks: 1
@@ -275,7 +275,7 @@ projects:
       a project quickly understand the structure and purpose of different
       components by creating concise documentation about each directory's
       contents and function.
-    tech_stack_ids: []
+    tech_stack_ids: ["Go"]
     metrics:
       stars: 1
       forks: 0
@@ -298,7 +298,7 @@ projects:
       Anthropic API. Switchboard provides a unified interface for AI apps,
       handling auth, rate limiting, and optimized communication with AI
       services while providing consistent response formatting.
-    tech_stack_ids: []
+    tech_stack_ids: ["Rust", "Git"]
     metrics:
       stars: 1
       forks: 0
@@ -320,7 +320,7 @@ projects:
       problematic code from being committed to repositories. Bouncer analyzes
       code changes before commits and provides feedback on potential issues,
       code quality problems, and security vulnerabilities.
-    tech_stack_ids: []
+    tech_stack_ids: ["JavaScript", "Git", "GitHub"]
     metrics:
       stars: 0
       forks: 0
@@ -343,7 +343,7 @@ projects:
       automation. Ward integrates with various code quality tools and adds
       intelligent validation checks that can be customized to enforce team
       coding standards and best practices consistently across projects.
-    tech_stack_ids: []
+    tech_stack_ids: ["JavaScript", "Git", "GitHub"]
     metrics:
       stars: 1
       forks: 0
