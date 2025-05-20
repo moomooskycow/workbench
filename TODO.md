@@ -238,7 +238,7 @@
     - **Verification:**
         1. Review `project_index.yml` to confirm `tech_stack_ids` are populated.
     - **Depends‑on:** [T014, T011]
-- [ ] **T026 · Feature · P2: enhance scripts/github_analyzer.py to fetch detailed repo info**
+- [x] **T026 · Feature · P2: enhance scripts/github_analyzer.py to fetch detailed repo info**
     - **Context:** Detailed Build Steps - Phase 2: 12. Enhance `github_analyzer.py`
     - **Action:**
         1. Modify `github_analyzer.py` to fetch contribution details (if available via public API), stars, forks, and last commit dates for repositories.
