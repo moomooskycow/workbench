@@ -376,6 +376,357 @@ This section documents my personal and open-source projects, including:
 - Learning outcomes
 - Open source contributions to other projects
 
+### GitHub Project Integration
+
+This section features selected showcase projects from my GitHub portfolio, detailing the problems addressed, contributions made, technical challenges overcome, and key learnings. Each project is cross-referenced with its canonical entry in the project_index.yml file for comprehensive tracking and reference.
+
+#### Time Is Money (ID: timeismoney)
+**Type:** Personal Project
+**Status:** Active
+**Repo:** [timeismoney](https://github.com/phrazzld/timeismoney)
+
+**Problem:** Online shopping lacks context about the true cost of purchases in terms of hours worked, making it difficult for users to make value-based purchasing decisions.
+
+**Contribution:** Designed and developed the entire Chrome extension from concept to deployment, including core price-detection algorithms, settings interface, and deployment pipeline.
+
+**Technologies:** JavaScript, Chrome Extension API, CSS, HTML
+**Metrics:** 30,000+ users, 5 stars, 3 forks, 32,500+ downloads
+**Impact:** Helped thousands of users develop healthier spending habits by contextualizing prices in terms of work hours required to earn them.
+
+##### Key Challenges
+- Developed robust price detection algorithms that work across diverse e-commerce platforms with varying DOM structures
+- Created unobtrusive UI that integrates seamlessly with existing web pages without disrupting user experience
+- Implemented efficient background processing to minimize performance impact on browsing
+
+##### Learning Outcomes
+- Mastered Chrome Extension API and browser extension development lifecycle
+- Gained experience in creating products that achieve significant user adoption
+- Developed skills in performance optimization for browser-based applications
+
+#### Brainstorm Press (ID: brainstorm-press)
+**Type:** Personal Project
+**Status:** Completed
+**Repo:** [brainstorm-press-client](https://github.com/phrazzld/brainstorm-press-client)
+
+**Problem:** Content creators lack simple, direct monetization options that don't rely on intermediaries, advertising, or traditional subscription models.
+
+**Contribution:** Built the entire platform including frontend client, backend API, and Bitcoin Lightning integration, handling everything from architecture to deployment.
+
+**Technologies:** TypeScript, React, Node.js, Express, Bitcoin Lightning Network
+**Metrics:** 75 users, 2 stars, 1 fork, 240 transactions
+**Impact:** Demonstrated practical implementation of Bitcoin Lightning Network for content monetization without intermediaries.
+
+##### Key Challenges
+- Integrated Bitcoin Lightning payment channels securely for micropayments
+- Designed and implemented content access control based on payment verification
+- Created a sustainable subscription and one-time payment model for content creators
+
+##### Learning Outcomes
+- Deepened knowledge of Bitcoin Lightning Network and cryptocurrency payment integration
+- Gained experience building full-stack applications with complex payment flows
+- Developed expertise in secure user authentication and content access management
+
+#### Thinktank (ID: thinktank)
+**Type:** Open Source
+**Status:** Active
+**Repo:** [thinktank](https://github.com/phrazzld/thinktank)
+
+**Problem:** Single AI models have limitations and biases that affect their problem-solving capabilities, but leveraging multiple models is complex and time-consuming.
+
+**Contribution:** Designed and built a CLI tool that enables "programmable cognition" by orchestrating multiple large language models to collaborate on complex problems.
+
+**Technologies:** Go, OpenAI API, Claude API, Gemini API, CLI
+**Metrics:** 125 installations, 1 star
+**Impact:** Introduced a new paradigm for AI-assisted development by leveraging multiple models' strengths while mitigating individual limitations.
+
+##### Key Challenges
+- Created a flexible architecture for parallel model querying and response synthesis
+- Designed an extensible template system for tailoring prompts to specific use cases
+- Implemented efficient token management to optimize context across multiple models
+
+##### Learning Outcomes
+- Developed expertise in Go for CLI application development
+- Gained deep understanding of LLM capabilities, limitations, and prompt engineering
+- Mastered techniques for synthesizing and evaluating responses from multiple AI systems
+
+#### Bitcoin Price Tag (ID: bitcoin-price-tag)
+**Type:** Personal Project
+**Status:** Active
+**Repo:** [bitcoin-price-tag](https://github.com/phrazzld/bitcoin-price-tag)
+
+**Problem:** Bitcoin holders struggle to evaluate prices in terms of BTC value, making it hard to consider opportunity costs when making purchases.
+
+**Contribution:** Built a Chrome extension that automatically annotates fiat currency prices on websites with their equivalent value in Bitcoin.
+
+**Technologies:** TypeScript, Chrome Extension API, Bitcoin Price APIs
+**Metrics:** 2,500+ users, 2 stars, 1 fork
+**Impact:** Helped Bitcoin users develop price awareness in BTC terms, contributing to broader Bitcoin adoption as a unit of account.
+
+##### Key Challenges
+- Implemented precise currency conversion with real-time Bitcoin price data
+- Created flexible configuration options for preferred display formats and currencies
+- Designed an unobtrusive UI that integrates with diverse web interfaces
+
+##### Learning Outcomes
+- Gained experience with TypeScript in browser extension development
+- Developed skills in financial data handling and currency conversion
+- Improved understanding of Bitcoin user needs and use cases
+
+#### Super Wire (ID: super-wire)
+**Type:** Personal Project
+**Status:** Completed
+**Repo:** [super-wire](https://github.com/phrazzld/super-wire)
+
+**Problem:** Creating high-quality audio content is time-consuming and requires specialized skills, limiting access to personalized podcast-like content.
+
+**Contribution:** Developed an on-demand podcast generation platform using AI to create custom audio content on any topic specified by the user.
+
+**Technologies:** TypeScript, OpenAI GPT, Text-to-Speech APIs, Node.js
+**Metrics:** 4 stars, 1 fork, 350 generated episodes
+**Impact:** Demonstrated innovative applications of AI in content creation, providing personalized audio content on demand.
+
+##### Key Challenges
+- Designed prompts that generate structured, podcast-quality content
+- Integrated text generation with voice synthesis for natural-sounding narration
+- Created a system for topic customization that produces coherent, engaging content
+
+##### Learning Outcomes
+- Mastered AI content generation techniques and prompt engineering
+- Developed skills in audio processing and text-to-speech integration
+- Gained experience in creating AI products that deliver creative media content
+
+#### Whetstone (ID: whetstone)
+**Type:** Personal Project
+**Status:** Active
+**Repo:** [whetstone](https://github.com/phrazzld/whetstone)
+
+**Problem:** Many readers struggle to maintain consistent reading habits and track progress across multiple books in today's distraction-filled environment.
+
+**Contribution:** Built a mobile application for tracking reading progress and managing reading lists with visualization tools and goal-setting features.
+
+**Technologies:** TypeScript, React Native, Firebase, Redux
+**Metrics:** 450 users, 3 stars, 1 fork
+**Impact:** Helped hundreds of users track their reading progress and stay motivated through visualization of reading streaks and milestones.
+
+##### Key Challenges
+- Designed an intuitive, frictionless interface to encourage daily app usage
+- Implemented a flexible tracking system for different reading styles and book formats
+- Created motivational features that promote consistent reading habits
+
+##### Learning Outcomes
+- Developed proficiency in React Native mobile app development
+- Gained experience in user engagement and habit-forming product design
+- Enhanced skills in data visualization and progress tracking implementations
+
+#### Ponder (ID: ponder)
+**Type:** Open Source
+**Status:** Active
+**Repo:** [ponder](https://github.com/phrazzld/ponder)
+
+**Problem:** Existing note-taking applications are often bloated, slow, or lack the efficiency needed for keyboard-driven workflows preferred by developers.
+
+**Contribution:** Developed a blazingly fast command-line note-taking application in Rust, emphasizing speed, efficiency, and markdown support.
+
+**Technologies:** Rust, CLI, Markdown
+**Metrics:** 2 stars, 320 downloads
+**Impact:** Delivered exceptional speed and efficiency for note-taking workflows, demonstrating Rust's capabilities for high-performance CLI applications.
+
+##### Key Challenges
+- Optimized data storage and retrieval for instantaneous note access
+- Implemented a flexible tagging and search system for efficient note organization
+- Created an intuitive command-line interface with minimal learning curve
+
+##### Learning Outcomes
+- Mastered Rust for performance-critical applications
+- Developed deep understanding of efficient data structures and algorithms
+- Gained experience in designing user-friendly CLI interfaces
+
+#### Devils Advocate (ID: devils-advocate)
+**Type:** Personal Project
+**Status:** Active
+**Repo:** [devils-advocate](https://github.com/phrazzld/devils-advocate)
+
+**Problem:** Online filter bubbles and echo chambers limit exposure to diverse viewpoints, reinforcing biases and polarization.
+
+**Contribution:** Created a Chrome extension that analyzes content being viewed and suggests articles with alternative perspectives to promote viewpoint diversity.
+
+**Technologies:** JavaScript, Natural Language Processing, Chrome Extension API
+**Metrics:** 750 users, 2 stars
+**Impact:** Promotes critical thinking by encouraging users to engage with perspectives outside their comfort zone, contributing to a healthier information ecosystem.
+
+##### Key Challenges
+- Developed algorithms to identify political or ideological leanings in content
+- Created a recommendation system for finding quality alternative viewpoints
+- Designed an interface that encourages users to explore diverse perspectives
+
+##### Learning Outcomes
+- Gained experience in content analysis and topic classification
+- Developed skills in creating user interfaces that nudge behavior without being intrusive
+- Enhanced understanding of recommendation systems and content diversity metrics
+
+#### StudyMode (ID: studymode)
+**Type:** Personal Project
+**Status:** Active
+**Repo:** [studymode](https://github.com/phrazzld/studymode)
+
+**Problem:** Traditional learning methods are often inefficient, lacking personalization and evidence-based techniques like spaced repetition and active recall.
+
+**Contribution:** Built a comprehensive learning platform combining spaced repetition, active recall, and AI-assisted content generation to optimize learning efficiency.
+
+**Technologies:** TypeScript, React, Node.js, MongoDB, OpenAI GPT
+**Metrics:** 180 active users, 3 stars
+**Impact:** Helped users achieve better knowledge retention and learning outcomes through proven methodologies and AI assistance.
+
+##### Key Challenges
+- Implemented spaced repetition algorithms for optimal review scheduling
+- Integrated AI content generation for creating personalized study materials
+- Designed an adaptive system that adjusts to individual learning patterns
+
+##### Learning Outcomes
+- Gained expertise in educational technology and learning science
+- Developed skills in creating adaptive systems that respond to user behavior
+- Enhanced understanding of AI applications in personalized education
+
+#### Neovim Config (ID: neovim-config)
+**Type:** Open Source
+**Status:** Active
+**Repo:** [neovim-config](https://github.com/phrazzld/neovim-config)
+
+**Problem:** Configuring Neovim as a modern development environment is complex and time-consuming, requiring extensive plugin knowledge and configuration expertise.
+
+**Contribution:** Created a comprehensive, modular Neovim configuration that transforms it into a full-featured IDE while maintaining performance and minimalist philosophy.
+
+**Technologies:** Lua, Neovim, Shell Scripting
+**Metrics:** 3 stars, 75 installations
+**Impact:** Helped other developers improve their editing workflows and leverage Neovim's capabilities more effectively for various development tasks.
+
+##### Key Challenges
+- Curated optimal plugin combinations that enhance functionality without bloat
+- Configured complex language servers and completion engines for multiple languages
+- Created an easily extendable architecture that others can customize
+
+##### Learning Outcomes
+- Mastered Lua programming for Neovim configuration
+- Developed deep understanding of text editor architecture and plugin ecosystems
+- Gained experience in optimizing development environments for productivity
+
+#### Glance (ID: glance)
+**Type:** Open Source
+**Status:** Active
+**Repo:** [glance](https://github.com/phrazzld/glance)
+
+**Problem:** Developers new to a codebase struggle to understand project structure and component purposes, slowing onboarding and productivity.
+
+**Contribution:** Built a tool that automatically generates quick summaries of every directory in a codebase to help developers understand project structure.
+
+**Technologies:** Go, AI Text Generation
+**Metrics:** 1 star, 95 installations
+**Impact:** Improved developer onboarding by providing auto-generated contextual information about directory contents and purposes.
+
+##### Key Challenges
+- Created algorithms to analyze directory contents and extract meaningful patterns
+- Designed concise yet informative summary templates for diverse codebases
+- Implemented efficient traversal of large code repositories
+
+##### Learning Outcomes
+- Enhanced skills in Go for filesystem operations and text processing
+- Developed techniques for extracting meaning from code organization
+- Gained experience in developer tools and productivity enhancement
+
+#### Switchboard (ID: switchboard)
+**Type:** Open Source
+**Status:** Active
+**Repo:** [switchboard](https://github.com/phrazzld/switchboard)
+
+**Problem:** Integrating with AI APIs directly introduces complexity in authentication, rate limiting, and response handling that distracts from core application development.
+
+**Contribution:** Developed a proxy service in Rust that simplifies interactions with Claude Code and other AI APIs by handling common integration challenges.
+
+**Technologies:** Rust, HTTP APIs, Authentication
+**Metrics:** 1 star, 12,500 API calls
+**Impact:** Simplified AI service integration by providing a robust, high-performance proxy layer that handles common challenges in API consumption.
+
+##### Key Challenges
+- Implemented efficient request batching and rate limiting
+- Created a unified authentication and credential management system
+- Designed consistent error handling and response formatting across different AI services
+
+##### Learning Outcomes
+- Mastered Rust for high-performance network services
+- Developed expertise in API proxy design and implementation
+- Gained experience with AI service integration patterns and best practices
+
+#### Bouncer (ID: bouncer)
+**Type:** Open Source
+**Status:** Active
+**Repo:** [bouncer](https://github.com/phrazzld/bouncer)
+
+**Problem:** Traditional static analysis tools often miss contextual code quality issues that require semantic understanding of the codebase.
+
+**Contribution:** Created an AI-powered pre-commit hook using the Gemini API to analyze code changes and provide intelligent feedback before commits.
+
+**Technologies:** JavaScript, Git Hooks, Gemini API
+**Metrics:** 35 installations
+**Impact:** Enhanced code quality gates by leveraging AI to provide more intelligent feedback than traditional static analysis tools.
+
+##### Key Challenges
+- Developed effective prompt engineering for code review scenarios
+- Created a system to filter and prioritize AI feedback for actionable results
+- Integrated seamlessly with existing git workflows and pre-commit infrastructure
+
+##### Learning Outcomes
+- Gained expertise in applying AI to code quality assessment
+- Developed skills in Git hooks and version control integration
+- Enhanced understanding of effective automated code review techniques
+
+#### Ward (ID: ward)
+**Type:** Open Source
+**Status:** Active
+**Repo:** [ward](https://github.com/phrazzld/ward)
+
+**Problem:** Enforcing consistent coding standards across teams requires extensive manual review or complex configuration of multiple separate tools.
+
+**Contribution:** Built a collection of pre-commit hooks for code review automation that integrates with various quality tools and adds intelligent validation checks.
+
+**Technologies:** Shell Scripting, Git Hooks, Code Analysis Tools
+**Metrics:** 1 star, 45 installations
+**Impact:** Improved development workflows by automating code review checks, helping teams maintain code quality while reducing review overhead.
+
+##### Key Challenges
+- Created a unified framework for integrating diverse code quality tools
+- Designed customizable rule sets that can adapt to different team needs
+- Implemented efficient execution strategies to minimize impact on commit time
+
+##### Learning Outcomes
+- Developed expertise in shell scripting for developer tooling
+- Gained deep understanding of code quality metrics and assessment
+- Enhanced skills in creating developer tools that improve team productivity
+
+#### Rust Tac Toe (ID: rust-tac-toe)
+**Type:** Open Source
+**Status:** Completed
+**Repo:** [rust-tac-toe](https://github.com/phrazzld/rust-tac-toe)
+
+**Problem:** Learning Rust through simple examples often doesn't demonstrate practical implementation of algorithms and game logic in a real application.
+
+**Contribution:** Implemented a command-line version of Tic-Tac-Toe in Rust featuring a clean interface and an unbeatable AI opponent using the minimax algorithm.
+
+**Technologies:** Rust, CLI, Game Theory
+**Metrics:** 2 stars, 1 fork, 125 downloads
+**Impact:** Served as an educational resource for developers learning Rust, demonstrating idiomatic code patterns and game algorithm implementation.
+
+##### Key Challenges
+- Implemented the minimax algorithm efficiently in Rust
+- Created a clean, intuitive command-line interface for gameplay
+- Designed multiple difficulty levels by limiting search depth
+
+##### Learning Outcomes
+- Mastered Rust ownership and borrowing patterns
+- Gained experience implementing game AI and decision algorithms
+- Developed skills in creating interactive CLI applications
+
+> All projects reference their canonical entry in data/project_index.yml for future cross-linking and automation.
+
 ## Hidden Experience
 
 This section captures professional experiences that may not be reflected in public repositories:

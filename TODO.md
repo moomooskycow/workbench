@@ -144,7 +144,7 @@
         1. Run the script: `python scripts/github_analyzer.py --username <user> --output data/github_analysis.json`.
         2. Verify the content and format of the output file.
     - **Depends‑on:** [T002, C004]
-- [ ] **T016 · Feature · P2: populate CV.md GitHub Project Integration section**
+- [x] **T016 · Feature · P2: populate CV.md GitHub Project Integration section**
     - **Context:** Detailed Build Steps - Phase 1: 5. Populate GitHub Projects
     - **Action:**
         1. In `CV.md` under the "GitHub Projects" H2 heading, create an H3 "GitHub Project Integration" sub-section.
