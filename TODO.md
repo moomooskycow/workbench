@@ -76,7 +76,7 @@
     - **Verification:**
         1. Manually review populated details for completeness and adherence to format.
     - **Depends‑on:** [T007, T005]
-- [ ] **T009 · Feature · P1: create data/skill_matrix.yml file and define base structure**
+- [x] **T009 · Feature · P1: create data/skill_matrix.yml file and define base structure**
     - **Context:** Detailed Build Steps - Phase 1: 4. Populate Technical Skills
     - **Action:**
         1. Create the `data/skill_matrix.yml` file.

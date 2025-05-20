@@ -1,0 +1,32 @@
+# Skill Matrix
+# This file contains structured information about technical skills for CV
+# generation. Each skill entry includes metadata about proficiency, acquisition,
+# usage history, and cross-references to projects where the skill was applied.
+#
+# Structure:
+# - name: Full name of the skill (e.g., "TypeScript", "React")
+# - category: Category classification (e.g., "Languages", "Frameworks", "Tools")
+# - proficiency: Expertise level (detailed scale to be defined in T010)
+# - acquired_on: Date when the skill was first learned (YYYY-MM format)
+# - versions: Array of specific versions used professionally
+# - used_in_projects_ids: Array of project IDs where this skill was applied
+#   (references project_index.yml)
+# - education_refs: Array of courses, books, or resources used to learn the skill
+
+---
+skills:
+  # This file currently defines only the base structure.
+  # Actual skill entries will be populated in task T011.
+  # Below is an example entry for reference:
+  
+  - name: JavaScript
+    category: Languages
+    proficiency: 5
+    acquired_on: 2015-06
+    versions:
+      - ES6
+      - ES2021
+    used_in_projects_ids: []
+    education_refs:
+      - "Eloquent JavaScript by Marijn Haverbeke"
+      - "MDN Web Docs"
