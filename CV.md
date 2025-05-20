@@ -905,6 +905,50 @@ This section organizes my expertise by industry and specialized domains:
 - Subject matter expertise
 - Business process knowledge
 
+### Fintech & Financial Services
+**Exposure:** 6+ years of professional engagement
+**Context:** Work at Memory Labs with financial clients, personal projects, and independent research
+
+**Key Aspects:**
+- Deep understanding of cryptocurrency technology and financial applications
+- Knowledge of payment processing workflows and integration patterns
+- Familiarity with financial regulations and compliance requirements (KYC/AML)
+- Experience with financial data security and privacy considerations
+- Practical implementation of financial transaction systems with Bitcoin and Lightning Network
+
+### Education Technology
+**Exposure:** 4+ years of professional engagement
+**Context:** Memory Labs' learning engine products, StudyMode project, personalized education platforms
+
+**Key Aspects:**
+- Understanding of learning science and effective educational methodologies
+- Experience designing and implementing adaptive learning systems
+- Knowledge of educational content delivery optimizations
+- Implementation of progress tracking and learning analytics
+- Familiarity with integration patterns for Learning Management Systems (LMS)
+
+### Cybersecurity & Compliance
+**Exposure:** 3+ years of professional engagement
+**Context:** Work at Novacoast focused on PCI compliance, security monitoring, and vulnerability management
+
+**Key Aspects:**
+- Practical experience implementing PCI DSS compliance solutions
+- Understanding of security monitoring tools and vulnerability management systems
+- Knowledge of secure coding practices and common web vulnerabilities
+- Experience with security authentication patterns and authorization frameworks
+- Familiarity with regulatory frameworks and audit requirements
+
+### Distributed Systems & Cloud Infrastructure
+**Exposure:** 7+ years of professional engagement
+**Context:** Professional experience at Memory Labs and Novacoast, personal and open-source projects
+
+**Key Aspects:**
+- Practical knowledge of distributed system architecture patterns
+- Experience designing and implementing fault-tolerant, high-availability systems
+- Expertise in cloud infrastructure deployment and optimization (primarily AWS)
+- Understanding of containerization and orchestration technologies
+- Experience implementing infrastructure-as-code practices
+
 ## Specialized Sections
 
 This section highlights specialized areas of expertise:
@@ -915,3 +959,58 @@ This section highlights specialized areas of expertise:
 - Mobile app development
 - Security and compliance
 - Other specialized technical domains
+
+### Chrome Extension Development
+**Experience Level:** 5+ years, 4 published extensions
+**Highlight Projects:** Time Is Money, Bitcoin Price Tag, Devils Advocate
+
+**Specific Capabilities:**
+- Expertise in Chrome Extension API and browser extension architecture
+- Strong understanding of DOM manipulation and web content injection
+- Experience building background script systems and persistent storage
+- Knowledge of Chrome extension security model and content script isolation
+- Implementation of cross-browser compatibility patterns
+
+### Bitcoin & Cryptocurrency Integration
+**Experience Level:** 4+ years, multiple production implementations
+**Highlight Projects:** Brainstorm Press, Bitcoin Price Tag, BlueWallet contributions, BTCPay Server contributions
+
+**Specific Capabilities:**
+- Deep knowledge of Bitcoin protocol and transaction formats
+- Practical experience integrating Lightning Network payment channels
+- Implementation of secure wallet interfaces and key management
+- Experience with cryptocurrency payment processing systems
+- Understanding of Bitcoin node operation and blockchain synchronization
+
+### AI/ML Implementation
+**Experience Level:** 3+ years, both commercial and research projects
+**Highlight Projects:** Memory Labs Learning Engine, Super Wire, Bouncer
+
+**Specific Capabilities:**
+- Integration of large language models (OpenAI, Claude, Gemini) into production systems
+- Implementation of content recommendation systems using collaborative filtering
+- Experience with natural language processing for text analysis and generation
+- Practical knowledge of neural networks for classification and prediction tasks
+- Development of AI-powered developer tools and automation systems
+
+### Developer Tooling & Automation
+**Experience Level:** 5+ years, multiple open-source tools
+**Highlight Projects:** Thinktank, Glance, Ward, Bouncer
+
+**Specific Capabilities:**
+- Creation of developer productivity tools and CLI applications
+- Implementation of code generation and analysis systems
+- Experience with Git hooks and version control automation
+- Deep knowledge of build systems and CI/CD pipelines
+- Design and implementation of development environment tooling
+
+### Mobile App Development
+**Experience Level:** 3+ years, multiple production applications
+**Highlight Projects:** Memory Labs mobile app, Whetstone
+
+**Specific Capabilities:**
+- Cross-platform mobile development with React Native
+- Implementation of offline-first architecture and local data persistence
+- Experience with mobile-specific UX patterns and performance optimizations
+- Knowledge of app store submission processes and requirements
+- Integration of mobile authentication patterns (biometrics, etc.)

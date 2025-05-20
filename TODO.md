@@ -182,7 +182,7 @@
     - **Verification:**
         1. Review the section for completeness and accuracy.
     - **Depends‑on:** [T004]
-- [ ] **T020 · Feature · P2: populate CV.md Domain Knowledge & Specialized Sections**
+- [x] **T020 · Feature · P2: populate CV.md Domain Knowledge & Specialized Sections**
     - **Context:** Detailed Build Steps - Phase 1: 8. Populate Domain Knowledge & Specialized Sections (Manual)
     - **Action:**
         1. Add content to the "Domain Knowledge" and "Specialized Sections" in `CV.md`.
