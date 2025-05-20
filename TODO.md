@@ -220,7 +220,7 @@
     - **Verification:**
         1. Manually check a few links in a Markdown preview to ensure they navigate correctly.
     - **Depends‑on:** [T004, T012, T016]
-- [ ] **T024 · Feature · P2: update data/skill_matrix.yml with used_in_projects_ids**
+- [x] **T024 · Feature · P2: update data/skill_matrix.yml with used_in_projects_ids**
     - **Context:** Detailed Build Steps - Phase 2: 11. Cross-Referencing Strategy
     - **Action:**
         1. For each skill in `skill_matrix.yml`, populate the `used_in_projects_ids` field with corresponding project IDs from `project_index.yml`.

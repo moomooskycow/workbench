@@ -73,7 +73,7 @@ skills:
       - ES6
       - ES2019
       - ES2021
-    used_in_projects_ids: []
+    used_in_projects_ids: ["timeismoney", "devils-advocate", "bouncer", "ward"]
     education_refs:
       - "Eloquent JavaScript by Marijn Haverbeke"
       - "JavaScript: The Good Parts by Douglas Crockford"
@@ -87,7 +87,7 @@ skills:
       - 3.0
       - 4.0
       - 4.5
-    used_in_projects_ids: []
+    used_in_projects_ids: ["brainstorm-press", "bitcoin-price-tag", "super-wire", "whetstone", "studymode"]
     education_refs:
       - "TypeScript Documentation"
       - "Programming TypeScript by Boris Cherny"
@@ -115,7 +115,7 @@ skills:
       - 3.7
       - 3.8
       - 3.9
-    used_in_projects_ids: []
+    used_in_projects_ids: ["github-analyzer"]
     education_refs:
       - "Python Crash Course by Eric Matthes"
       - "Real Python tutorials"
@@ -129,7 +129,7 @@ skills:
       - 1.45
       - 1.55
       - 1.60
-    used_in_projects_ids: []
+    used_in_projects_ids: ["ponder", "switchboard", "rust-tac-toe"]
     education_refs:
       - "The Rust Programming Language (official book)"
       - "Rust in Action by Tim McNamara"
@@ -142,7 +142,7 @@ skills:
     versions:
       - 1.16
       - 1.17
-    used_in_projects_ids: []
+    used_in_projects_ids: ["thinktank", "glance"]
     education_refs:
       - "The Go Programming Language by Alan A. A. Donovan & Brian W. Kernighan"
       - "Go by Example"
@@ -158,7 +158,7 @@ skills:
       - 16.8
       - 17.0
       - 18.0
-    used_in_projects_ids: []
+    used_in_projects_ids: ["brainstorm-press", "studymode", "whetstone"]
     education_refs:
       - "Official React Documentation"
       - "React Patterns by Kent C. Dodds"
@@ -172,7 +172,7 @@ skills:
       - 12.x
       - 14.x
       - 16.x
-    used_in_projects_ids: []
+    used_in_projects_ids: ["brainstorm-press", "super-wire", "studymode"]
     education_refs:
       - "Node.js Design Patterns by Mario Casciaro"
       - "Node.js Documentation"
@@ -184,7 +184,7 @@ skills:
     acquired_on: 2016-03
     versions:
       - 4.x
-    used_in_projects_ids: []
+    used_in_projects_ids: ["brainstorm-press", "super-wire"]
     education_refs:
       - "Express Documentation"
       - "Web Development with Node & Express by Ethan Brown"
@@ -255,7 +255,7 @@ skills:
       - 4.2
       - 4.4
       - 5.0
-    used_in_projects_ids: []
+    used_in_projects_ids: ["studymode", "brainstorm-press"]
     education_refs:
       - "MongoDB University courses"
       - "MongoDB: The Definitive Guide"
@@ -366,7 +366,7 @@ skills:
     versions:
       - 11.x
       - 12.x
-    used_in_projects_ids: []
+    used_in_projects_ids: ["studymode", "brainstorm-press"]
     education_refs:
       - "React Testing Library Documentation"
       - "Testing JavaScript by Kent C. Dodds"
@@ -391,7 +391,7 @@ skills:
     acquired_on: 2015-08
     versions:
       - 2.x
-    used_in_projects_ids: []
+    used_in_projects_ids: ["ward", "bouncer", "timeismoney", "brainstorm-press", "thinktank", "switchboard"]
     education_refs:
       - "Pro Git by Scott Chacon and Ben Straub"
       - "Git Documentation"
@@ -404,7 +404,7 @@ skills:
     versions:
       - "GitHub Actions"
       - "GitHub API"
-    used_in_projects_ids: []
+    used_in_projects_ids: ["timeismoney", "ward", "bouncer", "neovim-config"]
     education_refs:
       - "GitHub Documentation"
       - "GitHub Actions: Up and Running"
@@ -430,7 +430,7 @@ skills:
       - "GPT-3"
       - "GPT-3.5"
       - "GPT-4"
-    used_in_projects_ids: []
+    used_in_projects_ids: ["super-wire", "studymode", "thinktank"]
     education_refs:
       - "OpenAI Documentation"
       - "GPT-3: Creative Potential of NLP"
