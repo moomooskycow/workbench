@@ -41,7 +41,7 @@
     - **Verification:**
         1. Open `CV.md` and verify the presence and correctness of H2 headings.
     - **Depends‑on:** [T002]
-- [ ] **T005 · Feature · P1: define consistent formatting rules for CV.md content**
+- [x] **T005 · Feature · P1: define consistent formatting rules for CV.md content**
     - **Context:** Detailed Build Steps - Phase 1: 2. Define `CV.md` Core Structure
     - **Action:**
         1. Define rules for H3-H5 sub-sections, list items, and key-value pair patterns (e.g., `Tech:`, `Impact:`).
