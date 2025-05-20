@@ -164,7 +164,7 @@
     - **Verification:**
         1. Review the entries for completeness and accuracy.
     - **Depends‑on:** [T004]
-- [ ] **T018 · Feature · P2: populate CV.md Hidden Experience section**
+- [x] **T018 · Feature · P2: populate CV.md Hidden Experience section**
     - **Context:** Detailed Build Steps - Phase 1: 6. Populate Hidden Experience (Manual)
     - **Action:**
         1. Add content to the "Hidden Experience" section in `CV.md` for Internal Tools, Anonymized Client Projects, and Mentorship & Leadership.
