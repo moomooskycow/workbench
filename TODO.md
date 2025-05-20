@@ -131,7 +131,7 @@
     - **Verification:**
         1. Review `project_index.yml` for data accuracy and completeness.
     - **Depends‑on:** [T013]
-- [ ] **T015 · Feature · P2: develop basic scripts/github_analyzer.py**
+- [x] **T015 · Feature · P2: develop basic scripts/github_analyzer.py**
     - **Context:** Detailed Build Steps - Phase 1: 5. Populate GitHub Projects
     - **Action:**
         1. Create `scripts/github_analyzer.py`.
