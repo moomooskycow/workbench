@@ -67,7 +67,7 @@
     - **Verification:**
         1. Review `CV.md` to ensure all roles have the defined heading structure.
     - **Depends‑on:** [T004]
-- [ ] **T008 · Feature · P2: detail Professional Experience in CV.md**
+- [x] **T008 · Feature · P2: detail Professional Experience in CV.md**
     - **Context:** Detailed Build Steps - Phase 1: 3. Populate Professional Experience (Manual)
     - **Action:**
         1. For each role/project in `CV.md`, populate details: Technical Stack, Team Structure, Methodology, Problem-Solution Framing, Cross-Functional Collaboration.
