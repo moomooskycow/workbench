@@ -203,7 +203,7 @@
     - **Depends‑on:** [T002, T005]
 
 ## Enrichment & Script Development (Phase 2)
-- [ ] **T022 · Refactor · P2: add quantifiable impact and deepen technical descriptions in CV.md**
+- [x] **T022 · Refactor · P2: add quantifiable impact and deepen technical descriptions in CV.md**
     - **Context:** Detailed Build Steps - Phase 2: 10. Metrics Gathering & Technical Detail Deepening
     - **Action:**
         1. Revisit all populated entries in `CV.md` (Professional Experience, Projects, etc.).
