@@ -122,7 +122,7 @@
     - **Verification:**
         1. Check the file content for correct YAML structure and keys.
     - **Depends‑on:** [T002]
-- [ ] **T014 · Feature · P2: populate data/project_index.yml with 10-15 showcase projects**
+- [x] **T014 · Feature · P2: populate data/project_index.yml with 10-15 showcase projects**
     - **Context:** Detailed Build Steps - Phase 1: 5. Populate GitHub Projects
     - **Action:**
         1. Manually add entries for 10-15 showcase projects into `project_index.yml`.

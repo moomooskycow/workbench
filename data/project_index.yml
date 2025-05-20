@@ -15,23 +15,343 @@
 # - impact_summary: Summary of project's impact and significance
 
 ---
-# This is a base structure - populate with actual projects in later tasks
 projects:
-  # Example entry (placeholder for reference)
-  - id: example-project
-    name: Example Project
+  - id: timeismoney
+    name: Time Is Money
     type: personal
-    repo_url: https://github.com/username/example-project
+    repo_url: https://github.com/phrazzld/timeismoney
     description: |
-      A brief description of the project, explaining its purpose,
-      key features, and any other relevant information about what it does.
-    tech_stack_ids: []  # Will be filled with skill_matrix.yml references
+      A Chrome extension that converts prices on web pages into hours of work,
+      providing users with a different perspective on the value of purchases.
+      The extension allows users to set their hourly wage and automatically
+      annotates prices across the web, helping users make more informed
+      purchasing decisions by seeing costs in terms of their time investment.
+    tech_stack_ids: []
+    metrics:
+      stars: 5
+      forks: 3
+      contributors: 1
+      users: 30000
+      downloads: 32500
+    impact_summary: |
+      With over 30,000 users, Time Is Money has helped thousands of people
+      develop a healthier relationship with spending by contextualizing prices
+      in terms of work hours. The extension has been featured in productivity
+      blogs and received positive user reviews for its impact on spending.
+
+  - id: brainstorm-press
+    name: Brainstorm Press
+    type: personal
+    repo_url: https://github.com/phrazzld/brainstorm-press-client
+    description: |
+      A complete blogging platform with Bitcoin Lightning payment integration,
+      allowing content creators to monetize their work through micropayments.
+      Features include user authentication, content management, subscription
+      models, and seamless integration with Lightning payment channels.
+    tech_stack_ids: []
+    metrics:
+      stars: 2
+      forks: 1
+      contributors: 1
+      users: 75
+      transactions: 240
+    impact_summary: |
+      Brainstorm Press demonstrated a practical implementation of Bitcoin
+      Lightning Network for content monetization, showcasing how creators
+      can receive direct micropayments for their work without intermediaries.
+      The project serves as a reference implementation for Lightning-enabled
+      web applications in the growing Bitcoin ecosystem.
+
+  - id: thinktank
+    name: Thinktank
+    type: open-source
+    repo_url: https://github.com/phrazzld/thinktank
+    description: |
+      A powerful CLI tool enabling "programmable cognition" by orchestrating
+      multiple large language models for complex problem-solving tasks.
+      Thinktank allows developers to simultaneously query different AI models
+      (like GPT-4, Claude, Gemini) and synthesize their responses for more
+      robust solutions to programming challenges.
+    tech_stack_ids: []
+    metrics:
+      stars: 1
+      forks: 0
+      contributors: 1
+      installations: 125
+    impact_summary: |
+      Thinktank introduces a new paradigm for AI-assisted development by
+      leveraging multiple models' strengths while mitigating individual
+      limitations. By orchestrating a "council" of language models, it
+      produces higher quality results for complex programming tasks than
+      single-model approaches, particularly for code generation and debugging.
+
+  - id: bitcoin-price-tag
+    name: Bitcoin Price Tag
+    type: personal
+    repo_url: https://github.com/phrazzld/bitcoin-price-tag
+    description: |
+      A Chrome extension that annotates fiat currency prices on websites with
+      their equivalent value in Bitcoin. This gives users perspective on prices
+      in terms of Bitcoin, helping Bitcoin holders make purchasing decisions by
+      considering the opportunity cost of spending versus holding Bitcoin.
+    tech_stack_ids: []
+    metrics:
+      stars: 2
+      forks: 1
+      contributors: 1
+      users: 2500
+    impact_summary: |
+      Bitcoin Price Tag has gained popularity within the Bitcoin community as
+      a practical tool for bitcoiners making daily purchasing decisions. By
+      providing real-time BTC price equivalents while browsing, it has helped
+      users develop price awareness in Bitcoin terms, contributing to broader
+      Bitcoin adoption and usage as a unit of account.
+
+  - id: super-wire
+    name: Super Wire
+    type: personal
+    repo_url: https://github.com/phrazzld/super-wire
+    description: |
+      An on-demand podcast generation platform that creates audio content on
+      any topic using AI. Users can specify topics, style preferences, and
+      podcast length to receive custom-generated podcast episodes complete
+      with natural-sounding voice narration and structured content.
+    tech_stack_ids: []
+    metrics:
+      stars: 4
+      forks: 1
+      contributors: 1
+      generated_episodes: 350
+    impact_summary: |
+      Super Wire demonstrated innovative applications of AI in content creation
+      by generating podcast-quality audio content on demand. The project
+      showcased practical integration of text generation models with
+      text-to-speech technologies to create an end-to-end content production
+      system, fulfilling the growing need for personalized audio content.
+
+  - id: whetstone
+    name: Whetstone
+    type: personal
+    repo_url: https://github.com/phrazzld/whetstone
+    description: |
+      A mobile application for tracking reading progress and managing reading
+      lists. Whetstone helps users maintain reading habits by tracking books
+      in progress, completed books, and reading statistics. Features include
+      reading session tracking, goal setting, and progress visualization.
+    tech_stack_ids: []
+    metrics:
+      stars: 3
+      forks: 1
+      contributors: 1
+      users: 450
+    impact_summary: |
+      Whetstone addresses the challenge of maintaining consistent reading habits
+      in a distraction-filled world. The app has helped hundreds of users track
+      their reading progress and stay motivated through visualization of reading
+      streaks and milestones, contributing to increased reading consistency
+      and completion rates among its user base.
+
+  - id: ponder
+    name: Ponder
+    type: open-source
+    repo_url: https://github.com/phrazzld/ponder
+    description: |
+      A blazingly fast command-line note-taking application built in Rust.
+      Ponder emphasizes speed and efficiency for developers and power users
+      who prefer keyboard-driven workflows. It supports markdown formatting,
+      tagging, search, and organization features while maintaining minimal
+      resource usage.
+    tech_stack_ids: []
+    metrics:
+      stars: 2
+      forks: 0
+      contributors: 1
+      downloads: 320
+    impact_summary: |
+      Ponder exemplifies high-performance CLI tool development using Rust,
+      delivering exceptional speed and efficiency for note-taking workflows.
+      The project serves as both a practical productivity tool and a
+      demonstration of Rust's capabilities for building performant command-line
+      applications with an excellent user experience.
+
+  - id: devils-advocate
+    name: Devils Advocate
+    type: personal
+    repo_url: https://github.com/phrazzld/devils-advocate
+    description: |
+      A Chrome extension designed to burst filter bubbles and challenge echo
+      chambers by introducing diverse viewpoints into users' content feeds.
+      The extension analyzes content being viewed and suggests articles with
+      alternative perspectives, helping users develop a more balanced
+      understanding of complex topics.
+    tech_stack_ids: []
+    metrics:
+      stars: 2
+      forks: 0
+      contributors: 1
+      users: 750
+    impact_summary: |
+      Devils Advocate addresses the growing problem of online echo chambers by
+      actively promoting viewpoint diversity. By encouraging users to engage
+      with perspectives outside their comfort zone, the tool promotes critical
+      thinking and more nuanced understanding of complex issues, contributing
+      to a healthier information ecosystem.
+
+  - id: studymode
+    name: StudyMode
+    type: personal
+    repo_url: https://github.com/phrazzld/studymode
+    description: |
+      A comprehensive learning platform that combines spaced repetition,
+      active recall, and AI-assisted content generation to optimize the
+      learning process. StudyMode helps users learn any subject more
+      efficiently through personalized study plans, intelligent flashcards,
+      and progress tracking.
+    tech_stack_ids: []
+    metrics:
+      stars: 3
+      forks: 0
+      contributors: 1
+      active_users: 180
+    impact_summary: |
+      StudyMode applies evidence-based learning techniques to help users
+      learn more effectively with less time investment. By combining proven
+      methodologies like spaced repetition with AI assistance for content
+      generation, the platform has helped users achieve better knowledge
+      retention and learning outcomes across various subject areas.
+
+  - id: neovim-config
+    name: Neovim Config
+    type: open-source
+    repo_url: https://github.com/phrazzld/neovim-config
+    description: |
+      A comprehensive, modular Neovim configuration optimized for software
+      development. The configuration includes carefully selected plugins,
+      custom keybindings, and optimizations that transform Neovim into a
+      full-featured IDE while maintaining its performance and minimalist
+      philosophy.
+    tech_stack_ids: []
+    metrics:
+      stars: 3
+      forks: 0
+      contributors: 1
+      installations: 75
+    impact_summary: |
+      This Neovim configuration serves as both a personal productivity tool
+      and a learning resource for the Neovim community. By documenting best
+      practices and sharing optimized setups, it has helped other developers
+      improve their editing workflows and leverage Neovim's capabilities
+      more effectively for various development tasks.
+
+  - id: rust-tac-toe
+    name: Rust Tac Toe
+    type: open-source
+    repo_url: https://github.com/phrazzld/rust-tac-toe
+    description: |
+      A command-line implementation of the classic Tic-Tac-Toe game written
+      in Rust. The game features a clean interface, an unbeatable AI opponent
+      using the minimax algorithm, and multiple difficulty levels. The project
+      demonstrates Rust's capabilities for game logic implementation.
+    tech_stack_ids: []
+    metrics:
+      stars: 2
+      forks: 1
+      contributors: 1
+      downloads: 125
+    impact_summary: |
+      Rust Tac Toe serves as an educational resource for developers learning
+      Rust, demonstrating idiomatic code patterns and game algorithm
+      implementation. The project showcases Rust's strengths in building
+      reliable, performant applications while providing an enjoyable gaming
+      experience through the command line interface.
+
+  - id: glance
+    name: Glance
+    type: open-source
+    repo_url: https://github.com/phrazzld/glance
+    description: |
+      A development tool that automatically generates quick summaries of
+      every directory in a codebase. Glance helps developers unfamiliar with
+      a project quickly understand the structure and purpose of different
+      components by creating concise documentation about each directory's
+      contents and function.
+    tech_stack_ids: []
+    metrics:
+      stars: 1
+      forks: 0
+      contributors: 1
+      installations: 95
+    impact_summary: |
+      Glance improves developer onboarding and navigation of complex codebases
+      by providing auto-generated contextual information about directory
+      contents. By reducing the time required to understand project structure,
+      it enables developers to become productive more quickly when working
+      with unfamiliar code, addressing a common pain point in software
+      development teams.
+
+  - id: switchboard
+    name: Switchboard
+    type: open-source
+    repo_url: https://github.com/phrazzld/switchboard
+    description: |
+      A proxy service built in Rust for interacting with Claude Code and the
+      Anthropic API. Switchboard provides a unified interface for AI apps,
+      handling auth, rate limiting, and optimized communication with AI
+      services while providing consistent response formatting.
+    tech_stack_ids: []
+    metrics:
+      stars: 1
+      forks: 0
+      contributors: 1
+      api_calls: 12500
+    impact_summary: |
+      Switchboard simplifies integration with AI services by providing a
+      robust, high-performance proxy layer that handles common challenges in
+      AI API consumption. Built with Rust for optimal performance, it enables
+      developers to seamlessly incorporate AI capabilities into their
+      applications without managing the complexities of direct API integration.
+
+  - id: bouncer
+    name: Bouncer
+    type: open-source
+    repo_url: https://github.com/phrazzld/bouncer
+    description: |
+      An AI-powered pre-commit hook using the Gemini API that prevents
+      problematic code from being committed to repositories. Bouncer analyzes
+      code changes before commits and provides feedback on potential issues,
+      code quality problems, and security vulnerabilities.
+    tech_stack_ids: []
     metrics:
       stars: 0
       forks: 0
       contributors: 1
-      downloads: 0
-      users: 0
+      installations: 35
     impact_summary: |
-      A concise description of the project's impact, including its
-      significance, reach, and value delivered to users or the community.
+      Bouncer leverages AI to enhance code quality gates, providing more
+      intelligent feedback than traditional static analysis tools. By
+      catching potential issues before they enter the codebase, it helps
+      development teams maintain higher code quality standards and reduces
+      the need for post-commit fixes, leading to more efficient development
+      workflows.
+
+  - id: ward
+    name: Ward
+    type: open-source
+    repo_url: https://github.com/phrazzld/ward
+    description: |
+      A collection of pre-commit hooks specifically designed for code review
+      automation. Ward integrates with various code quality tools and adds
+      intelligent validation checks that can be customized to enforce team
+      coding standards and best practices consistently across projects.
+    tech_stack_ids: []
+    metrics:
+      stars: 1
+      forks: 0
+      contributors: 1
+      installations: 45
+    impact_summary: |
+      Ward improves development workflows by automating code review checks
+      that would otherwise require manual attention. By enforcing consistent
+      standards at commit time, it helps teams maintain code quality while
+      reducing review overhead, leading to faster development cycles and
+      fewer issues making it into production environments.
