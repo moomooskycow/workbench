@@ -191,7 +191,7 @@
     - **Verification:**
         1. Review the sections for appropriate content.
     - **Depends‑on:** [T004]
-- [ ] **T021 · Feature · P1: create Markdown entry templates in templates/**
+- [x] **T021 · Feature · P1: create Markdown entry templates in templates/**
     - **Context:** Detailed Build Steps - Phase 1: 9. Create Entry Templates
     - **Action:**
         1. Develop Markdown snippet templates in the `templates/` directory for new roles, projects, and skills.
