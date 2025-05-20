@@ -211,7 +211,7 @@
     - **Done‑when:**
         1. Key entries in `CV.md` are enriched with metrics and detailed technical information.
     - **Depends‑on:** [T008, T016, C003]
-- [ ] **T023 · Feature · P2: implement Markdown link-based cross-referencing in CV.md**
+- [x] **T023 · Feature · P2: implement Markdown link-based cross-referencing in CV.md**
     - **Context:** Detailed Build Steps - Phase 2: 11. Cross-Referencing Strategy
     - **Action:**
         1. Update `CV.md` to use Markdown links (e.g., `[Project X](#project-x-details)`) for internal cross-referencing between sections, projects, and skills where appropriate.

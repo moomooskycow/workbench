@@ -1,17 +1,17 @@
 # Comprehensive Curriculum Vitae
 
-This document serves as a comprehensive record of my professional experience, technical skills, projects, and domain knowledge. It is designed to be a complete repository of my career details from which more focused resumes can be generated for specific opportunities.
+This document serves as a comprehensive record of my [professional experience](#professional-experience), [technical skills](#technical-skills), [projects](#github-projects), and [domain knowledge](#domain-knowledge). It is designed to be a complete repository of my career details from which more focused resumes can be generated for specific opportunities.
 
 ## Professional Experience
 
 This section contains detailed information about my professional roles, including:
 - Employment history with precise dates
 - Project-based breakdown of responsibilities
-- Technical stack details for each role and project
-- Team structures and leadership responsibilities
+- Technical stack details for each role and project (with connections to my [Technical Skills](#technical-skills))
+- Team structures and leadership responsibilities (see also [Mentorship & Leadership](#mentorship--leadership))
 - Development methodologies
-- Problem-solution frameworks
-- Cross-functional collaboration experiences
+- Problem-solution frameworks (complemented by [GitHub Projects](#github-projects))
+- Cross-functional collaboration experiences (related to [Domain Knowledge](#domain-knowledge))
 
 ### Director of Engineering, Memory Labs
 *San Francisco, CA (Remote) | September 2022 - Present*
@@ -20,16 +20,16 @@ Led Product, Engineering, and Infrastructure teams while overseeing the full pro
 
 #### Learning Engine API Product
 
-**Context:** Designed and developed a flexible API product for delivering personalized learning content to enterprise clients, enabling integration with existing educational platforms. The API processed over 2.5 million content requests per month with 99.95% uptime SLA.
-**Tech:** TypeScript, Node.js, Express, MongoDB (with compound indexing and sharding strategy), AWS (Lambda, API Gateway, DynamoDB, EventBridge), OpenAI GPT-4 with custom fine-tuning
-**Team:** Led cross-functional team of 4 engineers, 1 product manager, and 1 QA specialist
+**Context:** Designed and developed a flexible API product for delivering personalized learning content to enterprise clients, enabling integration with existing educational platforms. The API processed over 2.5 million content requests per month with 99.95% uptime SLA. Related to my work in [Education Technology](#education-technology) domain.
+**Tech:** [TypeScript](#typescript), [Node.js](#nodejs), [Express](#express), [MongoDB](#mongodb) (with compound indexing and sharding strategy), [AWS](#aws) (Lambda, API Gateway, DynamoDB, EventBridge), [OpenAI GPT](#openai-gpt) with custom fine-tuning
+**Team:** Led cross-functional team of 4 engineers, 1 product manager, and 1 QA specialist (similar leadership approach in [Engineering Onboarding Program Development](#engineering-onboarding-program-development))
 **Methodology:** Agile/Scrum with 2-week sprints, daily standups, and bi-weekly retros
 
 - Architected a modular, extensible API system that supported 12 distinct content types and 8 learning formats, with a plugin architecture enabling 35% faster integration of new content providers
 - Collaborated with Sales and Product teams to define technical requirements based on enterprise client needs, reducing specification-to-development time by 40% through standardized requirement templates
-- Implemented comprehensive authentication using JWT with role-based access control, rate limiting with Redis-based token bucket algorithm, and granular usage tracking supporting per-endpoint, per-client analytics
-- Established robust testing protocols with Jest and Supertest, achieving 95% test coverage across critical components and reducing production incidents by 78% year-over-year
-- Designed and implemented a caching strategy that reduced average API response time from 320ms to 85ms while decreasing compute costs by 45%
+- Implemented comprehensive authentication using JWT with role-based access control, rate limiting with [Redis](#redis)-based token bucket algorithm, and granular usage tracking supporting per-endpoint, per-client analytics
+- Established robust testing protocols with [Jest](#jest) and Supertest, achieving 95% test coverage across critical components and reducing production incidents by 78% year-over-year
+- Designed and implemented a caching strategy that reduced average API response time from 320ms to 85ms while decreasing compute costs by 45% (similar approach to [Infrastructure and Cost Optimization](#infrastructure-and-cost-optimization))
 
 #### Client Relations and Custom Solutions
 
@@ -367,8 +367,10 @@ This section catalogs my technical capabilities, organized by:
 - Proficiency levels
 - Timeline of skill acquisition
 - Specific versions/technologies used
-- Project connections
-- Continuing education related to each skill
+- [Project connections](#github-projects)
+- Continuing education related to each skill (see also [Learning Journey](#learning-journey))
+
+These skills are demonstrated throughout my [Professional Experience](#professional-experience) and [GitHub Projects](#github-projects), with practical applications in various [Domain Knowledge](#domain-knowledge) areas.
 
 ### Technical Skills Taxonomy
 
@@ -378,78 +380,80 @@ This taxonomy organizes my technical skills by category, based on the comprehens
 
 Experienced polyglot programmer with expertise across multiple programming paradigms, focused primarily on JavaScript/TypeScript ecosystem while maintaining proficiency in Ruby, Python, and system languages.
 
-- **JavaScript** (5/5): 8+ years of experience with deep specialization in modern ES6+ features, async patterns, and functional programming techniques.
-- **TypeScript** (5/5): 6+ years of expertise, including advanced type system features, generics, and maintaining strict type safety in large codebases.
-- **Ruby** (4/5): 7+ years working with Ruby, particularly in Rails applications, with emphasis on clean, maintainable code.
-- **Python** (3/5): 5+ years using Python for data analysis, scripting, and automation tasks.
-- **Rust** (3/5): 3+ years exploring Rust for performance-critical components, with focus on memory safety and concurrency.
-- **Go** (2/5): 2+ years of experience building backend services and CLI tools, focusing on simplicity and performance.
+- <a id="javascript"></a>**JavaScript** (5/5): 8+ years of experience with deep specialization in modern ES6+ features, async patterns, and functional programming techniques. Applied in projects like [Time Is Money](#time-is-money-id-timeismoney) and [Devils Advocate](#devils-advocate-id-devils-advocate).
+- <a id="typescript"></a>**TypeScript** (5/5): 6+ years of expertise, including advanced type system features, generics, and maintaining strict type safety in large codebases. Used extensively in [Brainstorm Press](#brainstorm-press-id-brainstorm-press) and [StudyMode](#studymode-id-studymode).
+- <a id="ruby"></a>**Ruby** (4/5): 7+ years working with Ruby, particularly in Rails applications, with emphasis on clean, maintainable code. Applied in [Client Relations and Custom Solutions](#client-relations-and-custom-solutions) at Memory Labs.
+- <a id="python"></a>**Python** (3/5): 5+ years using Python for data analysis, scripting, and automation tasks. Used in [Analytics Data Pipeline](#analytics-data-pipeline) and [github_analyzer.py](#github-analyzer-id-github-analyzer).
+- <a id="rust"></a>**Rust** (3/5): 3+ years exploring Rust for performance-critical components, with focus on memory safety and concurrency. Applied in [Ponder](#ponder-id-ponder) and [Switchboard](#switchboard-id-switchboard).
+- <a id="go"></a>**Go** (2/5): 2+ years of experience building backend services and CLI tools, focusing on simplicity and performance. Used in [Thinktank](#thinktank-id-thinktank) and [Glance](#glance-id-glance).
 
 #### Frameworks
 
 Extensive experience with modern web frameworks, specializing in JavaScript/TypeScript ecosystems with strong expertise in both frontend and backend technologies.
 
-- **React** (5/5): 7+ years building complex UIs with modern patterns (hooks, context, Suspense), state management solutions, and performance optimization.
-- **Node.js** (5/5): 7+ years developing scalable server applications, including REST APIs, real-time systems, and microservices.
-- **Express** (4/5): 7+ years building and optimizing web server applications with middleware patterns, route organization, and security best practices.
-- **Ruby on Rails** (4/5): 7+ years developing full-stack web applications with focus on MVC architecture, ActiveRecord, and testing.
-- **Next.js** (3/5): 4+ years building production applications with SSR, SSG, and hybrid rendering strategies.
+- <a id="react"></a>**React** (5/5): 7+ years building complex UIs with modern patterns (hooks, context, Suspense), state management solutions, and performance optimization. Used in [StudyMode](#studymode-id-studymode) and [Client Relations and Custom Solutions](#client-relations-and-custom-solutions).
+- <a id="nodejs"></a>**Node.js** (5/5): 7+ years developing scalable server applications, including REST APIs, real-time systems, and microservices. Applied in [Learning Engine API Product](#learning-engine-api-product) and [Brainstorm Press](#brainstorm-press-id-brainstorm-press).
+- <a id="express"></a>**Express** (4/5): 7+ years building and optimizing web server applications with middleware patterns, route organization, and security best practices. Used in [Learning Engine API Product](#learning-engine-api-product) and [Super Wire](#super-wire-id-super-wire).
+- <a id="ruby-on-rails"></a>**Ruby on Rails** (4/5): 7+ years developing full-stack web applications with focus on MVC architecture, ActiveRecord, and testing. Applied in [Analytics and Reporting Features](#analytics-and-reporting-features) at Memory Labs.
+- <a id="nextjs"></a>**Next.js** (3/5): 4+ years building production applications with SSR, SSG, and hybrid rendering strategies. Used in personal projects and internal tools.
 
 #### Databases
 
 Worked extensively with both SQL and NoSQL databases, with skills in data modeling, optimization, and scaling strategies.
 
-- **MongoDB** (4/5): 7+ years designing schemas, indexes, and query optimization for document-based workloads.
-- **PostgreSQL** (4/5): 7+ years working with relational data, complex queries, and performance tuning.
-- **Redis** (3/5): 5+ years implementing caching, session storage, job queues, and real-time features.
-- **DynamoDB** (3/5): 3+ years creating NoSQL data models optimized for AWS environments and scalable applications.
+- <a id="mongodb"></a>**MongoDB** (4/5): 7+ years designing schemas, indexes, and query optimization for document-based workloads. Implemented in [Learning Engine API Product](#learning-engine-api-product) and [E-commerce Platform](#e-commerce-platform---order-processing-system-redesign).
+- <a id="postgresql"></a>**PostgreSQL** (4/5): 7+ years working with relational data, complex queries, and performance tuning. Used in [Client Relations and Custom Solutions](#client-relations-and-custom-solutions) and [Healthcare Provider](#healthcare-provider---patient-data-integration-platform) projects.
+- <a id="redis"></a>**Redis** (3/5): 5+ years implementing caching, session storage, job queues, and real-time features. Applied in [Learning Engine API Product](#learning-engine-api-product) and [Fortune 100 Financial Institution](#fortune-100-financial-institution---fraud-detection-system) projects.
+- <a id="dynamodb"></a>**DynamoDB** (3/5): 3+ years creating NoSQL data models optimized for AWS environments and scalable applications. Used in [Learning Engine API Product](#learning-engine-api-product) and internal tools.
 
 #### Cloud Services & Infrastructure
 
 Strong cloud engineering background with focus on AWS services, containerization, and infrastructure as code.
 
-- **AWS** (4/5): 6+ years designing and implementing cloud architectures using EC2, S3, Lambda, API Gateway, DynamoDB, and other services.
-- **Docker** (4/5): 5+ years containerizing applications, creating custom images, and optimizing multi-stage builds.
-- **Terraform** (3/5): 3+ years defining infrastructure as code with emphasis on modular, maintainable configurations.
+- <a id="aws"></a>**AWS** (4/5): 6+ years designing and implementing cloud architectures using EC2, S3, Lambda, API Gateway, DynamoDB, and other services. Applied in [Infrastructure and Cost Optimization](#infrastructure-and-cost-optimization) and [Custom Client Infrastructure](#custom-client-infrastructure).
+- <a id="docker"></a>**Docker** (4/5): 5+ years containerizing applications, creating custom images, and optimizing multi-stage builds. Used in [Client Relations and Custom Solutions](#client-relations-and-custom-solutions) and [Infrastructure and Cost Optimization](#infrastructure-and-cost-optimization).
+- <a id="terraform"></a>**Terraform** (3/5): 3+ years defining infrastructure as code with emphasis on modular, maintainable configurations. Implemented in [Infrastructure and Cost Optimization](#infrastructure-and-cost-optimization) and [Custom Client Infrastructure](#custom-client-infrastructure).
 
 #### Testing & Development Tools
 
 Advocate for comprehensive testing strategies and efficient development workflows.
 
-- **Jest** (4/5): 5+ years creating unit and integration tests with mocking, snapshots, and coverage analysis.
-- **React Testing Library** (4/5): 4+ years implementing component tests focused on user behavior rather than implementation details.
-- **Cypress** (3/5): 3+ years building end-to-end tests for critical user journeys.
-- **Git** (5/5): 8+ years with advanced branching strategies, history manipulation, and workflow optimization.
-- **GitHub** (5/5): 8+ years leveraging GitHub Actions, code reviews, and project management features.
+- <a id="jest"></a>**Jest** (4/5): 5+ years creating unit and integration tests with mocking, snapshots, and coverage analysis. Used in [Learning Engine API Product](#learning-engine-api-product) and [Automated Testing Implementation](#automated-testing-implementation).
+- <a id="react-testing-library"></a>**React Testing Library** (4/5): 4+ years implementing component tests focused on user behavior rather than implementation details. Applied in [Developer Productivity Suite](#developer-productivity-suite) and [StudyMode](#studymode-id-studymode).
+- <a id="cypress"></a>**Cypress** (3/5): 3+ years building end-to-end tests for critical user journeys. Used in [Automated Testing Implementation](#automated-testing-implementation) and client projects.
+- <a id="git"></a>**Git** (5/5): 8+ years with advanced branching strategies, history manipulation, and workflow optimization. Applied across all [Professional Experience](#professional-experience) and [GitHub Projects](#github-projects).
+- <a id="github"></a>**GitHub** (5/5): 8+ years leveraging GitHub Actions, code reviews, and project management features. Used extensively in [Developer Productivity Suite](#developer-productivity-suite) and personal projects like [Time Is Money](#time-is-money-id-timeismoney).
 
 #### AI & Machine Learning
 
 Recent focus on integrating AI capabilities into applications and products.
 
-- **OpenAI GPT** (3/5): 2+ years working with GPT models for content generation, summarization, and conversational interfaces.
+- <a id="openai-gpt"></a>**OpenAI GPT** (3/5): 2+ years working with GPT models for content generation, summarization, and conversational interfaces. Applied in [Learning Engine API Product](#learning-engine-api-product), [Super Wire](#super-wire-id-super-wire), and [Infrastructure and Cost Optimization](#infrastructure-and-cost-optimization).
 
 #### Project Management
 
 Experienced with agile methodologies and modern project management tools.
 
-- **Agile/Scrum** (4/5): 6+ years implementing and refining agile processes for software development teams.
-- **Linear** (4/5): 3+ years using Linear for issue tracking, sprint planning, and roadmap management.
+- <a id="agile-scrum"></a>**Agile/Scrum** (4/5): 6+ years implementing and refining agile processes for software development teams. Implemented across [Professional Experience](#professional-experience) roles, particularly in [Team Management and Leadership](#team-management-and-leadership).
+- <a id="linear"></a>**Linear** (4/5): 3+ years using Linear for issue tracking, sprint planning, and roadmap management. Used in [Team Management and Leadership](#team-management-and-leadership) at Memory Labs.
 
 ## GitHub Projects
 
 This section documents my personal and open-source projects, including:
 - Key showcase projects with detailed descriptions
 - Technical challenges and solutions
-- Technologies leveraged in each project
+- Technologies leveraged in each project (see [Technical Skills](#technical-skills))
 - Impact metrics and user statistics
-- Learning outcomes
+- Learning outcomes (complementing my formal [Learning Journey](#learning-journey))
 - Open source contributions to other projects
+
+These projects demonstrate practical applications of the skills listed in my [Technical Skills](#technical-skills) section and often relate to my [Professional Experience](#professional-experience) and [Domain Knowledge](#domain-knowledge) areas.
 
 ### GitHub Project Integration
 
 This section features selected showcase projects from my GitHub portfolio, detailing the problems addressed, contributions made, technical challenges overcome, and key learnings. Each project is cross-referenced with its canonical entry in the project_index.yml file for comprehensive tracking and reference.
 
-#### Time Is Money (ID: timeismoney)
+#### Time Is Money (ID: timeismoney) {#time-is-money-id-timeismoney}
 **Type:** Personal Project
 **Status:** Active
 **Repo:** [timeismoney](https://github.com/phrazzld/timeismoney)
@@ -476,7 +480,7 @@ This section features selected showcase projects from my GitHub portfolio, detai
 - Created an automated testing suite with 120+ test cases that reduced regression issues by 87% during major feature deployments
 - Implemented analytics and metrics collection that comply with GDPR and CCPA without compromising user privacy
 
-#### Brainstorm Press (ID: brainstorm-press)
+#### Brainstorm Press (ID: brainstorm-press) {#brainstorm-press-id-brainstorm-press}
 **Type:** Personal Project
 **Status:** Completed
 **Repo:** [brainstorm-press-client](https://github.com/phrazzld/brainstorm-press-client)
@@ -499,28 +503,30 @@ This section features selected showcase projects from my GitHub portfolio, detai
 - Gained experience building full-stack applications with complex payment flows
 - Developed expertise in secure user authentication and content access management
 
-#### Thinktank (ID: thinktank)
+#### Thinktank (ID: thinktank) {#thinktank-id-thinktank}
 **Type:** Open Source
 **Status:** Active
 **Repo:** [thinktank](https://github.com/phrazzld/thinktank)
 
-**Problem:** Single AI models have limitations and biases that affect their problem-solving capabilities, but leveraging multiple models is complex and time-consuming.
+**Problem:** Single AI models have limitations and biases that affect their problem-solving capabilities, but leveraging multiple models is complex and time-consuming. Related to my work with [OpenAI GPT](#openai-gpt) in professional contexts.
 
 **Contribution:** Designed and built a CLI tool that enables "programmable cognition" by orchestrating multiple large language models to collaborate on complex problems.
 
-**Technologies:** Go, OpenAI API, Claude API, Gemini API, CLI
+**Technologies:** [Go](#go), OpenAI API, Claude API, Gemini API, CLI
 **Metrics:** 125 installations, 1 star
-**Impact:** Introduced a new paradigm for AI-assisted development by leveraging multiple models' strengths while mitigating individual limitations.
+**Impact:** Introduced a new paradigm for AI-assisted development by leveraging multiple models' strengths while mitigating individual limitations. Demonstrates skills in [AI & Machine Learning](#ai--machine-learning).
 
 ##### Key Challenges
 - Created a flexible architecture for parallel model querying and response synthesis
 - Designed an extensible template system for tailoring prompts to specific use cases
 - Implemented efficient token management to optimize context across multiple models
+- Applied similar architectural principles to those used in [Infrastructure and Cost Optimization](#infrastructure-and-cost-optimization)
 
 ##### Learning Outcomes
-- Developed expertise in Go for CLI application development
+- Developed expertise in [Go](#go) for CLI application development
 - Gained deep understanding of LLM capabilities, limitations, and prompt engineering
 - Mastered techniques for synthesizing and evaluating responses from multiple AI systems
+- Applied knowledge from [Education Technology](#education-technology) to improve information synthesis
 
 #### Bitcoin Price Tag (ID: bitcoin-price-tag)
 **Type:** Personal Project
@@ -1118,27 +1124,29 @@ This section organizes my expertise by industry and specialized domains:
 - Subject matter expertise
 - Business process knowledge
 
-### Fintech & Financial Services
+These domains are demonstrated throughout my [Professional Experience](#professional-experience) and [GitHub Projects](#github-projects), providing context for the application of my [Technical Skills](#technical-skills).
+
+### Fintech & Financial Services {#fintech--financial-services}
 **Exposure:** 6+ years of professional engagement
-**Context:** Work at Memory Labs with financial clients, personal projects, and independent research
+**Context:** Work at Memory Labs with financial clients, personal projects like [Brainstorm Press](#brainstorm-press-id-brainstorm-press), and independent research
 
 **Key Aspects:**
-- Deep understanding of cryptocurrency technology and financial applications
-- Knowledge of payment processing workflows and integration patterns
-- Familiarity with financial regulations and compliance requirements (KYC/AML)
-- Experience with financial data security and privacy considerations
-- Practical implementation of financial transaction systems with Bitcoin and Lightning Network
+- Deep understanding of cryptocurrency technology and financial applications, applied in [Bitcoin Price Tag](#bitcoin-price-tag-id-bitcoin-price-tag)
+- Knowledge of payment processing workflows and integration patterns, demonstrated in [Fortune 100 Financial Institution](#fortune-100-financial-institution---fraud-detection-system) project
+- Familiarity with financial regulations and compliance requirements (KYC/AML), implemented in client projects
+- Experience with financial data security and privacy considerations, shown in [Brainstorm Press](#brainstorm-press-id-brainstorm-press)
+- Practical implementation of financial transaction systems with Bitcoin and Lightning Network, as seen in open source contributions to [BlueWallet](#bluewallet) and [BTCPay Server](#btcpay-server)
 
-### Education Technology
+### Education Technology {#education-technology}
 **Exposure:** 4+ years of professional engagement
-**Context:** Memory Labs' learning engine products, StudyMode project, personalized education platforms
+**Context:** Memory Labs' [Learning Engine API Product](#learning-engine-api-product), [StudyMode](#studymode-id-studymode) project, personalized education platforms
 
 **Key Aspects:**
-- Understanding of learning science and effective educational methodologies
-- Experience designing and implementing adaptive learning systems
-- Knowledge of educational content delivery optimizations
-- Implementation of progress tracking and learning analytics
-- Familiarity with integration patterns for Learning Management Systems (LMS)
+- Understanding of learning science and effective educational methodologies, applied in [StudyMode](#studymode-id-studymode)
+- Experience designing and implementing adaptive learning systems, developed for [Learning Engine API Product](#learning-engine-api-product)
+- Knowledge of educational content delivery optimizations, demonstrated in [Learning Engine API Product](#learning-engine-api-product)
+- Implementation of progress tracking and learning analytics, as seen in [Analytics and Reporting Features](#analytics-and-reporting-features)
+- Familiarity with integration patterns for Learning Management Systems (LMS), shown in [Client Relations and Custom Solutions](#client-relations-and-custom-solutions)
 
 ### Cybersecurity & Compliance
 **Exposure:** 3+ years of professional engagement
