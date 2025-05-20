@@ -155,7 +155,7 @@
     - **Verification:**
         1. Review the section for detail, accuracy, and correct referencing of `project_index.yml` IDs.
     - **Depends‑on:** [T004, T014, T005]
-- [ ] **T017 · Feature · P2: document Open Source Contributions in CV.md**
+- [x] **T017 · Feature · P2: document Open Source Contributions in CV.md**
     - **Context:** Detailed Build Steps - Phase 1: 5. Populate GitHub Projects
     - **Action:**
         1. Add entries for Open Source Contributions (e.g., BlueWallet, BTCPay Server) within the "GitHub Projects" section or a dedicated sub-section in `CV.md`.

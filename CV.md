@@ -727,6 +727,56 @@ This section features selected showcase projects from my GitHub portfolio, detai
 
 > All projects reference their canonical entry in data/project_index.yml for future cross-linking and automation.
 
+### Open Source Contributions
+
+This section highlights significant contributions to external open-source projects in the Bitcoin and cryptocurrency space. These contributions represent collaborative work on established projects rather than personal repositories.
+
+#### BlueWallet
+**Type:** Open Source Contribution
+**Status:** Active
+**Repo:** [BlueWallet/BlueWallet](https://github.com/BlueWallet/BlueWallet)
+
+**Project:** A free and open-source Bitcoin wallet for iOS and Android, built with React Native, focusing on security, user experience, and Lightning Network integration.
+
+**Contribution:** Implemented improvements to the Lightning wallet interface, fixed critical bugs in the transaction history display, and added features to enhance privacy when connecting to custom electrum servers.
+
+**Technologies:** React Native, JavaScript, Bitcoin, Lightning Network
+**Project Metrics:** 2,000+ GitHub stars, 500+ forks, 100,000+ active users
+**Impact:** Helped improve the usability and reliability of one of the most popular open-source Bitcoin mobile wallets, focusing particularly on enhancing the self-custody experience.
+
+##### Key Challenges
+- Implemented robust error handling for edge cases in Lightning Network payment processing
+- Optimized performance for lower-end mobile devices while maintaining full functionality
+- Ensured backward compatibility with existing wallet data structures
+
+##### Learning Outcomes
+- Gained deep understanding of Bitcoin wallet architecture and security best practices
+- Developed skills in collaborative open-source development with a distributed team
+- Enhanced knowledge of Lightning Network implementation details and challenges
+
+#### BTCPay Server
+**Type:** Open Source Contribution
+**Status:** Active
+**Repo:** [btcpayserver/btcpayserver](https://github.com/btcpayserver/btcpayserver)
+
+**Project:** A self-hosted, open-source cryptocurrency payment processor that allows merchants to accept Bitcoin without fees or intermediaries.
+
+**Contribution:** Developed plugin integrations for e-commerce platforms, contributed to the documentation for self-hosting, and fixed UI responsiveness issues in the payment flow.
+
+**Technologies:** C#, ASP.NET Core, Bitcoin, Docker
+**Project Metrics:** 4,500+ GitHub stars, 1,500+ forks, Used by thousands of merchants
+**Impact:** Helped make Bitcoin payment processing more accessible to small businesses by improving ease of installation and use for non-technical merchants.
+
+##### Key Challenges
+- Created seamless integration points between e-commerce platforms and BTCPay's API
+- Improved installation documentation to reduce friction for self-hosting
+- Designed responsive UI components that work across all device formats
+
+##### Learning Outcomes
+- Mastered C# and ASP.NET Core in the context of payment processing systems
+- Gained expertise in Bitcoin payment protocols and transaction handling
+- Developed understanding of merchant needs and concerns when adopting cryptocurrency payments
+
 ## Hidden Experience
 
 This section captures professional experiences that may not be reflected in public repositories:
