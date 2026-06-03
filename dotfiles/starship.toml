@@ -7,26 +7,30 @@ command_timeout = 2000
 palette = "rose-pine"
 
 format = """
-$custom\
+[](foam)\
 $directory\
+[(fg:foam bg:overlay)](fg:foam bg:overlay)\
 $git_branch\
-$git_state\
 $git_status\
+$git_state\
+[](fg:overlay)\
 $fill\
+[](overlay)\
 $cmd_duration\
 $time\
+[](overlay)\
 $line_break\
+$custom\
 $python\
 $nodejs\
 $rust\
 $golang\
 $status\
 $character"""
-
 [palettes.rose-pine]
 base    = "#191724"
 surface = "#1f1d2e"
-overlay = "#403d52"
+overlay = "#26233a"
 muted   = "#6e6a86"
 subtle  = "#908caa"
 text    = "#e0def4"
@@ -36,31 +40,27 @@ rose    = "#ebbcba"
 pine    = "#31748f"
 foam    = "#9ccfd8"
 iris    = "#c4a7e7"
-
 [fill]
 symbol = " "
 style  = "overlay"
-
 [directory]
-style = "bold foam"
+style = "bg:foam fg:base"
 truncation_length = 3
 truncation_symbol = "…/"
 truncate_to_repo = false
 home_symbol = "~"
 read_only = "  "
 read_only_style = "love"
-format = "[$path]($style)[$read_only]($read_only_style) "
-
+format = "[ $path ]($style)[$read_only]($read_only_style)"
 [git_branch]
-symbol = " "
+symbol = " "
 format = "[$symbol$branch]($style) "
-style  = "iris"
+style  = "bg:overlay fg:iris"
 truncation_length = 32
 truncation_symbol = "…"
-
 [git_status]
 format = "([$all_status$ahead_behind]($style))"
-style  = "gold"
+style  = "bg:overlay fg:gold"
 conflicted = "[!](love)"
 ahead      = "[⇡${count}](foam) "
 behind     = "[⇣${count}](rose) "
@@ -74,18 +74,16 @@ stashed    = "[≡](iris) "
 
 [git_state]
 format = '\[[$state( $progress_current/$progress_total)]($style)\] '
-style  = "love"
-
+style  = "bg:overlay fg:love"
 [cmd_duration]
 min_time = 2000
-format = "[  $duration]($style)"
-style  = "gold"
-
+format = "[  $duration ]($style)"
+style  = "bg:overlay fg:gold"
 [time]
 disabled = false
-format = " [ $time]($style) "
+format = "[ $time ]($style)"
 time_format = "%H:%M"
-style = "muted"
+style = "bg:overlay fg:muted"
 
 [character]
 success_symbol = "[❯](bold iris)"
