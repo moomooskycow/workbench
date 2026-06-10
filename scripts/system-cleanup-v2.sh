@@ -222,8 +222,12 @@ cleanup_system_memory() {
 
 # === Main Function ===
 main() {
-    local remaining_args
-    remaining_args=$(parse_common_args "$@")
+    parse_common_args "$@"
+    if [[ ${#REMAINING_ARGS[@]} -gt 0 ]]; then
+        set -- "${REMAINING_ARGS[@]}"
+    else
+        set --
+    fi
     
     init_common "system-cleanup-v2"
     load_config

@@ -134,7 +134,7 @@ test_dry_runs() {
     local test_project=""
     
     # Find a project with package.json for testing
-    test_project=$(find "$dev_dir" -name "package.json" -print0 2>/dev/null | head -z -1 | xargs -0 dirname 2>/dev/null || echo "")
+    test_project=$(find "$dev_dir" -name "package.json" 2>/dev/null | head -n 1 | xargs dirname 2>/dev/null || echo "")
     
     if [[ -n "$test_project" && -d "$test_project" ]]; then
         log_info "Testing node-modules-rescue.sh with: $(basename "$test_project")"
@@ -222,8 +222,12 @@ EOF
 }
 
 main() {
-    local remaining_args
-    remaining_args=$(parse_common_args "$@")
+    parse_common_args "$@"
+    if [[ ${#REMAINING_ARGS[@]} -gt 0 ]]; then
+        set -- "${REMAINING_ARGS[@]}"
+    else
+        set --
+    fi
     
     init_common "setup-maintenance"
     

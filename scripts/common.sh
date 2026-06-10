@@ -11,10 +11,16 @@ LOCK_FILE="${HOME}/.system-maintenance/maintenance.lock"
 LOG_FILE=""
 DRY_RUN=false
 VERBOSE=false
+NO_CONFIRM=false
+NO_BACKUP=false
+REMAINING_ARGS=()
 
 # === Initialization ===
 init_common() {
     local script_name="$1"
+    
+    # Set script-specific lock file to allow subprocess validation
+    LOCK_FILE="${HOME}/.system-maintenance/${script_name}.lock"
     
     # Create required directories
     mkdir -p "${HOME}/.system-maintenance/"{logs,backups,state}
@@ -86,7 +92,11 @@ log() {
     local timestamp="$(date '+%Y-%m-%d %H:%M:%S')"
     local log_line="[$timestamp] [$level] $message"
     
-    echo "$log_line" | tee -a "$LOG_FILE"
+    if [[ -n "${LOG_FILE:-}" ]]; then
+        echo "$log_line" | tee -a "$LOG_FILE"
+    else
+        echo "$log_line"
+    fi
 }
 
 log_info() { log "INFO" "$1"; }
@@ -222,7 +232,7 @@ safe_remove() {
     
     # Create backup if enabled
     local backup_path=""
-    if [[ "$always_backup" == "true" ]]; then
+    if [[ "${NO_BACKUP:-false}" != "true" && "$always_backup" == "true" ]]; then
         backup_path=$(create_backup "$target" "$backup_name")
     fi
     
@@ -248,6 +258,10 @@ safe_remove() {
 confirm() {
     local message="$1"
     local require_confirmation="$(get_config 'safety.require_confirmation' 'true')"
+    
+    if [[ "${NO_CONFIRM:-false}" == "true" ]]; then
+        return 0
+    fi
     
     if [[ "$require_confirmation" != "true" ]]; then
         return 0
@@ -283,10 +297,12 @@ run_os_command() {
     fi
     
     # Replace placeholders in command
-    for arg in "${args[@]}"; do
-        command="${command/\{$1\}/$arg}"
-        shift
-    done
+    if [[ ${#args[@]} -gt 0 ]]; then
+        for arg in "${args[@]}"; do
+            command="${command/\{$1\}/$arg}"
+            shift
+        done
+    fi
     
     log_info "Executing: $command"
     
@@ -316,6 +332,7 @@ EOF
 
 # === Argument Parsing ===
 parse_common_args() {
+    REMAINING_ARGS=()
     while [[ $# -gt 0 ]]; do
         case $1 in
             --dry-run)
@@ -329,10 +346,12 @@ parse_common_args() {
             --no-backup)
                 # Override config to disable backups
                 log_warn "Backup creation disabled!"
+                NO_BACKUP=true
                 ;;
             --no-confirm)
                 # Override config to skip confirmations
                 log_warn "Interactive confirmations disabled!"
+                NO_CONFIRM=true
                 ;;
             --config)
                 CONFIG_FILE="$2"
@@ -343,15 +362,11 @@ parse_common_args() {
                 exit 0
                 ;;
             *)
-                # Unknown option, return to caller
-                break
+                REMAINING_ARGS+=("$1")
                 ;;
         esac
         shift
     done
-    
-    # Return remaining arguments
-    echo "$@"
 }
 
 # === Notification System ===

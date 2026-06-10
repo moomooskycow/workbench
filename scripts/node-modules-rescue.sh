@@ -302,8 +302,12 @@ rollback_rescue() {
 
 # === Main Function ===
 main() {
-    local remaining_args
-    remaining_args=$(parse_common_args "$@")
+    parse_common_args "$@"
+    if [[ ${#REMAINING_ARGS[@]} -gt 0 ]]; then
+        set -- "${REMAINING_ARGS[@]}"
+    else
+        set --
+    fi
     
     # Parse script-specific arguments
     local project_path=""
@@ -344,7 +348,7 @@ main() {
                 error "Usage: $0 [--project] <project-path> [--dry-run]"
             fi
             
-            analyze_project "$project_path"
+            analyze_project "$project_path" || true
             ;;
         rescue)
             if [[ -z "$project_path" ]]; then
