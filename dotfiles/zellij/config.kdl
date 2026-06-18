@@ -5,15 +5,19 @@
 // Arrow separators render correctly here, so use the richer bar styling.
 simplified_ui false
 pane_frames false
-default_layout "compact"
+default_layout "default"
 
 // --- Scrollback + session persistence ----------------------------------------
 // Agents (Claude Code, etc.) dump a lot; mobile networks drop.
 // session_serialization keeps panes+tabs+commands across zellij restarts.
 // viewport serialization + scrollback bytes keeps context after resurrection.
+// NOTE: the option is `serialize_pane_viewport`. The old name
+// `pane_viewport_serialization` was NOT a real zellij key, so it was silently
+// ignored and scrollback was never actually serialized — which is why a
+// resurrected session came back blank. Fixed 2026-06-18.
 scroll_buffer_size 100000
 session_serialization true
-pane_viewport_serialization true
+serialize_pane_viewport true
 scrollback_lines_to_serialize 10000
 
 // --- Clipboard ---------------------------------------------------------------
@@ -165,6 +169,18 @@ theme "rose-pine"
 // intercepts the chord before the focused pane (e.g. Claude/Codex) sees it.
 keybinds {
     shared_except "locked" {
+        // --- Anti-accidental-quit ---------------------------------------------
+        // Zellij's default `Ctrl q` => Quit is a foot-gun: one fat-finger ends
+        // the whole session (it becomes resurrectable, but live processes die
+        // and, pre-fix, scrollback was lost). Repurpose the reflex key to the
+        // SAFE action: Detach. The session keeps running in the background and
+        // every pane/process stays alive — reattach with `zellij attach <name>`.
+        // Intentional quit is now deliberate only:
+        //   • session-manager picker: `Alt o` (kill/exit a session from the list)
+        //   • shell: `zellij kill-session <name>` or `zellij delete-session <name>`
+        unbind "Ctrl q"
+        bind "Ctrl q" { Detach; }
+
         bind "Alt p" { SwitchSession name="personal"; }
         bind "Alt w" { SwitchSession name="work"; }
         // Open the session-manager picker directly — skips Ctrl-o w mode dance.
@@ -174,6 +190,27 @@ keybinds {
                 move_to_focused_tab true
             };
         }
+        // Alt t — fuzzy TAB switcher (room): a full vertical list, type-to-filter,
+        // Enter to jump, or press a tab's number. The fix for "many tabs, one line".
+        // (New sessions only — Zellij doesn't hot-reload keybinds. For the current
+        //  session use the `zw` shell alias, which does the same thing live.)
+        bind "Alt t" {
+            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/room.wasm" {
+                floating true
+                ignore_case true
+                quick_jump true
+            };
+        }
+        // Alt 1-9 — jump straight to a tab by index.
+        bind "Alt 1" { GoToTab 1; }
+        bind "Alt 2" { GoToTab 2; }
+        bind "Alt 3" { GoToTab 3; }
+        bind "Alt 4" { GoToTab 4; }
+        bind "Alt 5" { GoToTab 5; }
+        bind "Alt 6" { GoToTab 6; }
+        bind "Alt 7" { GoToTab 7; }
+        bind "Alt 8" { GoToTab 8; }
+        bind "Alt 9" { GoToTab 9; }
     }
 }
 

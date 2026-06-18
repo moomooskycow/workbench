@@ -345,6 +345,34 @@ alias zls='zellij ls'                       # list sessions (live + exited)
 alias zlsn='zellij ls -sn'                  # names only, ANSI-stripped (pipe-friendly)
 alias zd='zellij action detach'             # detach without chord
 
+# --- ZELLIJ TABS ---
+# `zw` — fuzzy, full-list tab switcher (room plugin); "zellij window", à la tmux.
+# Works in the CURRENT session, unlike the Alt+t keybind which only applies to
+# sessions started after a config change. Type to filter, Enter to jump, or press
+# a tab's number. (NOT named `tabs`: that's a real POSIX command that sets
+# terminal tab stops and spews escape codes when the alias isn't loaded.)
+alias zw='zellij action launch-or-focus-plugin --floating --configuration "ignore_case=true,quick_jump=true" "file:$HOME/.config/zellij/plugins/room.wasm"'
+
+# `zn <name>` — quick manual tab rename.
+zn() { zellij action rename-tab "${1:?usage: zn <tab name>}"; }
+
+# Auto-name UNNAMED tabs (still called "Tab #N") to the git-repo / dir basename
+# when a shell starts. Never clobbers tabs you've named yourself (aesthetic,
+# olympus, …) — it only fires when the focused tab still has its default name.
+if [[ -n "$ZELLIJ" ]]; then
+  _zj_autoname() {
+    # Interactive shells only: don't spend a zellij IPC (or rename a tab) from
+    # non-interactive script/tool shells that also source this file.
+    [[ -o interactive ]] || return 0
+    local cur name
+    cur="$(zellij action current-tab-info 2>/dev/null | awk -F': ' '/^name:/{print $2}')"
+    [[ "$cur" == "Tab #"* ]] || return 0
+    name="$(basename "$(git rev-parse --show-toplevel 2>/dev/null || echo "$PWD")")"
+    [[ -n "$name" ]] && zellij action rename-tab "$name" 2>/dev/null
+  }
+  _zj_autoname
+fi
+
 # Attach-or-create: session name defaults to cwd basename
 zat() { zellij attach -c "${1:-$(basename "$PWD")}"; }
 

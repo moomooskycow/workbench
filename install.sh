@@ -78,6 +78,25 @@ ln -sf "$CONFIG_SUBDIR/wezterm/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua" 
 echo -e "${YELLOW}Setting up Zellij configuration...${RESET}"
 mkdir -p "$HOME/.config/zellij"
 ln -sf "$CONFIG_SUBDIR/zellij/config.kdl" "$HOME/.config/zellij/config.kdl" && echo -e "${GREEN}✓ zellij config${RESET}" || echo -e "${RED}✗ zellij config${RESET}"
+mkdir -p "$HOME/.config/zellij/layouts" "$HOME/.config/zellij/plugins"
+ln -sf "$CONFIG_SUBDIR/zellij/layouts/default.kdl" "$HOME/.config/zellij/layouts/default.kdl" && echo -e "${GREEN}✓ zellij default layout${RESET}" || echo -e "${RED}✗ zellij default layout${RESET}"
+# Fetch zjstatus (status bar) + room (tab switcher) plugins if missing.
+# Pinned to tagged releases for reproducibility: `latest` can pull a future
+# build that breaks against the installed zellij (sessions are version-fragile).
+# zjstatus v0.23.0 tracks zellij-tile 0.44.x. Bump these when bumping zellij.
+# File-download (not URL-load in the layout) is the upstream-recommended path —
+# it sidesteps zellij#3479, where concurrent per-tab downloads corrupt the wasm.
+for _zp in \
+  "zjstatus.wasm|https://github.com/dj95/zjstatus/releases/download/v0.23.0/zjstatus.wasm" \
+  "zjframes.wasm|https://github.com/dj95/zjstatus/releases/download/v0.23.0/zjframes.wasm" \
+  "room.wasm|https://github.com/rvcas/room/releases/download/v1.2.1/room.wasm"; do
+  _zf="${_zp%%|*}"; _zu="${_zp##*|}"
+  if [ ! -f "$HOME/.config/zellij/plugins/$_zf" ]; then
+    curl -fsSL "$_zu" -o "$HOME/.config/zellij/plugins/$_zf" && echo -e "${GREEN}✓ zellij plugin: $_zf${RESET}" || echo -e "${RED}✗ zellij plugin: $_zf${RESET}"
+  else
+    echo -e "${GREEN}✓ zellij plugin present: $_zf${RESET}"
+  fi
+done
 
 # Create Alacritty configuration directory and symlink
 echo -e "${YELLOW}Setting up Alacritty configuration...${RESET}"

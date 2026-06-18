@@ -1,0 +1,59 @@
+// Default layout — Rosé Pine capsule bar via zjstatus.
+// Symlinked to ~/.config/zellij/layouts/default.kdl (see install.sh).
+// Plugins live in ~/.config/zellij/plugins/ (run install.sh or fetch manually).
+//
+// The capsule glyphs  /  are powerline half-circles (same ones the starship
+// prompt uses), so this only renders correctly with a Nerd Font. On the desktop
+// terminal that's already true; on Blink (mobile) set the font to a Nerd Font.
+layout {
+    default_tab_template {
+        // ── Rosé Pine capsule status bar (TOP). Move this pane below `children`
+        //    to put the bar at the bottom instead. ──
+        pane size=1 borderless=true {
+            plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+                format_left   "{mode}{tabs}"
+                format_right  "{datetime}"
+                format_space  "#[bg=#191724]"
+                border_enabled "false"
+
+                // Hide pane frames when a tab has a single pane; show them when
+                // split. No-op until `pane_frames true` is set in config.kdl.
+                hide_frame_for_single_pane "true"
+
+                // ── Mode capsule (left of the tabs). NORMAL is blank on purpose,
+                //    so a colored pill only appears when you switch into a mode. ──
+                mode_normal       ""
+                mode_locked       "#[fg=#eb6f92,bg=#191724]#[fg=#191724,bg=#eb6f92,bold] LOCKED #[fg=#eb6f92,bg=#191724] "
+                mode_pane         "#[fg=#c4a7e7,bg=#191724]#[fg=#191724,bg=#c4a7e7,bold] PANE #[fg=#c4a7e7,bg=#191724] "
+                mode_tab          "#[fg=#9ccfd8,bg=#191724]#[fg=#191724,bg=#9ccfd8,bold] TAB #[fg=#9ccfd8,bg=#191724] "
+                mode_resize       "#[fg=#f6c177,bg=#191724]#[fg=#191724,bg=#f6c177,bold] RESIZE #[fg=#f6c177,bg=#191724] "
+                mode_move         "#[fg=#f6c177,bg=#191724]#[fg=#191724,bg=#f6c177,bold] MOVE #[fg=#f6c177,bg=#191724] "
+                mode_scroll       "#[fg=#ebbcba,bg=#191724]#[fg=#191724,bg=#ebbcba,bold] SCROLL #[fg=#ebbcba,bg=#191724] "
+                mode_enter_search "#[fg=#ebbcba,bg=#191724]#[fg=#191724,bg=#ebbcba,bold] SEARCH #[fg=#ebbcba,bg=#191724] "
+                mode_search       "#[fg=#ebbcba,bg=#191724]#[fg=#191724,bg=#ebbcba,bold] SEARCH #[fg=#ebbcba,bg=#191724] "
+                mode_session      "#[fg=#31748f,bg=#191724]#[fg=#e0def4,bg=#31748f,bold] SESSION #[fg=#31748f,bg=#191724] "
+                mode_rename_tab   "#[fg=#9ccfd8,bg=#191724]#[fg=#191724,bg=#9ccfd8,bold] RENAME #[fg=#9ccfd8,bg=#191724] "
+                mode_rename_pane  "#[fg=#c4a7e7,bg=#191724]#[fg=#191724,bg=#c4a7e7,bold] RENAME #[fg=#c4a7e7,bg=#191724] "
+
+                // ── Tabs as capsules:  index · name  ──
+                tab_normal            "#[fg=#26233a,bg=#191724]#[fg=#908caa,bg=#26233a] {index} {name} #[fg=#26233a,bg=#191724] "
+                tab_active            "#[fg=#ebbcba,bg=#191724]#[fg=#191724,bg=#ebbcba,bold] {index} {name} #[fg=#ebbcba,bg=#191724] "
+                tab_normal_fullscreen "#[fg=#26233a,bg=#191724]#[fg=#908caa,bg=#26233a] {index} {name} {fullscreen_indicator}#[fg=#26233a,bg=#191724] "
+                tab_active_fullscreen "#[fg=#ebbcba,bg=#191724]#[fg=#191724,bg=#ebbcba,bold] {index} {name} {fullscreen_indicator}#[fg=#ebbcba,bg=#191724] "
+                tab_normal_sync       "#[fg=#26233a,bg=#191724]#[fg=#908caa,bg=#26233a] {index} {name} {sync_indicator}#[fg=#26233a,bg=#191724] "
+                tab_active_sync       "#[fg=#ebbcba,bg=#191724]#[fg=#191724,bg=#ebbcba,bold] {index} {name} {sync_indicator}#[fg=#ebbcba,bg=#191724] "
+                tab_fullscreen_indicator "□ "
+                tab_sync_indicator       " "
+                tab_floating_indicator   "󰉈 "
+
+                // ── Right side: clock. (Git intentionally omitted — starship already
+                //    shows the branch accurately per-directory; zjstatus reads the
+                //    wrong cwd for git.) ──
+                datetime          "#[fg=#908caa,bg=#191724] {format} "
+                datetime_format   "%a %d %b · %H:%M"
+                datetime_timezone "America/Chicago"
+            }
+        }
+        children
+    }
+}
