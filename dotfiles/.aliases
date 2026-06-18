@@ -15,6 +15,7 @@ alias cw='clauditor --watch'
 alias e='node $DEVELOPMENT/elevator/dist/cli.js'
 alias cub='ccusage blocks --live'
 alias cx='codex --search --dangerously-bypass-approvals-and-sandbox'
+alias cxg='codex --profile glm --search --dangerously-bypass-approvals-and-sandbox'  # GLM 5.2 via OpenRouter (e.g. when out of GPT)
 alias g='gemini'
 alias o='opencode'
 
