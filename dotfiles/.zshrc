@@ -111,6 +111,12 @@ fi
 # --- PROJECT-SPECIFIC EXPORTS ---
 export WORKBENCH_DIR="/Users/phaedrus/Development/workbench"
 
+# QMD (daybook semantic search) native-runtime pin. better-sqlite3 is compiled
+# for Node 22 (NODE_MODULE_VERSION 127); the qmd launcher otherwise auto-selects
+# a newer mise/homebrew Node (24/26 → modules 137/147) that cannot dlopen it.
+# The `22` symlink tracks the latest 22.x, which is ABI-stable at 127.
+export QMD_NODE="$HOME/.local/share/mise/installs/node/22/bin/node"
+
 # opencode
 export PATH=/Users/phaedrus/.opencode/bin:$PATH
 
