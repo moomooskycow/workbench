@@ -36,13 +36,13 @@ fi
 source $HOME/.env                    # Environment variables and PATH
 [ -f $HOME/.fun ] && source $HOME/.fun  # Utility functions
 source $HOME/.aliases               # Command aliases and git helpers
-source $HOME/.secrets               # Machine-specific secrets
+[ -f $HOME/.secrets ] && source $HOME/.secrets               # Machine-specific secrets
 
 # --- HISTORY CONFIGURATION ---
 # Enhanced history settings for better command recall
 HISTFILE=~/.zsh_history
-HISTSIZE=1024                      # Commands in memory
-SAVEHIST=1024                      # Commands saved to file
+HISTSIZE=100000                    # Commands in memory
+SAVEHIST=100000                    # Commands saved to file
 setopt append_history               # Append to history file
 setopt hist_ignore_all_dups        # Remove older duplicate entries
 unsetopt hist_ignore_space          # Don't ignore commands starting with space
@@ -51,6 +51,8 @@ setopt hist_verify                  # Show command before executing from history
 setopt inc_append_history           # Add commands immediately
 setopt share_history                # Share history between sessions
 setopt bang_hist                    # Enable ! history expansion
+setopt extended_history             # Timestamp each history entry
+setopt hist_find_no_dups            # Skip dups when searching history
 
 # --- EXTERNAL TOOL INTEGRATIONS ---
 # Initialize various development and productivity tools
@@ -138,7 +140,14 @@ typeset -U path
 # re-printing on subshells or `exec zsh`.
 if [[ -o interactive && -z "$QUOTE_SHOWN" ]]; then
   export QUOTE_SHOWN=1
-  "$HOME/Documents/daybook/scripts/quote-session.sh" 2>/dev/null
+  # Hard timeout so a misbehaving quote path (a stalled tool, or an
+  # iCloud-evicted quotes dir) can never block shell startup. Falls back to a
+  # direct call if `timeout` is unavailable.
+  if (( $+commands[timeout] )); then
+    timeout 2 "$HOME/Documents/daybook/scripts/quote-session.sh" 2>/dev/null || true
+  else
+    "$HOME/Documents/daybook/scripts/quote-session.sh" 2>/dev/null || true
+  fi
 fi
 
 # bun
@@ -176,3 +185,8 @@ export PATH="$HOME/.grok/bin:$PATH"
   source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && \
   source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# --- FINAL PATH DEDUP ---
+# Installer-appended PATH lines (Antigravity, grok, bun, deno, opencode) land
+# after the earlier dedup near line 129, so collapse duplicates one last time.
+typeset -U path
