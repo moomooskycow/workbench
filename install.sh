@@ -83,7 +83,7 @@ ln -sf "$CONFIG_SUBDIR/zellij/layouts/default.kdl" "$HOME/.config/zellij/layouts
 # Fetch zjstatus (status bar) + room (tab switcher) plugins if missing.
 # Pinned to tagged releases for reproducibility: `latest` can pull a future
 # build that breaks against the installed zellij (sessions are version-fragile).
-# zjstatus v0.23.0 tracks zellij-tile 0.44.x. Bump these when bumping zellij.
+# zjstatus v0.23.0 tracks zellij-tile 0.44.x (tested on 0.44.3). Bump when bumping zellij.
 # File-download (not URL-load in the layout) is the upstream-recommended path —
 # it sidesteps zellij#3479, where concurrent per-tab downloads corrupt the wasm.
 for _zp in \
@@ -97,6 +97,25 @@ for _zp in \
     echo -e "${GREEN}✓ zellij plugin present: $_zf${RESET}"
   fi
 done
+
+# Seed the zjstatus plugin permission so a fresh session renders the bar
+# immediately. Without it, zjstatus shows an (invisible, un-acceptable)
+# "Allow? (y/n)" prompt inside the 1-row status bar — it can't be granted
+# there, so the bar stays blank until you grant it some other way.
+echo -e "${YELLOW}Seeding zjstatus permission grant...${RESET}"
+case "$(uname -s)" in
+  Darwin) ZJ_CACHE="$HOME/Library/Caches/org.Zellij-Contributors.Zellij" ;;
+  *)      ZJ_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/zellij" ;;
+esac
+mkdir -p "$ZJ_CACHE"
+ZJ_PERMS="$ZJ_CACHE/permissions.kdl"
+ZJ_PLUGIN="$HOME/.config/zellij/plugins/zjstatus.wasm"
+if ! grep -qF "$ZJ_PLUGIN" "$ZJ_PERMS" 2>/dev/null; then
+  printf '"%s" {\n    ReadApplicationState\n    ChangeApplicationState\n    RunCommands\n}\n' "$ZJ_PLUGIN" >> "$ZJ_PERMS"
+  echo -e "${GREEN}✓ zjstatus permission seeded${RESET}"
+else
+  echo -e "${GREEN}✓ zjstatus permission already granted${RESET}"
+fi
 
 # Create Alacritty configuration directory and symlink
 echo -e "${YELLOW}Setting up Alacritty configuration...${RESET}"
@@ -127,29 +146,9 @@ git config core.hooksPath .githooks
 chmod +x .githooks/*
 echo -e "${GREEN}✓ Git hooks${RESET}"
 
-# Set WORKBENCH_DIR in shell configuration
-echo -e "${YELLOW}Setting up WORKBENCH_DIR environment variable...${RESET}"
-if [ -f "$HOME/.zshrc" ]; then
-  # Check if WORKBENCH_DIR is already in .zshrc
-  if ! grep -q "export WORKBENCH_DIR=" "$HOME/.zshrc"; then
-    echo -e "\n# Workbench directory path" >> "$HOME/.zshrc"
-    echo "export WORKBENCH_DIR=\"$WORKBENCH_DIR\"" >> "$HOME/.zshrc"
-    echo -e "${GREEN}✓ Added WORKBENCH_DIR to .zshrc${RESET}"
-  else
-    echo -e "${YELLOW}WORKBENCH_DIR already defined in .zshrc${RESET}"
-  fi
-fi
-
-if [ -f "$HOME/.bashrc" ]; then
-  # Check if WORKBENCH_DIR is already in .bashrc
-  if ! grep -q "export WORKBENCH_DIR=" "$HOME/.bashrc"; then
-    echo -e "\n# Workbench directory path" >> "$HOME/.bashrc"
-    echo "export WORKBENCH_DIR=\"$WORKBENCH_DIR\"" >> "$HOME/.bashrc"
-    echo -e "${GREEN}✓ Added WORKBENCH_DIR to .bashrc${RESET}"
-  else
-    echo -e "${YELLOW}WORKBENCH_DIR already defined in .bashrc${RESET}"
-  fi
-fi
+# WORKBENCH_DIR is exported directly in dotfiles/.zshrc (symlinked to ~/.zshrc),
+# so there's nothing to append here. The old append-to-~/.zshrc block was a
+# footgun: ~/.zshrc is a symlink to the tracked dotfile, so it wrote into the repo.
 
 # Reload shell
 echo -e "${GREEN}Installation complete!${RESET}"
