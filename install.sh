@@ -86,15 +86,22 @@ ln -sf "$CONFIG_SUBDIR/zellij/layouts/default.kdl" "$HOME/.config/zellij/layouts
 # zjstatus v0.23.0 tracks zellij-tile 0.44.x (tested on 0.44.3). Bump when bumping zellij.
 # File-download (not URL-load in the layout) is the upstream-recommended path —
 # it sidesteps zellij#3479, where concurrent per-tab downloads corrupt the wasm.
+# file|url|sha256 — a git tag is MUTABLE (can be re-pointed to a new binary);
+# only the content hash is tamper-evident. Download to a temp path, verify the
+# checksum, and ONLY THEN move into place, so a tampered/truncated file never
+# lands. Re-capture hashes when bumping versions: shasum -a 256 *.wasm
 for _zp in \
-  "zjstatus.wasm|https://github.com/dj95/zjstatus/releases/download/v0.23.0/zjstatus.wasm" \
-  "zjframes.wasm|https://github.com/dj95/zjstatus/releases/download/v0.23.0/zjframes.wasm" \
-  "room.wasm|https://github.com/rvcas/room/releases/download/v1.2.1/room.wasm"; do
-  _zf="${_zp%%|*}"; _zu="${_zp##*|}"
-  if [ ! -f "$HOME/.config/zellij/plugins/$_zf" ]; then
-    curl -fsSL "$_zu" -o "$HOME/.config/zellij/plugins/$_zf" && echo -e "${GREEN}✓ zellij plugin: $_zf${RESET}" || echo -e "${RED}✗ zellij plugin: $_zf${RESET}"
+  "zjstatus.wasm|https://github.com/dj95/zjstatus/releases/download/v0.23.0/zjstatus.wasm|e006901223524239db618021e4cc5d17f82dc4bfae5432895ba41f03f13861ff" \
+  "zjframes.wasm|https://github.com/dj95/zjstatus/releases/download/v0.23.0/zjframes.wasm|8d89e831bde195363faa5a810b04460a421006d37c9886ce9e255130fa93a085" \
+  "room.wasm|https://github.com/rvcas/room/releases/download/v1.2.1/room.wasm|90b483a40b762468fb75862160587a05fbedcd5c13adcb3ed231f01bf9c072d1"; do
+  _zf="${_zp%%|*}"; _rest="${_zp#*|}"; _zu="${_rest%%|*}"; _zh="${_rest##*|}"
+  _dst="$HOME/.config/zellij/plugins/$_zf"
+  if [ -f "$_dst" ]; then echo -e "${GREEN}✓ zellij plugin present: $_zf${RESET}"; continue; fi
+  _tmp="$(mktemp)"
+  if curl -fsSL "$_zu" -o "$_tmp" && echo "$_zh  $_tmp" | shasum -a 256 -c - >/dev/null 2>&1; then
+    mv "$_tmp" "$_dst" && echo -e "${GREEN}✓ zellij plugin verified: $_zf${RESET}"
   else
-    echo -e "${GREEN}✓ zellij plugin present: $_zf${RESET}"
+    rm -f "$_tmp"; echo -e "${RED}✗ zellij plugin FAILED download/checksum: $_zf${RESET}"
   fi
 done
 
@@ -140,10 +147,12 @@ backup_if_exists() {
   fi
 }
 
-# Setup Git hooks
+# Setup Git hooks + the secret scanner the pre-commit hook invokes.
 echo -e "${YELLOW}Setting up Git hooks...${RESET}"
 git config core.hooksPath .githooks
-chmod +x .githooks/*
+chmod +x .githooks/* 2>/dev/null
+# gitleaks backs the pre-commit secret scan; without it the hook no-ops (warns).
+command -v gitleaks >/dev/null 2>&1 || { command -v brew >/dev/null 2>&1 && brew install gitleaks; }
 echo -e "${GREEN}✓ Git hooks${RESET}"
 
 # WORKBENCH_DIR is exported directly in dotfiles/.zshrc (symlinked to ~/.zshrc),

@@ -1,0 +1,24 @@
+#!/bin/sh
+# Block commits that introduce secrets. Active because install.sh sets
+# `git config core.hooksPath .githooks`. This is a convenience gate — it's
+# bypassable with `git commit --no-verify`, and AI agents commit constantly,
+# so GitHub Push Protection (server-side, unbypassable on a normal push) is
+# the real backstop. Layer, don't rely on this alone.
+#
+# Requires gitleaks: `brew install gitleaks` (install.sh does this for you).
+
+if command -v gitleaks >/dev/null 2>&1; then
+  if ! gitleaks git --staged --redact --no-banner 2>/dev/null; then
+    # older gitleaks used `gitleaks protect --staged`; fall back if needed
+    if ! gitleaks protect --staged --redact --no-banner 2>/dev/null; then
+      echo ""
+      echo "✗ gitleaks: a secret was detected in staged changes — commit blocked."
+      echo "  Review the finding above. If it's a false positive, add a narrow"
+      echo "  rule to .gitleaksignore (never disable the gate to get green)."
+      exit 1
+    fi
+  fi
+else
+  echo "⚠ gitleaks not installed — local secret scan SKIPPED."
+  echo "  Install it: brew install gitleaks   (push protection still backstops)"
+fi

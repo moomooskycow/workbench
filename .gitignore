@@ -1,9 +1,23 @@
-# Dotfiles (force include)
-!*/.zshrc
-!*/.aliases
-!*/.env
-!*/.fun
-!*/.tmux.conf
+# --- Secrets: DENY BY DEFAULT ---
+# Never auto-track env/key files anywhere. A repo-wide `!*/.env` force-include
+# used to live here and force-tracked a nested .env, leaking a token. The
+# managed dotfiles below are re-included by EXACT path only — no `*/` globs.
+.env
+.env.*
+**/.env
+**/.env.*
+*.pem
+*.key
+*_rsa
+*_ed25519
+!**/.env.example
+
+# Managed dotfiles (force-include the specific tracked copies, rooted paths)
+!/dotfiles/.zshrc
+!/dotfiles/.aliases
+!/dotfiles/.env
+!/dotfiles/.fun
+!/dotfiles/.tmux.conf
 
 # Development tools
 .tool-versions
