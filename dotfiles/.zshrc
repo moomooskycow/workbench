@@ -107,7 +107,7 @@ esac
 
 # --- PROMPT INITIALIZATION ---
 # Starship - modern cross-shell prompt
-if command -v starship &> /dev/null; then
+if [[ "$TERM" != "dumb" ]] && command -v starship &> /dev/null; then
   eval "$(starship init zsh)"
 fi
 
