@@ -219,18 +219,13 @@ gstreak() {
   echo "────────────────────"
 }
 
-# Todo.txt (topydo) aliases
-alias t='topydo -t ~/Documents/daybook/todo.txt -d ~/Documents/daybook/done.txt'
-alias ta='t add'
-alias tl='t ls'
-alias td='t do'
-alias te='t edit'
-alias ttoday='t ls due:today'
-alias toverdue='t ls "due:<today"'
-alias thabits='t ls +habits'
-alias tnext='t ls -n 10'
-alias tstreak='~/Documents/daybook/scripts/habit-streak.sh'
-alias tstreaks='~/Documents/daybook/scripts/habit-streaks.sh'
+# Todoist CLI — replaced topydo/todo.txt 2026-06-25.
+# `td` now resolves to the Todoist CLI binary (~/.npm-global/bin/td).
+alias ta='td add'           # natural-language quick-add
+alias tl='td task list'
+alias tt='td today'         # due today + overdue
+alias ti='td inbox'
+alias tu='td upcoming'
 alias q='~/Documents/daybook/scripts/quote-session.sh'
 
 # General shortcuts
