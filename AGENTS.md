@@ -31,3 +31,8 @@ Pass a targeted natural language query describing what you're trying to accompli
 → Use classical search tools afterward if needed to fill gaps.
 
 CANNOT BE CALLED IN PARALLEL - one invocation at a time.
+
+## Repo Gate
+
+Run `scripts/check.sh` before committing. It is the host-agnostic gate used by
+GitHub Actions and validates shell syntax plus ShellCheck error-level findings.

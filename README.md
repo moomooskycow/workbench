@@ -10,6 +10,18 @@ Personal configuration repository for development environment setup, terminal pr
 - Utility scripts for local development workflows
 - Git hooks and automated quality checks
 
+## Quality Gate
+
+Run the repo-owned gate before opening or merging a change:
+
+```bash
+scripts/check.sh
+```
+
+The gate validates shell syntax for the tracked shell entrypoints and runs
+ShellCheck at error severity. GitHub Actions only installs ShellCheck and calls
+this same script.
+
 ## Installation
 
 ```bash
