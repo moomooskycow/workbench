@@ -1,0 +1,199 @@
+#!/bin/bash
+
+# Synchronize the non-native Codex TUI theme with macOS appearance.
+# Claude Code, Herdr, and Ghostty have native automatic appearance settings;
+# this helper only owns Codex's custom TextMate theme selection and links.
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKBENCH_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+THEME_SOURCE_DIR="$WORKBENCH_DIR/dotfiles/codex/themes"
+CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
+CODEX_CONFIG="$CODEX_HOME/config.toml"
+
+dry_run=false
+requested_mode=auto
+
+usage() {
+    cat <<'EOF'
+Usage: sync-system-theme [--dry-run] [--mode auto|light|dark]
+
+Selects the tracked Rose Pine Codex TUI theme for the current macOS
+appearance, installs safe symlinks under ~/.codex/themes, and updates only
+[tui].theme in ~/.codex/config.toml.
+EOF
+}
+
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        --dry-run)
+            dry_run=true
+            shift
+            ;;
+        --mode)
+            [ "$#" -ge 2 ] || { echo "error: --mode requires a value" >&2; exit 2; }
+            requested_mode="$2"
+            shift 2
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        *)
+            echo "error: unknown argument: $1" >&2
+            usage >&2
+            exit 2
+            ;;
+    esac
+done
+
+case "$requested_mode" in
+    auto|light|dark) ;;
+    *)
+        echo "error: mode must be auto, light, or dark" >&2
+        exit 2
+        ;;
+esac
+
+mode="$requested_mode"
+if [ "$mode" = "auto" ]; then
+    if ! command -v defaults >/dev/null 2>&1; then
+        echo "error: macOS defaults command is required for --mode auto" >&2
+        exit 1
+    fi
+    appearance="$(defaults read -g AppleInterfaceStyle 2>/dev/null || true)"
+    if [ "$appearance" = "Dark" ]; then
+        mode=dark
+    else
+        mode=light
+    fi
+fi
+
+case "$mode" in
+    light)
+        theme_name="rose-pine-dawn"
+        theme_file="rose-pine-dawn.tmTheme"
+        ;;
+    dark)
+        theme_name="rose-pine"
+        theme_file="rose-pine.tmTheme"
+        ;;
+esac
+
+if [ ! -f "$CODEX_CONFIG" ]; then
+    echo "error: Codex config not found: $CODEX_CONFIG" >&2
+    exit 1
+fi
+
+if [ ! -f "$THEME_SOURCE_DIR/$theme_file" ]; then
+    echo "error: tracked theme not found: $THEME_SOURCE_DIR/$theme_file" >&2
+    exit 1
+fi
+
+theme_dest_dir="$CODEX_HOME/themes"
+theme_dest="$theme_dest_dir/$theme_file"
+
+link_theme() {
+    local source="$1"
+    local destination="$2"
+
+    if [ -L "$destination" ]; then
+        if [ "$(readlink "$destination")" = "$source" ]; then
+            printf 'theme-link: unchanged %s\n' "$destination"
+        elif [ "$dry_run" = true ]; then
+            printf 'theme-link: would replace symlink %s\n' "$destination"
+        else
+            rm "$destination"
+            ln -s "$source" "$destination"
+            printf 'theme-link: repaired %s -> %s\n' "$destination" "$source"
+        fi
+    elif [ -e "$destination" ]; then
+        echo "error: refusing to replace an existing Codex theme file: $destination" >&2
+        return 1
+    elif [ "$dry_run" = true ]; then
+        printf 'theme-link: would create %s -> %s\n' "$destination" "$source"
+    else
+        ln -s "$source" "$destination"
+        printf 'theme-link: created %s -> %s\n' "$destination" "$source"
+    fi
+}
+
+current_tui_theme() {
+    awk '
+        /^\[/ { in_tui = ($0 == "[tui]") }
+        in_tui && $0 ~ /^[[:space:]]*theme[[:space:]]*=/ {
+            line = $0
+            sub(/^[[:space:]]*theme[[:space:]]*=[[:space:]]*"/, "", line)
+            sub(/".*$/, "", line)
+            print line
+            exit
+        }
+    ' "$CODEX_CONFIG"
+}
+
+update_codex_config() {
+    local current
+    current="$(current_tui_theme || true)"
+    if [ "$current" = "$theme_name" ]; then
+        printf 'codex-config: unchanged [tui].theme = "%s"\n' "$theme_name"
+        return 0
+    fi
+
+    if [ "$dry_run" = true ]; then
+        printf 'codex-config: would set [tui].theme = "%s" (was "%s")\n' "$theme_name" "${current:-unset}"
+        return 0
+    fi
+
+    local temporary file_mode
+    temporary="$(mktemp "$CODEX_CONFIG.theme.XXXXXX")"
+    file_mode="$(stat -f '%Lp' "$CODEX_CONFIG" 2>/dev/null || stat -c '%a' "$CODEX_CONFIG")"
+    awk -v value="$theme_name" '
+        BEGIN { in_tui = 0; saw_tui = 0; wrote_theme = 0 }
+        /^\[/ {
+            if (in_tui && !wrote_theme) {
+                print "theme = \"" value "\""
+                wrote_theme = 1
+            }
+            in_tui = ($0 == "[tui]")
+            if (in_tui) saw_tui = 1
+        }
+        {
+            if (in_tui && $0 ~ /^[[:space:]]*theme[[:space:]]*=/) {
+                print "theme = \"" value "\""
+                wrote_theme = 1
+                next
+            }
+            print
+        }
+        END {
+            if (in_tui && !wrote_theme) {
+                print "theme = \"" value "\""
+                wrote_theme = 1
+            }
+            if (!saw_tui) {
+                print ""
+                print "[tui]"
+                print "theme = \"" value "\""
+            }
+        }
+    ' "$CODEX_CONFIG" > "$temporary"
+    chmod "$file_mode" "$temporary"
+    mv "$temporary" "$CODEX_CONFIG"
+    printf 'codex-config: set [tui].theme = "%s"\n' "$theme_name"
+}
+
+if [ "$dry_run" = false ]; then
+    mkdir -p "$theme_dest_dir"
+fi
+link_theme "$THEME_SOURCE_DIR/$theme_file" "$theme_dest"
+
+# Keep both tracked themes available to Codex. The selected theme changes with
+# the host; the inactive theme is still useful for manual previewing.
+for other_theme in rose-pine.tmTheme rose-pine-dawn.tmTheme; do
+    [ "$other_theme" = "$theme_file" ] && continue
+    link_theme "$THEME_SOURCE_DIR/$other_theme" "$theme_dest_dir/$other_theme"
+done
+
+update_codex_config
+printf 'system-theme: %s (Codex %s)\n' "$mode" "$theme_name"

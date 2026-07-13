@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.phaedrus.workbench.theme-sync</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>__WORKBENCH_DIR__/bin/sync-system-theme</string>
+		<string>--mode</string>
+		<string>auto</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StartInterval</key>
+	<integer>60</integer>
+	<key>ProcessType</key>
+	<string>Background</string>
+	<key>StandardOutPath</key>
+	<string>__HOME__/.config/workbench/theme-sync.log</string>
+	<key>StandardErrorPath</key>
+	<string>__HOME__/.config/workbench/theme-sync.log</string>
+</dict>
+</plist>

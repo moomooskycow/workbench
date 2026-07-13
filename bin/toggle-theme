@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Theme Toggle Script
-# Switches between Rose Pine light and dark themes for both Alacritty and tmux
+# Switches between Rose Pine light and dark themes for Alacritty and tmux.
+# Claude Code and Herdr follow the system appearance automatically.
 # Usage: toggle-theme
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -44,15 +45,9 @@ if [[ "$is_light" == "true" ]]; then
     if "$ALACRITTY_THEME_SCRIPT" rose_pine; then
         echo "✓ Switched to dark mode (Rose Pine)"
     fi
-    
-    # Claude Code theme change removed - not supported by API
-    # claude config set theme dark
 else
     echo "Current theme is dark ($current_theme), switching to light mode..."
     if "$ALACRITTY_THEME_SCRIPT" rose_pine_dawn; then
         echo "✓ Switched to light mode (Rose Pine Dawn)"
     fi
-    
-    # Claude Code theme change removed - not supported by API
-    # claude config set theme light
 fi

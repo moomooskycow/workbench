@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Light Mode Script
-# Switches both Alacritty and tmux to Rose Pine Dawn light theme
+# Switches Alacritty and tmux to Rose Pine Dawn light theme.
+# Claude Code and Herdr follow the system appearance automatically.
 # Usage: light-mode
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -20,12 +21,4 @@ if [[ $? -eq 0 ]]; then
 else
     echo "✗ Failed to switch to light mode"
     exit 1
-fi
-
-# Update Claude config to match
-claude config set theme light
-if [[ $? -eq 0 ]]; then
-    echo "✓ Updated Claude theme to light"
-else
-    echo "✗ Failed to update Claude theme"
 fi

@@ -130,6 +130,33 @@ fi
 echo -e "${YELLOW}Setting up Herdr configuration...${RESET}"
 mkdir -p "$HOME/.config/herdr"
 ln -sf "$CONFIG_SUBDIR/herdr/config.toml" "$HOME/.config/herdr/config.toml" && echo -e "${GREEN}✓ herdr config${RESET}" || echo -e "${RED}✗ herdr config${RESET}"
+
+# Setup Codex Rose Pine themes and host appearance synchronization. The helper
+# only patches [tui].theme and refuses to replace unrelated Codex files.
+echo -e "${YELLOW}Setting up Codex theme synchronization...${RESET}"
+if [ -f "$HOME/.codex/config.toml" ] && [ -x "$WORKBENCH_DIR/bin/sync-system-theme" ]; then
+  "$WORKBENCH_DIR/bin/sync-system-theme" --mode auto && echo -e "${GREEN}✓ Codex theme sync${RESET}" || echo -e "${RED}✗ Codex theme sync${RESET}"
+else
+  echo -e "${YELLOW}Codex config not found, skipping live Codex theme sync${RESET}"
+fi
+
+# Keep Codex's non-native TUI theme selection aligned after a system appearance
+# change. Claude Code, Herdr, and Ghostty have their own native auto modes.
+if [ "$(uname -s)" = "Darwin" ]; then
+  THEME_AGENT_LABEL="com.phaedrus.workbench.theme-sync"
+  THEME_AGENT_PATH="$HOME/Library/LaunchAgents/$THEME_AGENT_LABEL.plist"
+  THEME_AGENT_TEMPLATE="$WORKBENCH_DIR/launchd/$THEME_AGENT_LABEL.plist"
+  mkdir -p "$HOME/Library/LaunchAgents" "$HOME/.config/workbench"
+  THEME_AGENT_TEMP="$(mktemp "$HOME/Library/LaunchAgents/$THEME_AGENT_LABEL.plist.XXXXXX")"
+  sed -e "s|__WORKBENCH_DIR__|$WORKBENCH_DIR|g" -e "s|__HOME__|$HOME|g" "$THEME_AGENT_TEMPLATE" > "$THEME_AGENT_TEMP"
+  mv "$THEME_AGENT_TEMP" "$THEME_AGENT_PATH"
+  if command -v launchctl >/dev/null 2>&1; then
+    THEME_DOMAIN="gui/$(id -u)"
+    launchctl bootout "$THEME_DOMAIN/$THEME_AGENT_LABEL" >/dev/null 2>&1 || true
+    launchctl bootstrap "$THEME_DOMAIN" "$THEME_AGENT_PATH" >/dev/null 2>&1 && echo -e "${GREEN}✓ system theme LaunchAgent${RESET}" || echo -e "${YELLOW}LaunchAgent linked; load it with launchctl bootstrap if needed${RESET}"
+  fi
+fi
+
 # Create Alacritty configuration directory and symlink
 echo -e "${YELLOW}Setting up Alacritty configuration...${RESET}"
 mkdir -p "$HOME/.config/alacritty"

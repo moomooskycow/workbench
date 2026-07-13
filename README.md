@@ -9,6 +9,7 @@ Personal configuration repository for development environment setup, terminal pr
 - Project registry docs and naming notes
 - Utility scripts for local development workflows
 - Git hooks and automated quality checks
+- Rose Pine light/dark synchronization for Codex, Claude Code, Herdr, and Ghostty
 
 ## Quality Gate
 
@@ -28,6 +29,21 @@ this same script.
 git clone https://github.com/phrazzld/workbench.git ~/Development/workbench
 cd ~/Development/workbench
 ./install.sh
+```
+
+## Agent appearance
+
+The supported automatic path follows the macOS appearance setting: Claude Code
+uses its `auto` theme, Herdr uses the Rose Pine/Rose Pine Dawn pair with
+`auto_switch`, and Ghostty already uses its native system theme pair. Codex's
+custom TUI themes live under `dotfiles/codex/themes`; `bin/sync-system-theme`
+updates only `[tui].theme` and keeps both themes linked under `~/.codex/themes`.
+The installer registers a small LaunchAgent that checks the host appearance
+once a minute. Preview either state without changing anything with:
+
+```bash
+bin/sync-system-theme --mode light --dry-run
+bin/sync-system-theme --mode dark --dry-run
 ```
 
 

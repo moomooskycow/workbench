@@ -5,8 +5,8 @@ onboarding = false
 
 [theme]
 name = "rose-pine"
-# Follow Ghostty light/dark if you ever swap; rose-pine dawn is the light pair
-auto_switch = false
+# Follow the host terminal's light/dark appearance; Rose Pine Dawn is the light pair.
+auto_switch = true
 dark_name = "rose-pine"
 light_name = "rose-pine-dawn"
 
