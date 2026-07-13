@@ -57,6 +57,18 @@ ln -sf "$CONFIG_SUBDIR/starship.toml" "$HOME/.config/starship.toml" && echo -e "
 echo -e "${YELLOW}Setting up Ghostty configuration...${RESET}"
 mkdir -p "$HOME/.config/ghostty/themes" "$HOME/.config/ghostty/shaders"
 ln -sf "$CONFIG_SUBDIR/ghostty/config" "$HOME/.config/ghostty/config" && echo -e "${GREEN}✓ ghostty config${RESET}" || echo -e "${RED}✗ ghostty config${RESET}"
+
+# macOS loads this native config after the XDG config. Ghostty's generated
+# template contains `theme =`, which resets the managed light/dark theme.
+# Remove only that empty reset; preserve any explicit user-owned override.
+if [ "$(uname -s)" = "Darwin" ]; then
+  GHOSTTY_NATIVE_CONFIG="$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+  if [ -f "$GHOSTTY_NATIVE_CONFIG" ] && grep -Eq '^[[:space:]]*theme[[:space:]]*=[[:space:]]*$' "$GHOSTTY_NATIVE_CONFIG"; then
+    sed -i '' -E '/^[[:space:]]*theme[[:space:]]*=[[:space:]]*$/d' "$GHOSTTY_NATIVE_CONFIG"
+    echo -e "${GREEN}✓ removed Ghostty native empty theme override${RESET}"
+  fi
+fi
+
 for shader_file in "$CONFIG_SUBDIR/ghostty/shaders/"*.glsl; do
   if [ -f "$shader_file" ]; then
     shader_name=$(basename "$shader_file")

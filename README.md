@@ -35,9 +35,13 @@ cd ~/Development/workbench
 
 The supported automatic path follows the macOS appearance setting: Claude Code
 uses its `auto` theme, Herdr uses the Rose Pine/Rose Pine Dawn pair with
-`auto_switch`, and Ghostty already uses its native system theme pair. Codex's
-custom TUI themes live under `dotfiles/codex/themes`; `bin/sync-system-theme`
-updates only `[tui].theme` and keeps both themes linked under `~/.codex/themes`.
+`auto_switch`, and Ghostty uses its native system theme pair. On macOS the
+installer also removes Ghostty's generated empty `theme =` override, since the
+native config is loaded after the XDG config. Codex's
+custom syntax-highlighting themes live under `dotfiles/codex/themes`;
+`bin/sync-system-theme` updates only `[tui].theme` and keeps both themes linked
+under `~/.codex/themes`. Codex's surrounding TUI follows the active Ghostty
+terminal surface.
 The installer registers a small LaunchAgent that checks the host appearance
 once a minute. Preview either state without changing anything with:
 
