@@ -66,6 +66,9 @@ if [ "$(uname -s)" = "Darwin" ]; then
   if [ -f "$GHOSTTY_NATIVE_CONFIG" ] && grep -Eq '^[[:space:]]*theme[[:space:]]*=[[:space:]]*$' "$GHOSTTY_NATIVE_CONFIG"; then
     sed -i '' -E '/^[[:space:]]*theme[[:space:]]*=[[:space:]]*$/d' "$GHOSTTY_NATIVE_CONFIG"
     echo -e "${GREEN}✓ removed Ghostty native empty theme override${RESET}"
+  elif [ -f "$GHOSTTY_NATIVE_CONFIG" ] && grep -Eq '^[[:space:]]*theme[[:space:]]*=[[:space:]]*light:Rose Pine Dawn,dark:Rose Pine[[:space:]]*$' "$GHOSTTY_NATIVE_CONFIG"; then
+    sed -i '' -E 's|^[[:space:]]*theme[[:space:]]*=.*$|theme = light:Ember Dawn,dark:Ember|' "$GHOSTTY_NATIVE_CONFIG"
+    echo -e "${GREEN}✓ migrated Ghostty native Rose Pine theme override${RESET}"
   fi
 fi
 
@@ -143,7 +146,7 @@ echo -e "${YELLOW}Setting up Herdr configuration...${RESET}"
 mkdir -p "$HOME/.config/herdr"
 ln -sf "$CONFIG_SUBDIR/herdr/config.toml" "$HOME/.config/herdr/config.toml" && echo -e "${GREEN}✓ herdr config${RESET}" || echo -e "${RED}✗ herdr config${RESET}"
 
-# Setup Codex Rose Pine themes and host appearance synchronization. The helper
+# Setup Codex Ember themes and host appearance synchronization. The helper
 # only patches [tui].theme and refuses to replace unrelated Codex files.
 echo -e "${YELLOW}Setting up Codex theme synchronization...${RESET}"
 if [ -f "$HOME/.codex/config.toml" ] && [ -x "$WORKBENCH_DIR/bin/sync-system-theme" ]; then

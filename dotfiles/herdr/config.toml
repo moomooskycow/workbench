@@ -4,11 +4,16 @@
 onboarding = false
 
 [theme]
-name = "rose-pine"
-# Follow the host terminal's light/dark appearance; Rose Pine Dawn is the light pair.
+name = "kanagawa"
+# Follow the host terminal's light/dark appearance; Kanagawa Lotus is the
+# inked paper counterpart to the dark Kanagawa palette.
 auto_switch = true
-dark_name = "rose-pine"
-light_name = "rose-pine-dawn"
+dark_name = "kanagawa"
+light_name = "kanagawa-lotus"
+
+[theme.custom]
+# Amber is the shared operator accent across Herdr and the Ember terminal pair.
+accent = "#c47a2a"
 
 [terminal]
 # $SHELL (zsh) is picked up automatically; leave empty.
@@ -78,7 +83,7 @@ show_agent_labels_on_pane_borders = true
 # Attention queue: surface blocked/done agents ahead of working ones, so
 # next_agent/previous_agent (alt+shift+j/k) walk what needs attention first.
 agent_panel_sort = "priority"
-accent = "#c4a7e7"
+accent = "#c47a2a"
 
 [ui.toast]
 # In-app toasts for agent state changes

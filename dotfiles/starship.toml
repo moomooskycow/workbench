@@ -1,10 +1,10 @@
-# Starship — Rose Pine, nerd-font glyphs, two-line prompt
+# Starship — terminal-native ink prompt, nerd-font glyphs, two-line prompt
 # Design: minimalist left (context) + right-aligned meta (duration, clock)
-# Palette matches ~/.config/zellij/config.kdl and Ghostty theme.
+# Palette names intentionally resolve through Ghostty's active ANSI theme.
 
 add_newline = true
 command_timeout = 2000
-palette = "rose-pine"
+palette = "terminal-ink"
 
 format = """
 [](foam)\
@@ -27,19 +27,19 @@ $rust\
 $golang\
 $status\
 $character"""
-[palettes.rose-pine]
-base    = "#191724"
-surface = "#1f1d2e"
-overlay = "#26233a"
-muted   = "#6e6a86"
-subtle  = "#908caa"
-text    = "#e0def4"
-love    = "#eb6f92"
-gold    = "#f6c177"
-rose    = "#ebbcba"
-pine    = "#31748f"
-foam    = "#9ccfd8"
-iris    = "#c4a7e7"
+[palettes.terminal-ink]
+base    = "black"
+surface = "bright-black"
+overlay = "bright-black"
+muted   = "bright-black"
+subtle  = "bright-white"
+text    = "white"
+love    = "red"
+gold    = "yellow"
+rose    = "bright-red"
+pine    = "green"
+foam    = "cyan"
+iris    = "magenta"
 [fill]
 symbol = " "
 style  = "overlay"

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Ember</string>
+	<key>settings</key>
+	<array>
+		<dict>
+			<key>settings</key>
+			<dict>
+				<key>background</key><string>#131119</string>
+				<key>caret</key><string>#e8a849</string>
+				<key>foreground</key><string>#d5cec4</string>
+				<key>invisibles</key><string>#4a4458</string>
+				<key>lineHighlight</key><string>#1c1820</string>
+				<key>selection</key><string>#3d2e1f</string>
+			</dict>
+		</dict>
+		<dict><key>scope</key><string>comment</string><key>settings</key><dict><key>foreground</key><string>#8c8173</string></dict></dict>
+		<dict><key>scope</key><string>keyword, storage</string><key>settings</key><dict><key>foreground</key><string>#c8a8d0</string></dict></dict>
+		<dict><key>scope</key><string>string, constant.character</string><key>settings</key><dict><key>foreground</key><string>#e3b35a</string></dict></dict>
+		<dict><key>scope</key><string>constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>#e88888</string></dict></dict>
+		<dict><key>scope</key><string>entity.name.function, support.function</string><key>settings</key><dict><key>foreground</key><string>#67b5b4</string></dict></dict>
+		<dict><key>scope</key><string>entity.name.type, support.type</string><key>settings</key><dict><key>foreground</key><string>#8ab9d2</string></dict></dict>
+		<dict><key>scope</key><string>variable, variable.parameter</string><key>settings</key><dict><key>foreground</key><string>#eee7dc</string></dict></dict>
+		<dict><key>scope</key><string>invalid</string><key>settings</key><dict><key>foreground</key><string>#e9828d</string></dict></dict>
+	</array>
+</dict>
+</plist>

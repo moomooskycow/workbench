@@ -1,10 +1,11 @@
 # ═══════════════════════════════════════════════
 #  G H O S T T Y
-#  rose pine · FiraCode ligatures · refined
+#  ember ink · FiraCode ligatures · refined
 # ═══════════════════════════════════════════════
 
-# Theme — Rose Pine, auto light/dark
-theme = light:Rose Pine Dawn,dark:Rose Pine
+# Theme — Ember, auto light/dark
+# Warm paper and dark charcoal keep the shell legible before an agent starts.
+theme = light:Ember Dawn,dark:Ember
 window-theme = system
 
 # ── macOS Chrome ──────────────────────────────
@@ -14,13 +15,14 @@ macos-window-shadow = false
 window-step-resize = true
 window-save-state = always
 
-# ── Transparency & Blur ──────────────────────
-background-opacity = 0.92
-background-blur-radius = 24
+# ── Clarity ───────────────────────────────────
+# Opaque and shader-free by design: code and prompts should not compete with
+# the desktop or bloom into their background.
+background-opacity = 1.0
+background-blur-radius = 0
 
-# ── Bloom Shader ────────────────────────────
-custom-shader = ~/.config/ghostty/shaders/bloom.glsl
-custom-shader-animation = false
+# ── Bloom Shader ─────────────────────────────
+# Deliberately disabled for crisp light-mode text.
 
 # ── Typography ────────────────────────────────
 # FiraCode: beautiful ligatures (=> != >= -> |>)
@@ -42,7 +44,7 @@ adjust-cursor-thickness = 2
 adjust-box-thickness = 1
 
 # ── Visual Polish ─────────────────────────────
-minimum-contrast = 1.1
+minimum-contrast = 1.2
 bold-is-bright = false
 
 # ── Window ────────────────────────────────────
@@ -61,7 +63,6 @@ macos-non-native-fullscreen = visible-menu
 # ── Splits ────────────────────────────────────
 unfocused-split-opacity = 0.7
 focus-follows-mouse = true
-split-divider-color = #26233a
 
 # ── Cursor & Mouse ───────────────────────────
 cursor-style = bar
@@ -85,11 +86,11 @@ quick-terminal-screen = main
 quick-terminal-animation-duration = 0.12
 quick-terminal-size = 40%
 
-# ── Dock Icon (Rose Pine) ─────────────────────
+# ── Dock Icon (Ember) ────────────────────────
 macos-icon = custom-style
 macos-icon-frame = aluminum
-macos-icon-ghost-color = #e0def4
-macos-icon-screen-color = #191724,#eb6f92
+macos-icon-ghost-color = #d5cec4
+macos-icon-screen-color = #131119,#e8a849
 
 # ═══════════════════════════════════════════════
 #  K E Y B I N D S

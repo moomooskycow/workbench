@@ -25,8 +25,8 @@ detect_config_path() {
 
 CONFIG_PATH="$(detect_config_path)"
 LOCAL_THEMES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../dotfiles/ghostty/themes" && pwd)"
-DEFAULT_LIGHT_THEME="$LOCAL_THEMES_DIR/rose-pine-dawn"
-DEFAULT_DARK_THEME="$LOCAL_THEMES_DIR/rose-pine"
+DEFAULT_LIGHT_THEME="$LOCAL_THEMES_DIR/Ember Dawn"
+DEFAULT_DARK_THEME="$LOCAL_THEMES_DIR/Ember"
 USER_THEMES_DIR="$HOME/.config/ghostty/themes"
 APP_THEMES_DIR="/Applications/Ghostty.app/Contents/Resources/ghostty/themes"
 

@@ -2,7 +2,7 @@
 
 # Synchronize the non-native Codex TUI theme with macOS appearance.
 # Claude Code, Herdr, and Ghostty have native automatic appearance settings;
-# this helper only owns Codex's custom TextMate theme selection and links.
+# this helper owns Codex's custom TextMate theme selection and links.
 
 set -euo pipefail
 
@@ -19,7 +19,7 @@ usage() {
     cat <<'EOF'
 Usage: sync-system-theme [--dry-run] [--mode auto|light|dark]
 
-Selects the tracked Rose Pine Codex TUI theme for the current macOS
+Selects the tracked Ember Codex TUI theme for the current macOS
 appearance, installs safe symlinks under ~/.codex/themes, and updates only
 [tui].theme in ~/.codex/config.toml.
 EOF
@@ -72,12 +72,12 @@ fi
 
 case "$mode" in
     light)
-        theme_name="rose-pine-dawn"
-        theme_file="rose-pine-dawn.tmTheme"
+        theme_name="ember-dawn"
+        theme_file="ember-dawn.tmTheme"
         ;;
     dark)
-        theme_name="rose-pine"
-        theme_file="rose-pine.tmTheme"
+        theme_name="ember"
+        theme_file="ember.tmTheme"
         ;;
 esac
 
@@ -190,7 +190,7 @@ link_theme "$THEME_SOURCE_DIR/$theme_file" "$theme_dest"
 
 # Keep both tracked themes available to Codex. The selected theme changes with
 # the host; the inactive theme is still useful for manual previewing.
-for other_theme in rose-pine.tmTheme rose-pine-dawn.tmTheme; do
+for other_theme in ember.tmTheme ember-dawn.tmTheme; do
     [ "$other_theme" = "$theme_file" ] && continue
     link_theme "$THEME_SOURCE_DIR/$other_theme" "$theme_dest_dir/$other_theme"
 done
