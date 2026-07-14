@@ -22,6 +22,18 @@ cd ~/Development/workbench && ./install.sh
 - Environment-aware setup
 - POSIX-compatible syntax
 - Security-conscious (no secrets in configs)
+- `op-agent` starts agents with an allowlisted environment from
+  `op/mint-agent.env`; credential variables contain only Mint placeholders and
+  their clients are pinned to Mint proxy URLs. It never resolves
+  `~/.config/op/agent.env`.
+- Primary agent aliases (`c`, `cx`, `cxg`, `db`, `g`, `o`, `omp`, `ompr`,
+  `i`, and `im`) enter through `op-agent`. Shell startup never loads
+  `OP_SERVICE_ACCOUNT_TOKEN`; ordinary human `op` commands keep the CLI's
+  interactive 1Password Desktop integration.
+- OpenAI variables are intentionally absent from the shared agent runtime.
+  Roster's image-generation references still contain direct vendor calls, so
+  exporting even a Mint placeholder globally would imply a route they do not
+  yet honor.
 
 ## Remote Workflow
 

@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [ "$#" -eq 0 ]; then
+  echo "usage: op-agent <command> [args...]" >&2
+  exit 2
+fi
+
+runtime_env="${MINT_RUNTIME_ENV_FILE:-$HOME/.config/op/mint-agent.env}"
+if [ ! -r "$runtime_env" ]; then
+  echo "op-agent: Mint runtime env is not readable: $runtime_env" >&2
+  exit 1
+fi
+
+# The runtime file is repository-owned and value-free. Source it only to avoid
+# placing even placeholders in argv while constructing the clean environment.
+set -a
+# shellcheck disable=SC1090
+. "$runtime_env"
+set +a
+
+: "${MINT_BASE_URL:?Mint runtime env must set MINT_BASE_URL}"
+: "${CANARY_ENDPOINT:?Mint runtime env must set CANARY_ENDPOINT}"
+: "${CANARY_API_KEY:?Mint runtime env must set CANARY_API_KEY}"
+: "${XAI_BASE_URL:?Mint runtime env must set XAI_BASE_URL}"
+: "${DEEPGRAM_BASE_URL:?Mint runtime env must set DEEPGRAM_BASE_URL}"
+
+# Start from an empty environment. This is the load-bearing difference from
+# the retired `op run --env-file=agent.env` wrapper: parked 1Password refs and
+# any ambient shell secret cannot cross into the agent process.
+clean_env=(
+  "HOME=$HOME"
+  "USER=${USER:-}"
+  "LOGNAME=${LOGNAME:-${USER:-}}"
+  "PATH=$PATH"
+  "SHELL=${SHELL:-/bin/zsh}"
+  "TERM=${TERM:-}"
+  "TMPDIR=${TMPDIR:-/tmp}"
+  "LANG=${LANG:-}"
+  "LC_ALL=${LC_ALL:-}"
+  "LC_CTYPE=${LC_CTYPE:-}"
+  "XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-}"
+  "XDG_CACHE_HOME=${XDG_CACHE_HOME:-}"
+  "XDG_DATA_HOME=${XDG_DATA_HOME:-}"
+  "SSH_AUTH_SOCK=${SSH_AUTH_SOCK:-}"
+  "CODEX_HOME=${CODEX_HOME:-}"
+  "MINT_BASE_URL=$MINT_BASE_URL"
+  "CANARY_ENDPOINT=$CANARY_ENDPOINT"
+  "CANARY_API_KEY=$CANARY_API_KEY"
+  "XAI_BASE_URL=$XAI_BASE_URL"
+  "DEEPGRAM_BASE_URL=$DEEPGRAM_BASE_URL"
+)
+
+exec env -i "${clean_env[@]}" "$@"

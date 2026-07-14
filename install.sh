@@ -24,6 +24,13 @@ ln -sf "$CONFIG_SUBDIR/.aliases" "$HOME/.aliases" && echo -e "${GREEN}✓ .alias
 ln -sf "$CONFIG_SUBDIR/.env" "$HOME/.env" && echo -e "${GREEN}✓ .env${RESET}" || echo -e "${RED}✗ .env${RESET}"
 ln -sf "$CONFIG_SUBDIR/.fun" "$HOME/.fun" && echo -e "${GREEN}✓ .fun${RESET}" || echo -e "${RED}✗ .fun${RESET}"
 
+# Install the value-free Mint agent runtime. The live 1Password env file may
+# retain parked references for operator recovery, but op-agent never resolves
+# or inherits it.
+mkdir -p "$HOME/.config/op"
+ln -sf "$CONFIG_SUBDIR/op/op-agent.sh" "$HOME/.config/op/op-agent.sh" && echo -e "${GREEN}✓ op-agent shell integration${RESET}" || echo -e "${RED}✗ op-agent shell integration${RESET}"
+ln -sf "$CONFIG_SUBDIR/op/mint-agent.env" "$HOME/.config/op/mint-agent.env" && echo -e "${GREEN}✓ Mint agent runtime env${RESET}" || echo -e "${RED}✗ Mint agent runtime env${RESET}"
+
 # Install vtop themes
 echo -e "${YELLOW}Installing vtop themes...${RESET}"
 if command -v vtop &>/dev/null; then

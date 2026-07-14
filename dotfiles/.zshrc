@@ -36,8 +36,8 @@ fi
 source $HOME/.env                    # Environment variables and PATH
 [ -f $HOME/.fun ] && source $HOME/.fun  # Utility functions
 source $HOME/.aliases               # Command aliases and git helpers
-# Secrets retired from disk 2026-06 → now in 1Password (Agents vault), loaded ambiently via ~/.zprofile (op run).
-[ -f $HOME/.config/op/op-agent.sh ] && source $HOME/.config/op/op-agent.sh  # `op-agent <cmd>` → run cmd with secrets from 1Password (Agents vault)
+# Agent entrypoints use the value-free Mint runtime and an empty inherited env.
+[ -f $HOME/.config/op/op-agent.sh ] && source $HOME/.config/op/op-agent.sh
 
 # --- HISTORY CONFIGURATION ---
 # Enhanced history settings for better command recall

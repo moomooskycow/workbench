@@ -41,4 +41,6 @@ fi
 echo "Checking ShellCheck error-level findings..."
 shellcheck -S error "${shell_sources[@]}"
 
+"$ROOT_DIR/scripts/test-op-agent.sh"
+
 echo "Workbench gate passed."

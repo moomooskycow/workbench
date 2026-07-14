@@ -9,21 +9,21 @@ alias clear="clear && source ~/.zshrc && exec zsh"
 alias compress='tar czf'
 alias decompress='tar xzf'
 alias f='fzf --bind "enter:execute(nvim {})"'
-alias c='roster dispatch kaylee'
-alias db='claude --dangerously-skip-permissions --append-system-prompt-file "$HOME/Documents/daybook/.claude/system-prompt.md"'
+alias c='op-agent roster dispatch kaylee'
+alias db='op-agent claude --dangerously-skip-permissions --append-system-prompt-file "$HOME/Documents/daybook/.claude/system-prompt.md"'
 alias cw='clauditor --watch'
 alias e='node $DEVELOPMENT/elevator/dist/cli.js'
 alias cub='ccusage blocks --live'
-alias cx='roster dispatch amos'
-alias cxg='codex --profile glm --search --dangerously-bypass-approvals-and-sandbox'  # GLM 5.2 via OpenRouter (e.g. when out of GPT)
-alias g='gemini'
-alias o='opencode'
-alias omp='roster dispatch urza'
-alias ompr='command omp'
+alias cx='op-agent roster dispatch amos'
+alias cxg='op-agent codex --profile glm --search --dangerously-bypass-approvals-and-sandbox'  # GLM 5.2 via OpenRouter (e.g. when out of GPT)
+alias g='op-agent gemini'
+alias o='op-agent opencode'
+alias omp='op-agent roster dispatch urza'
+alias ompr='op-agent omp'
 
 # Pi agents
-alias i='pictl'
-alias im='pictl meta'
+alias i='op-agent pictl'
+alias im='op-agent pictl meta'
 
 # Git aliases
 alias gs='git status --short'
