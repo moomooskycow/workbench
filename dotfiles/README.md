@@ -24,7 +24,9 @@ cd ~/Development/workbench && ./install.sh
 - Security-conscious (no secrets in configs)
 - `roster/runtime.env` declares only value-free Mint routes under the explicit
   `ROSTER_CHILD_ENV_` prefix. Roster clears inherited state, strips that prefix
-  for its child, and applies its own projection last.
+  for its child, and applies its own projection last. Powder uses the dedicated
+  `__mint.powder.roster__` placeholder and Mint proxy origin; neither a raw
+  Powder credential nor a credential resolver enters the child environment.
 - `c`, `cx`, and `omp` launch raw Harnesses. `rc`, `rcx`, and `romp` opt into
   Kaylee, Amos, and Urza through Roster. No alias depends on a wrapper.
 - Shell startup never loads `OP_SERVICE_ACCOUNT_TOKEN`; ordinary human `op`

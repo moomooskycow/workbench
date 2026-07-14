@@ -19,16 +19,22 @@ rm "$tmp/security-called"
 printf '%s\n' '#!/bin/sh' 'touch "${SECURITY_CALLED:?}"' 'exit 99' > "$tmp/bin/security"
 chmod +x "$tmp/bin/security"
 
-env -u OP_SERVICE_ACCOUNT_TOKEN -u OP_LOAD_DESKTOP_APP_SETTINGS -u OP_CACHE \
+env -u OP_SERVICE_ACCOUNT_TOKEN -u OP_LOAD_DESKTOP_APP_SETTINGS -u OP_CACHE -u MINT_BASE_URL \
+  -u POWDER_API_BASE_URL -u POWDER_API_KEY \
   HOME="$tmp/home" SECURITY_CALLED="$tmp/security-called" PATH="$tmp/bin:$PATH" \
   zsh -f -c '
+    set -e
     source "$1"
     test -z "${OP_SERVICE_ACCOUNT_TOKEN:-}"
     test -z "${OP_LOAD_DESKTOP_APP_SETTINGS:-}"
     test -z "${OP_CACHE:-}"
     test -z "${MINT_BASE_URL:-}"
+    test -z "${POWDER_API_BASE_URL:-}"
+    test -z "${POWDER_API_KEY:-}"
     test "$ROSTER_CHILD_ENV_CANARY_API_KEY" = "__mint.canary.default__"
     test "$ROSTER_CHILD_ENV_CANARY_ENDPOINT" = "$ROSTER_CHILD_ENV_MINT_BASE_URL/proxy/https/canary.mistystep.io"
+    test "$ROSTER_CHILD_ENV_POWDER_API_BASE_URL" = "$ROSTER_CHILD_ENV_MINT_BASE_URL/proxy/https/sanctum.tail5f5eb4.ts.net:10001"
+    test "$ROSTER_CHILD_ENV_POWDER_API_KEY" = "__mint.powder.roster__"
     test "$ROSTER_CHILD_ENV_XAI_BASE_URL" = "$ROSTER_CHILD_ENV_MINT_BASE_URL/proxy/https/api.x.ai/v1"
     test "$ROSTER_CHILD_ENV_DEEPGRAM_BASE_URL" = "$ROSTER_CHILD_ENV_MINT_BASE_URL/proxy/https/api.deepgram.com/v1"
   ' _ "$ROOT_DIR/dotfiles/.zshenv"
