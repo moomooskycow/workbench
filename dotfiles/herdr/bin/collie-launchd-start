@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Login-time collie starter for launchd. The plugin's collie-ctl.sh start is
+# not idempotent without systemd (always spawns a bridge and clobbers the
+# pidfile), so probe the port first and only start when nothing answers.
+set -euo pipefail
+
+PORT="${COLLIE_PORT:-8787}"
+if curl -sf -m 3 -o /dev/null "http://127.0.0.1:${PORT}/api/config"; then
+  echo "collie already answering on :${PORT}; nothing to do"
+  exit 0
+fi
+
+# Resolve the plugin checkout without the herdr CLI (its socket may not be up
+# at login). The install dir carries a content hash; take the newest match.
+ctl=$(ls -td "$HOME"/.config/herdr/plugins/github/herdr.collie-*/scripts/collie-ctl.sh 2>/dev/null | head -1)
+if [ -z "$ctl" ]; then
+  echo "error: no herdr.collie checkout found" >&2
+  exit 1
+fi
+
+exec bash "$ctl" start
