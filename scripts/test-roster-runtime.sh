@@ -58,9 +58,9 @@ printf '%s\n' \
   'omp' \
   'pictl' \
   'pictl meta' \
-  'roster dispatch kaylee' \
-  'roster dispatch amos' \
-  'roster dispatch urza' \
+  'roster dispatch --default claude' \
+  'roster dispatch --default codex' \
+  'roster dispatch --default omp' \
   > "$tmp/expected-entrypoints.log"
 diff -u "$tmp/expected-entrypoints.log" "$tmp/home/entrypoints.log"
 

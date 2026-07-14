@@ -19,9 +19,9 @@ alias cxg='codex --profile glm --search --dangerously-bypass-approvals-and-sandb
 alias g='gemini'
 alias o='opencode'
 alias ompr='omp'
-alias rc='roster dispatch kaylee'
-alias rcx='roster dispatch amos'
-alias romp='roster dispatch urza'
+alias rc='roster dispatch --default claude'
+alias rcx='roster dispatch --default codex'
+alias romp='roster dispatch --default omp'
 
 # Pi agents
 alias i='pictl'
