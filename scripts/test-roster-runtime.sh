@@ -59,7 +59,7 @@ printf '%s\n' \
   'codex --profile glm --search --dangerously-bypass-approvals-and-sandbox' \
   "claude --dangerously-skip-permissions --append-system-prompt-file $tmp/home/Documents/daybook/.claude/system-prompt.md" \
   'gemini' \
-  'opencode' \
+  'omp' \
   'omp' \
   'omp' \
   'pictl' \
