@@ -150,59 +150,6 @@ echo -e "${YELLOW}Setting up Herdr configuration...${RESET}"
 mkdir -p "$HOME/.config/herdr"
 ln -sf "$CONFIG_SUBDIR/herdr/config.toml" "$HOME/.config/herdr/config.toml" && echo -e "${GREEN}✓ herdr config${RESET}" || echo -e "${RED}✗ herdr config${RESET}"
 
-# Setup OMP Kanagawa themes (dark: kanagawa / light: kanagawa-lotus).
-# OMP loads custom themes from ~/.omp/agent/themes.
-echo -e "${YELLOW}Setting up OMP Kanagawa themes...${RESET}"
-mkdir -p "$HOME/.omp/agent/themes"
-for theme_file in "$CONFIG_SUBDIR/omp/themes/"*.json; do
-  if [ -f "$theme_file" ]; then
-    theme_name=$(basename "$theme_file")
-    ln -sfn "$theme_file" "$HOME/.omp/agent/themes/$theme_name" && echo -e "${GREEN}✓ omp theme: $theme_name${RESET}" || echo -e "${RED}✗ omp theme: $theme_name${RESET}"
-  fi
-done
-if [ -f "$HOME/.omp/agent/config.yml" ]; then
-  python3 - <<'PY'
-from pathlib import Path
-path = Path.home() / ".omp" / "agent" / "config.yml"
-text = path.read_text()
-lines = text.splitlines()
-out = []
-in_theme = False
-changed = False
-for line in lines:
-    if line.startswith("theme:"):
-        in_theme = True
-        out.append(line)
-        continue
-    if in_theme:
-        stripped = line.lstrip()
-        indent = len(line) - len(stripped)
-        if stripped and not stripped.startswith("#") and indent == 0:
-            in_theme = False
-        elif stripped.startswith("dark:"):
-            prefix = line[: line.index("dark:")]
-            if stripped != "dark: kanagawa":
-                changed = True
-            out.append(f"{prefix}dark: kanagawa")
-            continue
-        elif stripped.startswith("light:"):
-            prefix = line[: line.index("light:")]
-            if stripped != "light: kanagawa-lotus":
-                changed = True
-            out.append(f"{prefix}light: kanagawa-lotus")
-            continue
-    out.append(line)
-if changed:
-    path.write_text("\n".join(out) + ("\n" if text.endswith("\n") else ""))
-    print("omp-config: set theme.dark=kanagawa theme.light=kanagawa-lotus")
-else:
-    print("omp-config: theme already on Kanagawa pair")
-PY
-  echo -e "${GREEN}✓ omp theme bindings${RESET}"
-else
-  echo -e "${YELLOW}OMP config not found, themes installed for next config write${RESET}"
-fi
-
 # Setup Codex Ember themes and host appearance synchronization. The helper
 # only patches [tui].theme and refuses to replace unrelated Codex files.
 echo -e "${YELLOW}Setting up Codex theme synchronization...${RESET}"

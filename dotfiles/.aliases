@@ -24,6 +24,12 @@ alias rc='roster dispatch --default claude'
 alias rcx='roster dispatch --default codex'
 alias romp='roster dispatch --default omp'
 
+# OMP preset launchers (config overlays under ~/.omp/agent/presets)
+alias omp-lean='omp --config ~/.omp/agent/presets/lean.yml'
+alias omp-design='omp --config ~/.omp/agent/presets/design.yml'
+alias omp-ops='omp --config ~/.omp/agent/presets/ops.yml'
+alias omp-research='omp --config ~/.omp/agent/presets/research.yml'
+
 # Pi agents
 alias i='pictl'
 alias im='pictl meta'
