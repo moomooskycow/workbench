@@ -9,8 +9,43 @@ local act = wezterm.action
 -- APPEARANCE
 -- ====================
 
--- Rose Pine Moon for softer, more aesthetic colors
-config.color_scheme = 'rose-pine-moon'
+-- Ember — warm charcoal + copper (matches Ghostty Ember)
+config.color_schemes = config.color_schemes or {}
+config.color_schemes['Ember'] = {
+  foreground = '#d5cec4',
+  background = '#131119',
+  cursor_bg = '#e8a849',
+  cursor_fg = '#131119',
+  cursor_border = '#e8a849',
+  selection_fg = '#f0e4d4',
+  selection_bg = '#3d2e1f',
+  ansi = {
+    '#1c1820', '#d46a6a', '#8aab7c', '#d4a54c',
+    '#7a9ec2', '#b08cb8', '#7aab9c', '#c8c0b4',
+  },
+  brights = {
+    '#4a4458', '#e88888', '#a5c896', '#e8c36e',
+    '#94b8d8', '#c8a8d0', '#96c8b8', '#e8e0d4',
+  },
+}
+config.color_schemes['Ember Dawn'] = {
+  foreground = '#2c2622',
+  background = '#f4efe8',
+  cursor_bg = '#c47a2a',
+  cursor_fg = '#f4efe8',
+  cursor_border = '#c47a2a',
+  selection_fg = '#2c2622',
+  selection_bg = '#e4d4be',
+  ansi = {
+    '#2c2622', '#b04040', '#5a7a4c', '#8a5a00',
+    '#4a6a8a', '#7a5a82', '#4a7a6a', '#d5cec4',
+  },
+  brights = {
+    '#5a5248', '#c25050', '#6a8a5c', '#8f5f00',
+    '#5a7ea0', '#8a6a92', '#5a8a7a', '#f4efe8',
+  },
+}
+config.color_scheme = 'Ember'
 
 -- Typography with better spacing and fallbacks
 config.font = wezterm.font_with_fallback({
@@ -22,9 +57,9 @@ config.font_size = 14.0
 config.line_height = 1.3
 config.harfbuzz_features = { 'calt=1', 'clig=1', 'liga=1' }
 
--- Window aesthetics with subtle gradient
+-- Soft warm lift — no purple gradient
 config.window_background_gradient = {
-  colors = { '#232136', '#2a273f' },
+  colors = { '#131119', '#1c1820' },
   orientation = { Linear = { angle = -45.0 } },
 }
 config.macos_window_background_blur = 20
@@ -104,16 +139,16 @@ config.tab_max_width = 32
 config.window_decorations = 'RESIZE'
 config.window_padding = { left = 12, right = 12, top = 12, bottom = 12 }
 
--- Rose Pine Moon colors for tab bar
-local rose_pine = {
-  bg = '#232136',
-  fg = '#e0def4',
-  subtle = '#6e6a86',
-  muted = '#908caa',
-  love = '#eb6f92',
-  gold = '#f6c177',
-  foam = '#9ccfd8',
-  iris = '#c4a7e7',
+-- Ember colors for tab bar
+local ember = {
+  bg = '#131119',
+  fg = '#d5cec4',
+  subtle = '#6f6878',
+  muted = '#9a9288',
+  love = '#d46a6a',
+  gold = '#d4a54c',
+  foam = '#7aab9c',
+  iris = '#e8a849', -- copper accent (kept key name for call sites)
 }
 
 -- Powerline separators (nerd fonts)
@@ -159,15 +194,15 @@ wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_wid
   end
 
   -- Colors
-  local bg = rose_pine.bg
-  local fg = rose_pine.subtle
+  local bg = ember.bg
+  local fg = ember.subtle
 
   if tab.is_active then
-    bg = rose_pine.muted
-    fg = rose_pine.bg
+    bg = ember.muted
+    fg = ember.bg
   elseif hover then
     bg = '#2a273f'
-    fg = rose_pine.fg
+    fg = ember.fg
   end
 
   return {
@@ -193,14 +228,14 @@ wezterm.on('update-right-status', function(window, pane)
     if #branch > 0 then
       table.insert(segments, {
         text = ' ' .. wezterm.nerdfonts.dev_git_branch .. ' ' .. branch,
-        color = rose_pine.love
+        color = ember.love
       })
     end
   end
 
   -- Workspace (if not default)
   if workspace ~= 'default' then
-    table.insert(segments, { text = ' ' .. workspace, color = rose_pine.iris })
+    table.insert(segments, { text = ' ' .. workspace, color = ember.iris })
   end
 
   -- Battery
@@ -209,13 +244,13 @@ wezterm.on('update-right-status', function(window, pane)
     local icon = charge > 50 and wezterm.nerdfonts.md_battery or wezterm.nerdfonts.md_battery_low
     table.insert(segments, {
       text = ' ' .. icon .. ' ' .. string.format('%.0f%%', charge),
-      color = rose_pine.iris
+      color = ember.iris
     })
   end
 
   -- Time and hostname
-  table.insert(segments, { text = ' ' .. wezterm.nerdfonts.md_clock .. ' ' .. time, color = rose_pine.foam })
-  table.insert(segments, { text = ' ' .. wezterm.nerdfonts.md_laptop .. ' ' .. hostname, color = rose_pine.gold })
+  table.insert(segments, { text = ' ' .. wezterm.nerdfonts.md_clock .. ' ' .. time, color = ember.foam })
+  table.insert(segments, { text = ' ' .. wezterm.nerdfonts.md_laptop .. ' ' .. hostname, color = ember.gold })
 
   -- Format with powerline arrows
   local elements = {}
@@ -223,7 +258,7 @@ wezterm.on('update-right-status', function(window, pane)
     table.insert(elements, { Foreground = { Color = seg.color } })
     table.insert(elements, { Text = SOLID_LEFT_ARROW })
     table.insert(elements, { Background = { Color = seg.color } })
-    table.insert(elements, { Foreground = { Color = rose_pine.bg } })
+    table.insert(elements, { Foreground = { Color = ember.bg } })
     table.insert(elements, { Text = seg.text .. ' ' })
   end
 
@@ -242,8 +277,8 @@ wezterm.on('update-status', function(window, pane)
   local name = window:active_key_table()
   if name then
     window:set_left_status(wezterm.format({
-      { Foreground = { Color = rose_pine.love } },
-      { Background = { Color = rose_pine.bg } },
+      { Foreground = { Color = ember.love } },
+      { Background = { Color = ember.bg } },
       { Text = ' [' .. name:upper() .. '] ' },
     }))
   else

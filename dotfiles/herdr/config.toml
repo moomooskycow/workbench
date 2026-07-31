@@ -4,17 +4,27 @@
 onboarding = false
 
 [theme]
-# Rose Pine — follow host light/dark with paired Dawn for light mode.
-name = "rose-pine"
+# Ember — ride Ghostty's ANSI surface (theme = terminal) and stamp copper
+# accent. auto_switch keeps host light/dark in sync; both poles use terminal
+# so parchment/charcoal come from Ember Dawn / Ember, not a second palette.
+name = "terminal"
 auto_switch = true
-dark_name = "rose-pine"
-light_name = "rose-pine-dawn"
+dark_name = "terminal"
+light_name = "terminal"
 
 [theme.custom]
-# Transparent chrome so Herdr matches the outer terminal bg.
+# Transparent chrome so Herdr matches the outer terminal bg (Ember / Ember Dawn).
 panel_bg = "reset"
-# Rose Pine iris — readable on both moon and dawn.
-accent = "#c4a7e7"
+# Copper — Ghostty Ember cursor. Readable on charcoal and parchment.
+accent = "#e8a849"
+# Warm semantic tokens (override cool defaults from `terminal` base).
+peach = "#e8a849"
+yellow = "#d4a54c"
+red = "#d46a6a"
+green = "#8aab7c"
+blue = "#7a9ec2"
+teal = "#7aab9c"
+mauve = "#b08cb8"
 
 [terminal]
 # $SHELL (zsh) is picked up automatically; leave empty.
@@ -86,46 +96,59 @@ hide_tab_bar_when_single_tab = true
 # Attention queue: surface blocked/done agents ahead of working ones, so
 # next_agent/previous_agent (alt+shift+j/k) walk what needs attention first.
 agent_panel_sort = "priority"
-accent = "#c4a7e7"
+accent = "#e8a849"
+# 0.7.5: ask for a workspace name at interactive creation - named spaces
+# keep the sidebar and session navigator legible across a wide fleet.
+prompt_new_workspace_name = true
 
-# 0.7.4: packed agent-aware sidebar. terminal_title_stripped shows what the
-# agent is doing without spinner glyphs.
+# 0.7.4: agent-aware sidebar. row_gap=1 adds a blank line between agent
+# entries so each reads as a discrete item rather than a packed list
+# (release-notes-recommended separation). terminal_title_stripped shows
+# what the agent is doing without spinner glyphs.
+# 0.7.5: per-token styling. Visual hierarchy per agent entry: bold agent
+# name (the identity), contextual state colors untouched (semantic), dim
+# activity line and location line (context, not signal). fg stays unset
+# on state_icon/state_text/git_status so semantic colors survive.
 [ui.sidebar.agents]
-row_gap = 0
+row_gap = 1
 rows = [
-  ["state_icon", "workspace", "tab"],
-  ["agent"],
+  ["state_icon", { token = "workspace", dim = true }, { token = "tab", dim = true }],
+  [{ token = "agent", bold = true }],
 ]
 
 [ui.sidebar.agents.rows_by_agent]
 omp = [
-  ["state_icon", "agent", "state_text"],
-  ["terminal_title_stripped"],
-  ["workspace", "tab"],
+  ["state_icon", { token = "agent", bold = true }, "state_text"],
+  [{ token = "$model", dim = true }],
+  [{ token = "$summary", dim = true }],
+  [{ token = "terminal_title_stripped", dim = true }],
+  [{ token = "workspace", dim = true }, { token = "tab", dim = true }],
 ]
 claude = [
-  ["state_icon", "agent", "state_text"],
-  ["terminal_title_stripped"],
-  ["workspace", "tab"],
+  ["state_icon", { token = "agent", bold = true }, "state_text"],
+  [{ token = "terminal_title_stripped", dim = true }],
+  [{ token = "workspace", dim = true }, { token = "tab", dim = true }],
 ]
 codex = [
-  ["state_icon", "agent", "state_text"],
-  ["terminal_title_stripped"],
-  ["workspace", "tab"],
+  ["state_icon", { token = "agent", bold = true }, "state_text"],
+  [{ token = "terminal_title_stripped", dim = true }],
+  [{ token = "workspace", dim = true }, { token = "tab", dim = true }],
 ]
 pi = [
-  ["state_icon", "agent", "state_text"],
-  ["terminal_title_stripped"],
-  ["workspace", "tab"],
+  ["state_icon", { token = "agent", bold = true }, "state_text"],
+  [{ token = "terminal_title_stripped", dim = true }],
+  [{ token = "workspace", dim = true }, { token = "tab", dim = true }],
 ]
 opencode = [
-  ["state_icon", "agent", "state_text"],
-  ["terminal_title_stripped"],
-  ["workspace", "tab"],
+  ["state_icon", { token = "agent", bold = true }, "state_text"],
+  [{ token = "terminal_title_stripped", dim = true }],
+  [{ token = "workspace", dim = true }, { token = "tab", dim = true }],
 ]
 
+# 0.7.4: row_gap=1 mirrors the agents section for consistent visual
+# separation between space entries.
 [ui.sidebar.spaces]
-row_gap = 0
+row_gap = 1
 rows = [
   ["state_icon", "workspace"],
   ["branch", "git_status"],
