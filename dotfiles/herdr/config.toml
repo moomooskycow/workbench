@@ -4,22 +4,30 @@
 onboarding = false
 
 [theme]
-# Rose Pine — follow host light/dark with paired Dawn for light mode.
-name = "rose-pine"
+# Follow host light/dark. Dawn on light surfaces; rose-pine on dark.
+name = "rose-pine-dawn"
 auto_switch = true
 dark_name = "rose-pine"
 light_name = "rose-pine-dawn"
 
 [theme.custom]
-# Transparent chrome so Herdr matches the outer terminal bg.
+# Transparent chrome so Herdr matches the outer terminal background.
 panel_bg = "reset"
-# Rose Pine iris — readable on both moon and dawn.
-accent = "#c4a7e7"
+# Graphite for selection and structural emphasis; no decorative copper.
+accent = "#50656c"
+# Accessible semantic colors on the light terminal surface.
+peach = "#a4513f"
+yellow = "#8a6a1f"
+red = "#b34444"
+green = "#397452"
+blue = "#3f6784"
+teal = "#397469"
+mauve = "#735a83"
 
 [terminal]
 # $SHELL (zsh) is picked up automatically; leave empty.
 default_shell = ""
-# macOS: login shells so /usr/libexec/path_helper + Homebrew init run.
+# Auto mode launches the configured login shell correctly on Linux and macOS.
 shell_mode = "auto"
 # New panes inherit the source pane's cwd — stays in-project when splitting.
 new_cwd = "follow"
@@ -34,7 +42,7 @@ directory = "~/.herdr/worktrees"
 
 [keys]
 prefix = "ctrl+b"
-# vim-style pane nav in prefix mode (you're coming from Zellij)
+# Vim-style pane navigation in prefix mode.
 focus_pane_left = "prefix+h"
 focus_pane_down = "prefix+j"
 focus_pane_up = "prefix+k"
@@ -44,7 +52,7 @@ swap_pane_left = "prefix+shift+h"
 swap_pane_down = "prefix+shift+j"
 swap_pane_up = "prefix+shift+k"
 swap_pane_right = "prefix+shift+l"
-# Zellij-style navigation: alt+h/l for tabs, alt+shift+h/l for workspaces
+# Fast navigation: alt+h/l for tabs, alt+shift+h/l for workspaces.
 # (keep prefix+n/p as fallback for terminal-ssh where alt chords may not pass through)
 next_tab = ["prefix+n", "alt+l"]
 previous_tab = ["prefix+p", "alt+h"]
@@ -86,46 +94,59 @@ hide_tab_bar_when_single_tab = true
 # Attention queue: surface blocked/done agents ahead of working ones, so
 # next_agent/previous_agent (alt+shift+j/k) walk what needs attention first.
 agent_panel_sort = "priority"
-accent = "#c4a7e7"
+accent = "#50656c"
+# 0.7.5: ask for a workspace name at interactive creation - named spaces
+# keep the sidebar and session navigator legible across a wide fleet.
+prompt_new_workspace_name = true
 
-# 0.7.4: packed agent-aware sidebar. terminal_title_stripped shows what the
-# agent is doing without spinner glyphs.
+# 0.7.4: agent-aware sidebar. row_gap=1 adds a blank line between agent
+# entries so each reads as a discrete item rather than a packed list
+# (release-notes-recommended separation). terminal_title_stripped shows
+# what the agent is doing without spinner glyphs.
+# 0.7.5: per-token styling. Visual hierarchy per agent entry: bold agent
+# name (the identity), contextual state colors untouched (semantic), dim
+# activity line and location line (context, not signal). fg stays unset
+# on state_icon/state_text/git_status so semantic colors survive.
 [ui.sidebar.agents]
-row_gap = 0
+row_gap = 1
 rows = [
-  ["state_icon", "workspace", "tab"],
-  ["agent"],
+  ["state_icon", { token = "workspace", dim = true }, { token = "tab", dim = true }],
+  [{ token = "agent", bold = true }],
 ]
 
 [ui.sidebar.agents.rows_by_agent]
 omp = [
-  ["state_icon", "agent", "state_text"],
-  ["terminal_title_stripped"],
-  ["workspace", "tab"],
+  ["state_icon", { token = "agent", bold = true }, "state_text"],
+  [{ token = "$model", dim = true }],
+  [{ token = "$summary", dim = true }],
+  [{ token = "terminal_title_stripped", dim = true }],
+  [{ token = "workspace", dim = true }, { token = "tab", dim = true }],
 ]
 claude = [
-  ["state_icon", "agent", "state_text"],
-  ["terminal_title_stripped"],
-  ["workspace", "tab"],
+  ["state_icon", { token = "agent", bold = true }, "state_text"],
+  [{ token = "terminal_title_stripped", dim = true }],
+  [{ token = "workspace", dim = true }, { token = "tab", dim = true }],
 ]
 codex = [
-  ["state_icon", "agent", "state_text"],
-  ["terminal_title_stripped"],
-  ["workspace", "tab"],
+  ["state_icon", { token = "agent", bold = true }, "state_text"],
+  [{ token = "terminal_title_stripped", dim = true }],
+  [{ token = "workspace", dim = true }, { token = "tab", dim = true }],
 ]
 pi = [
-  ["state_icon", "agent", "state_text"],
-  ["terminal_title_stripped"],
-  ["workspace", "tab"],
+  ["state_icon", { token = "agent", bold = true }, "state_text"],
+  [{ token = "terminal_title_stripped", dim = true }],
+  [{ token = "workspace", dim = true }, { token = "tab", dim = true }],
 ]
 opencode = [
-  ["state_icon", "agent", "state_text"],
-  ["terminal_title_stripped"],
-  ["workspace", "tab"],
+  ["state_icon", { token = "agent", bold = true }, "state_text"],
+  [{ token = "terminal_title_stripped", dim = true }],
+  [{ token = "workspace", dim = true }, { token = "tab", dim = true }],
 ]
 
+# 0.7.4: row_gap=1 mirrors the agents section for consistent visual
+# separation between space entries.
 [ui.sidebar.spaces]
-row_gap = 0
+row_gap = 1
 rows = [
   ["state_icon", "workspace"],
   ["branch", "git_status"],
