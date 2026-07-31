@@ -1,133 +1,124 @@
-# Starship — terminal-native ink prompt, nerd-font glyphs, two-line prompt
-# Design: minimalist left (context) + right-aligned meta (duration, clock)
-# Palette names intentionally resolve through Ghostty's active ANSI theme.
-
+# Starship — terminal-native ink prompt, Nerd Font glyphs, two-line prompt
+# Palette names resolve through the terminal's active ANSI theme.
 add_newline = true
 command_timeout = 2000
 palette = "terminal-ink"
 
 format = """
-[](foam)\
+$custom\
 $directory\
-[(fg:foam bg:overlay)](fg:foam bg:overlay)\
 $git_branch\
-$git_status\
 $git_state\
-[](fg:overlay)\
+$git_status\
 $fill\
-[](overlay)\
 $cmd_duration\
 $time\
-[](overlay)\
 $line_break\
-$custom\
 $python\
 $nodejs\
 $rust\
 $golang\
 $status\
 $character"""
+
 [palettes.terminal-ink]
-base    = "black"
+base = "black"
 surface = "bright-black"
 overlay = "bright-black"
-muted   = "bright-black"
-subtle  = "bright-white"
-text    = "white"
-love    = "red"
-gold    = "yellow"
-rose    = "bright-red"
-pine    = "green"
-foam    = "cyan"
-iris    = "magenta"
+muted = "bright-black"
+subtle = "bright-white"
+text = "white"
+love = "red"
+gold = "yellow"
+rose = "bright-red"
+pine = "green"
+foam = "cyan"
+iris = "magenta"
+
 [fill]
 symbol = " "
-style  = "overlay"
+style = "overlay"
+
 [directory]
-style = "bg:foam fg:base"
+style = "bold foam"
 truncation_length = 3
 truncation_symbol = "…/"
 truncate_to_repo = false
 home_symbol = "~"
-read_only = "  "
+read_only = " 🔒"
 read_only_style = "love"
-format = "[ $path ]($style)[$read_only]($read_only_style)"
+format = "[$path]($style)[$read_only]($read_only_style) "
+
 [git_branch]
 symbol = " "
 format = "[$symbol$branch]($style) "
-style  = "bg:overlay fg:iris"
+style = "iris"
 truncation_length = 32
 truncation_symbol = "…"
+
 [git_status]
 format = "([$all_status$ahead_behind]($style))"
-style  = "bg:overlay fg:gold"
+style = "gold"
 conflicted = "[!](love)"
-ahead      = "[⇡${count}](foam) "
-behind     = "[⇣${count}](rose) "
-diverged   = "[⇡${ahead_count}⇣${behind_count}](love) "
-untracked  = "[?](subtle)"
-modified   = "[*](gold)"
-staged     = "[+](pine)"
-renamed    = "[»](foam)"
-deleted    = "[✘](love)"
-stashed    = "[≡](iris) "
+ahead = "[⇡${count}](foam) "
+behind = "[⇣${count}](rose) "
+diverged = "[⇡${ahead_count}⇣${behind_count}](love) "
+untracked = "[?](subtle)"
+modified = "[*](gold)"
+staged = "[+](pine)"
+renamed = "[»](foam)"
+deleted = "[✘](love)"
+stashed = "[≡](iris) "
 
 [git_state]
 format = '\[[$state( $progress_current/$progress_total)]($style)\] '
-style  = "bg:overlay fg:love"
+style = "love"
+
 [cmd_duration]
 min_time = 2000
-format = "[  $duration ]($style)"
-style  = "bg:overlay fg:gold"
+format = "[$duration]($style) "
+style = "gold"
+
 [time]
 disabled = false
-format = "[ $time ]($style)"
+format = "[$time]($style)"
 time_format = "%H:%M"
-style = "bg:overlay fg:muted"
+style = "muted"
 
 [character]
 success_symbol = "[❯](iris)"
-error_symbol   = "[❯](love)"
-vimcmd_symbol  = "[❮](foam)"
+error_symbol = "[❯](love)"
+vimcmd_symbol = "[❮](foam)"
 
 [status]
 disabled = false
 format = "[$symbol$status]($style) "
 symbol = " "
-style  = "love"
+style = "love"
 map_symbol = true
 
 [python]
 symbol = " "
 format = "[$symbol$virtualenv ]($style)"
-style  = "gold"
+style = "gold"
 
 [nodejs]
 symbol = " "
 format = "[$symbol($version) ]($style)"
-style  = "foam"
+style = "foam"
 detect_files = ["package.json", ".nvmrc"]
 
 [rust]
 symbol = " "
 format = "[$symbol($version) ]($style)"
-style  = "rose"
+style = "rose"
 
 [golang]
 symbol = " "
 format = "[$symbol($version) ]($style)"
-style  = "foam"
+style = "foam"
 
-# Zellij session chip — shown only inside a session.
-[custom.zellij]
-command = 'printf "%s" "$ZELLIJ_SESSION_NAME"'
-when = 'test -n "$ZELLIJ_SESSION_NAME"'
-format = "[ $output ]($style)"
-style = "bg:overlay iris"
-description = "Zellij session name"
-shell = ["sh", "--noprofile", "--norc"]
 
-# SSH/mosh host chip — shown only when remote.
 [hostname]
 ssh_only = true
 format = "[ $hostname ](bg:overlay gold) "

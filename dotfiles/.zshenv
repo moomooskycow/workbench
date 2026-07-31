@@ -1,28 +1,13 @@
-# Minimal PATH bootstrap for non-interactive zsh shells launched by GUI apps.
-# Keep this file side-effect free: no prompts, evals, starship, or slow commands.
+# Side-effect-free environment for login, interactive, and GUI-launched shells.
+typeset -U path PATH
+path=("$HOME/.local/bin" $path)
 
-typeset -gaU path
-
-for _codex_path_dir in \
-  "$HOME/.bun/bin" \
-  "$HOME/.npm-global/bin" \
-  "$HOME/.opencode/bin" \
-  "$HOME/Library/pnpm" \
-  "/opt/homebrew/sbin" \
-  "/opt/homebrew/bin" \
-  "$HOME/.cargo/bin" \
-  "$HOME/.local/bin"
-do
-  [[ -d "$_codex_path_dir" ]] && path=("$_codex_path_dir" $path)
-done
-
-unset _codex_path_dir
-export PATH
-
-# Supply only explicitly marked, value-free routes. Roster clears the inherited
-# environment and maps these into its child; raw Harness commands remain raw.
-if [[ -r "$HOME/.config/roster/runtime.env" ]]; then
-  set -a
-  source "$HOME/.config/roster/runtime.env"
-  set +a
+if [[ -S "$HOME/.1password/agent.sock" ]]; then
+  export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
 fi
+
+docker_socket="${XDG_RUNTIME_DIR:-/run/user/$UID}/docker.sock"
+if [[ -S "$docker_socket" ]]; then
+  export DOCKER_HOST="unix://$docker_socket"
+fi
+unset docker_socket
