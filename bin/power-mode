@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# Supported Thelio power modes. Profile transitions may report a false SATA error,
+# so commands intentionally continue and the resulting state is always printed.
+set -u
+
+show_policy_values() {
+  local label="$1"
+  shift
+  local -A seen=()
+  local file value
+  for file in "$@"; do
+    if [[ -r "$file" ]]; then
+      value="$(<"$file")"
+      seen["$value"]=1
+    fi
+  done
+  local values=""
+  for value in "${!seen[@]}"; do
+    values+="${values:+, }$value"
+  done
+  printf '%-16s %s\n' "$label" "$values"
+}
+
+show_state() {
+  printf '\nSystem76 profile\n'
+  system76-power profile
+
+  printf '\nCPU policy\n'
+  show_policy_values governor /sys/devices/system/cpu/cpufreq/policy*/scaling_governor
+  show_policy_values epp /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference
+  show_policy_values boost /sys/devices/system/cpu/cpufreq/boost
+  show_policy_values min_khz /sys/devices/system/cpu/cpufreq/policy*/scaling_min_freq
+  show_policy_values max_khz /sys/devices/system/cpu/cpufreq/policy*/scaling_max_freq
+
+  printf '\nNVIDIA policy\n'
+  nvidia-smi --query-gpu=power.limit,power.min_limit,power.max_limit,persistence_mode --format=csv,noheader
+}
+
+mode="${1:-status}"
+case "$mode" in
+  quiet)
+    system76-power profile balanced
+    busctl call com.system76.Scheduler /com/system76/Scheduler com.system76.Scheduler SetCpuProfile s default
+    printf 'power\n' | sudo tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference >/dev/null
+    printf '0\n' | sudo tee /sys/devices/system/cpu/cpufreq/boost >/dev/null
+    sudo nvidia-smi -pl 250
+    ;;
+  balanced)
+    sudo nvidia-smi -pl 300
+    system76-power profile balanced
+    busctl call com.system76.Scheduler /com/system76/Scheduler com.system76.Scheduler SetCpuProfile s auto
+    ;;
+  performance)
+    sudo nvidia-smi -pl 300
+    system76-power profile performance
+    busctl call com.system76.Scheduler /com/system76/Scheduler com.system76.Scheduler SetCpuProfile s responsive
+    ;;
+  status)
+    ;;
+  *)
+    printf 'usage: %s {quiet|balanced|performance|status}\n' "${0##*/}" >&2
+    exit 2
+    ;;
+esac
+
+show_state

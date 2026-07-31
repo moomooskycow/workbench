@@ -11,9 +11,11 @@ export PATH="$PATH:$HOME/Development/workbench/bin"
 
 ## Utilities
 
+- `ghostty` - Launch the local Ghostty AppImage
 - `ghostty-theme` - Theme switching for Ghostty
 - `image-shrink` - Backup + resize/recompress images for LLM-friendly galleries
 - `kill-ports-3000-3007.sh` - Clear common local dev server ports
+- `power-mode` - System76 power profile helper (quiet|balanced|performance|status)
 - `projects` - Project registry helper
 - `stripe-audit` - Stripe configuration audit helper
 - `dark-mode` - Set the system and Codex theme to dark
