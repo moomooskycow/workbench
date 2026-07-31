@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic Engineering Operating Environment — Research &amp; Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#16161e; --bg-soft:#1a1b26; --bg-card:#1f2335; --bg-elev:#24283b;
+  --border:#2c3047; --border-soft:#232637;
+  --text:#c0caf5; --text-2:#9aa5ce; --muted:#565f89; --dim:#414868;
+  --blue:#7aa2f7; --blue-d:rgba(122,162,247,.13);
+  --green:#9ece6a; --green-d:rgba(158,206,106,.13);
+  --yellow:#e0af68; --yellow-d:rgba(224,175,104,.13);
+  --red:#f7768e; --red-d:rgba(247,118,142,.13);
+  --purple:#bb9af7; --purple-d:rgba(187,154,247,.13);
+  --cyan:#7dcfff; --cyan-d:rgba(125,207,255,.13);
+  --orange:#ff9e64; --orange-d:rgba(255,158,100,.13);
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono','SF Mono',Consolas,monospace;
+  --sidebar:236px; --content:780px; --radius:10px; --radius-s:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+::selection{background:var(--blue-d);color:var(--blue)}
+
+/* ---------- progress bar ---------- */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--blue),var(--purple));z-index:100;transition:width 80ms linear}
+
+/* ---------- sidebar ---------- */
+nav#toc{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar);padding:2.2rem 1.4rem;border-right:1px solid var(--border-soft);background:var(--bg);overflow-y:auto;z-index:50}
+nav#toc .brand{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+nav#toc .brand b{color:var(--blue)}
+nav#toc .date{font-family:var(--mono);font-size:.68rem;color:var(--dim);margin-bottom:1.8rem}
+nav#toc a{display:block;padding:.34rem .6rem;margin:.1rem 0;font-size:.82rem;color:var(--muted);text-decoration:none;border-radius:var(--radius-s);border-left:2px solid transparent;transition:all 150ms}
+nav#toc a:hover{color:var(--text-2);background:var(--bg-card)}
+nav#toc a.active{color:var(--blue);background:var(--blue-d);border-left-color:var(--blue)}
+nav#toc .toc-num{font-family:var(--mono);font-size:.66rem;color:var(--dim);margin-right:.45rem}
+nav#toc a.active .toc-num{color:var(--blue)}
+
+/* ---------- layout ---------- */
+main{margin-left:var(--sidebar);padding:0 2.5rem}
+.wrap{max-width:var(--content);margin:0 auto}
+section{padding:4.2rem 0 1rem;scroll-margin-top:1.5rem}
+
+/* ---------- hero ---------- */
+header.hero{padding:6rem 0 4rem;position:relative}
+header.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 50% 0%,rgba(122,162,247,.09),transparent 65%);pointer-events:none}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:1.2rem}
+.eyebrow .sep{color:var(--dim);margin:0 .5rem}
+h1.title{font-size:clamp(2.1rem,4.5vw,3.3rem);font-weight:800;line-height:1.12;letter-spacing:-.02em;background:linear-gradient(135deg,#dbe4ff 30%,#7aa2f7 100%);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:1.1rem}
+.subtitle{font-size:1.12rem;color:var(--text-2);max-width:44rem;margin-bottom:2.4rem}
+.verdict-box{background:linear-gradient(180deg,var(--bg-card),var(--bg-soft));border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem 1.8rem;position:relative;overflow:hidden}
+.verdict-box::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--purple),transparent)}
+.verdict-box .vlabel{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:.6rem}
+.verdict-box p{font-size:1.06rem;color:var(--text);font-weight:500}
+.verdict-box p em{color:var(--blue);font-style:normal}
+
+/* ---------- section headers ---------- */
+.sec-head{margin-bottom:2rem}
+.sec-num{font-family:var(--mono);font-size:.75rem;color:var(--blue);letter-spacing:.12em;margin-bottom:.4rem}
+h2{font-size:1.75rem;font-weight:700;letter-spacing:-.015em;color:#e3e9ff;margin-bottom:.5rem}
+.sec-lede{color:var(--text-2);font-size:1.02rem;max-width:42rem}
+h3{font-size:1.14rem;font-weight:600;color:#dbe2fa;margin:2.2rem 0 .8rem}
+p{margin-bottom:1rem;color:var(--text-2)}
+p strong,li strong{color:var(--text)}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+ul.plain{list-style:none;margin-bottom:1rem}
+ul.plain li{padding-left:1.2rem;position:relative;margin-bottom:.4rem;color:var(--text-2)}
+ul.plain li::before{content:"·";position:absolute;left:.2rem;color:var(--blue);font-weight:700}
+code{font-family:var(--mono);font-size:.85em;background:var(--bg-elev);padding:.12em .4em;border-radius:4px;color:var(--cyan)}
+
+/* ---------- pull quote ---------- */
+.pull{border-left:3px solid var(--purple);background:var(--purple-d);border-radius:0 var(--radius-s) var(--radius-s) 0;padding:1rem 1.4rem;margin:1.6rem 0;font-size:1.02rem;color:var(--text);font-weight:500}
+
+/* ---------- tables ---------- */
+.tbl{width:100%;border-collapse:collapse;margin:1.4rem 0;font-size:.9rem}
+.tbl th{text-align:left;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:.6rem .8rem;border-bottom:1px solid var(--border)}
+.tbl td{padding:.68rem .8rem;border-bottom:1px solid var(--border-soft);color:var(--text-2);vertical-align:top}
+.tbl tr:hover td{background:rgba(122,162,247,.03)}
+.tbl td:first-child{color:var(--text);font-weight:500}
+
+/* ---------- badges ---------- */
+.badge{display:inline-block;font-family:var(--mono);font-size:.68rem;font-weight:600;letter-spacing:.06em;padding:.18em .6em;border-radius:99px;white-space:nowrap}
+.b-keep{background:var(--green-d);color:var(--green)}
+.b-build{background:var(--blue-d);color:var(--blue)}
+.b-add{background:var(--cyan-d);color:var(--cyan)}
+.b-warn{background:var(--yellow-d);color:var(--yellow)}
+.b-no{background:var(--red-d);color:var(--red)}
+.b-later{background:var(--bg-elev);color:var(--muted)}
+.b-purple{background:var(--purple-d);color:var(--purple)}
+
+/* ---------- cards ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.4rem 0}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.4rem 0}
+.card{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:var(--radius);padding:1.3rem 1.4rem;transition:border-color 150ms}
+.card:hover{border-color:var(--border)}
+.card h4{font-size:.98rem;font-weight:600;color:var(--text);margin-bottom:.45rem;display:flex;align-items:center;gap:.6rem}
+.card p{font-size:.88rem;margin-bottom:.4rem}
+.card .meta{font-family:var(--mono);font-size:.7rem;color:var(--dim)}
+
+/* ---------- architecture planes ---------- */
+.arch{margin:2rem 0;display:flex;flex-direction:column;gap:0}
+.plane{border:1px solid var(--border-soft);border-radius:var(--radius);background:var(--bg-card);padding:1.1rem 1.3rem;position:relative;border-left:3px solid var(--pc,var(--muted))}
+.plane .p-head{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin-bottom:.75rem}
+.plane .p-name{font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--pc,var(--text))}
+.plane .p-desc{font-size:.78rem;color:var(--muted)}
+.plane .p-nodes{display:flex;flex-wrap:wrap;gap:.5rem}
+.pnode{font-family:var(--mono);font-size:.76rem;background:var(--bg-elev);border:1px solid var(--border-soft);border-radius:var(--radius-s);padding:.34em .7em;color:var(--text-2)}
+.pnode.hot{border-color:var(--pc);color:var(--pc)}
+.flow{display:flex;align-items:center;gap:.7rem;padding:.45rem 0 .45rem 1.4rem}
+.flow .arrow{color:var(--dim);font-size:.95rem}
+.flow .flabel{font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+.kernel-band{border:1px dashed var(--purple);border-radius:var(--radius);padding:1rem 1.3rem;margin-top:1rem;background:var(--purple-d)}
+.kernel-band .p-name{color:var(--purple)}
+.kernel-band .p-nodes .pnode{background:transparent;border-color:rgba(187,154,247,.3);color:var(--purple)}
+
+/* ---------- kernel primitives ---------- */
+.kcard{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:var(--radius);padding:1.4rem 1.5rem;margin-bottom:1rem;display:grid;grid-template-columns:auto 1fr;gap:1.1rem}
+.kcard .knum{font-family:var(--mono);font-size:1.05rem;font-weight:600;color:var(--blue);opacity:.85}
+.kcard h4{font-size:1.02rem;font-weight:600;color:var(--text);margin-bottom:.4rem}
+.kcard p{font-size:.9rem;margin-bottom:.6rem}
+.kfields{font-family:var(--mono);font-size:.74rem;line-height:1.9;color:var(--muted)}
+.kfields span{background:var(--bg-elev);border-radius:4px;padding:.1em .5em;margin:0 .18em .3em 0;display:inline-block;color:var(--cyan)}
+
+/* ---------- timeline ---------- */
+.timeline{position:relative;margin:2rem 0;padding-left:2.6rem}
+.timeline::before{content:"";position:absolute;left:.85rem;top:.4rem;bottom:.4rem;width:2px;background:linear-gradient(180deg,var(--blue),var(--purple))}
+.titem{position:relative;margin-bottom:2rem}
+.titem .tmark{position:absolute;left:-2.6rem;top:.1rem;width:1.75rem;height:1.75rem;border-radius:50%;background:var(--bg-elev);border:2px solid var(--blue);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.78rem;font-weight:600;color:var(--blue)}
+.titem h4{font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:.45rem}
+.titem p{font-size:.92rem}
+.crit{display:grid;gap:.5rem;margin-top:.7rem}
+.crit>div{font-size:.85rem;border-radius:var(--radius-s);padding:.6rem .9rem;border-left:3px solid}
+.crit .pass{background:var(--green-d);border-color:var(--green);color:var(--text-2)}
+.crit .pass b{color:var(--green)}
+.crit .fail{background:var(--red-d);border-color:var(--red);color:var(--text-2)}
+.crit .fail b{color:var(--red)}
+
+/* ---------- flywheel ---------- */
+.wheel{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:1.8rem 0;font-family:var(--mono);font-size:.78rem}
+.wheel .wstep{background:var(--bg-card);border:1px solid var(--border);border-radius:99px;padding:.5em 1em;color:var(--text-2)}
+.wheel .wstep.hi{border-color:var(--blue);color:var(--blue)}
+.wheel .warr{color:var(--dim)}
+.wheel .wloop{color:var(--purple);font-size:.72rem;padding:.2em .6em;border:1px dashed var(--purple);border-radius:99px}
+
+/* ---------- hazards ---------- */
+.hazard{display:flex;gap:1rem;background:var(--bg-card);border:1px solid var(--border-soft);border-left:3px solid var(--hz,var(--yellow));border-radius:var(--radius-s);padding:.95rem 1.2rem;margin-bottom:.7rem}
+.hazard .hsev{font-family:var(--mono);font-size:.64rem;font-weight:700;letter-spacing:.08em;color:var(--hz,var(--yellow));white-space:nowrap;padding-top:.25rem}
+.hazard p{font-size:.88rem;margin:0}
+.hazard p b{color:var(--text)}
+
+/* ---------- decision matrix ---------- */
+.matrix td:last-child{text-align:right}
+
+/* ---------- evidence ---------- */
+.ev-cols{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:1.4rem}
+.ev-cols h4{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem}
+.ev-cols ul{list-style:none}
+.ev-cols li{margin-bottom:.45rem;font-size:.84rem}
+.ev-cols li code{font-size:.78rem;overflow-wrap:anywhere;word-break:break-word;white-space:normal}
+
+/* ---------- footer ---------- */
+footer{margin-top:5rem;padding:2.5rem 0 3.5rem;border-top:1px solid var(--border-soft);color:var(--dim);font-size:.8rem;font-family:var(--mono)}
+footer .fsep{margin:0 .6rem;color:var(--border)}
+
+/* ---------- back to top ---------- */
+#top-btn{position:fixed;bottom:1.6rem;right:1.6rem;width:2.6rem;height:2.6rem;border-radius:50%;background:var(--bg-elev);border:1px solid var(--border);color:var(--text-2);font-size:1rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity 200ms;z-index:60}
+#top-btn.show{opacity:1;pointer-events:auto}
+#top-btn:hover{color:var(--blue);border-color:var(--blue)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1080px){
+  nav#toc{position:static;width:auto;border-right:none;border-bottom:1px solid var(--border-soft);display:flex;flex-wrap:wrap;gap:.2rem;padding:1rem 1.2rem}
+  nav#toc .brand,nav#toc .date{width:100%}
+  nav#toc a{border-left:none;padding:.25rem .55rem}
+  main{margin-left:0;padding:0 1.4rem}
+  .grid2,.grid3,.ev-cols{grid-template-columns:1fr}
+  .kcard{grid-template-columns:1fr}
+  .tbl{display:block;overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+}
+@media print{
+  nav#toc,#top-btn,#progress{display:none}
+  main{margin:0}
+  body{background:#fff;color:#222}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<nav id="toc">
+  <div class="brand">MISTY STEP <b>·</b> RESEARCH</div>
+  <div class="date">2026-07-22</div>
+  <a href="#verdict"><span class="toc-num">01</span>Verdict</a>
+  <a href="#state"><span class="toc-num">02</span>Current State</a>
+  <a href="#architecture"><span class="toc-num">03</span>Architecture</a>
+  <a href="#kernel"><span class="toc-num">04</span>Protocol Kernel</a>
+  <a href="#decisions"><span class="toc-num">05</span>Build vs Integrate</a>
+  <a href="#experiments"><span class="toc-num">06</span>Experiments</a>
+  <a href="#flywheel"><span class="toc-num">07</span>Learning Flywheel</a>
+  <a href="#possibilities"><span class="toc-num">08</span>What Opens Up</a>
+  <a href="#hazards"><span class="toc-num">09</span>Hazards</a>
+  <a href="#decision"><span class="toc-num">10</span>The Decision</a>
+  <a href="#evidence"><span class="toc-num">11</span>Evidence</a>
+</nav>
+
+<main>
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Research<span class="sep">·</span>Architecture<span class="sep">·</span>Vision</div>
+  <h1 class="title">Agentic Engineering<br>Operating Environment</h1>
+  <p class="subtitle">What a unified full-stack agent system — terminal to multiplexer to harness to governance, evals, workboard, credentials, and automation — could be on this machine. Built from four parallel research lanes over the live estate and external prior art.</p>
+  <div class="verdict-box">
+    <div class="vlabel">The Verdict</div>
+    <p>Yes, build it — but unify the <em>operator experience</em> and <em>execution lineage</em>, not the products, repositories, databases, or trust domains. The missing center is a small protocol kernel, not another app.</p>
+  </div>
+</header>
+
+<!-- ============ 01 VERDICT ============ -->
+<section id="verdict">
+  <div class="sec-head">
+    <div class="sec-num">01</div>
+    <h2>The Verdict</h2>
+    <p class="sec-lede">There is a real, ambitious product here. It is not a monolith.</p>
+  </div>
+
+  <p>The right product is a <strong>local-first agentic engineering operating environment</strong>: one operator experience, one execution lineage, one vocabulary for identity, authority, evidence, and failure — over multiple replaceable terminals, harnesses, models, and services, with deterministic systems governing model-driven work.</p>
+
+  <p>SOTA models change the bottleneck. Cognition is increasingly abundant; the scarce parts are now knowing what work exists, preventing agents from colliding, constraining authority, surviving crashes and disconnects, proving what happened, comparing configurations honestly, and learning from real work without turning private transcripts into a warehouse. That is exactly the layer the local projects are already converging toward.</p>
+
+  <div class="pull">One distribution, many authorities. Most of the difficult domain cores already exist on this machine — the missing center is a versioned protocol kernel plus conformance suite that lets them compose safely.</div>
+
+  <h3>The acceptance oracle</h3>
+  <p>The unified system succeeds only if <strong>replaceability</strong> holds end to end:</p>
+  <ul class="plain">
+    <li>Any one terminal, multiplexer, harness, credential broker, workflow engine, work ledger, eval runner, or human projection can be replaced without rewriting authoritative history.</li>
+    <li>A disconnect does not terminate durable work.</li>
+    <li>An observation outage never gains control authority.</li>
+    <li>A credential outage fails closed, with no raw-secret fallback.</li>
+    <li>An ambiguous external effect is never blindly retried.</li>
+    <li>No component reads another component's private database.</li>
+    <li>The system stays useful from plain CLI tools when the unified UI is gone.</li>
+  </ul>
+
+  <h3>Explicit non-goals</h3>
+  <p>No shared mega-database. No universal workflow DSL. No transcript warehouse. No premature top-level product pick. No merging of trust domains to make a dashboard prettier.</p>
+</section>
+
+<!-- ============ 02 CURRENT STATE ============ -->
+<section id="state">
+  <div class="sec-head">
+    <div class="sec-num">02</div>
+    <h2>What Exists Today</h2>
+    <p class="sec-lede">This is not a greenfield project. Most hard domain primitives are already real; the seams are missing.</p>
+  </div>
+
+  <table class="tbl">
+    <thead><tr><th>Layer</th><th>Current authority</th><th>Observed state</th><th>Decision</th></tr></thead>
+    <tbody>
+      <tr><td>Terminal rendering</td><td>Ghostty 1.3.1</td><td>Excellent daily terminal</td><td><span class="badge b-keep">KEEP</span></td></tr>
+      <tr><td>Multiplexing &amp; workspaces</td><td>Herdr 0.7.5</td><td>Protocol 17: workspaces, panes, agents, worktrees, metadata, events, plugins</td><td><span class="badge b-keep">KEEP + INTEGRATE</span></td></tr>
+      <tr><td>Interactive harness</td><td>OMP 17.0.7</td><td>Deep tool surface, typed subagents, LSP/DAP, hash-anchored edits, persistent kernels</td><td><span class="badge b-keep">PRIMARY</span></td></tr>
+      <tr><td>Minimal harness</td><td>Pi 0.78.1</td><td>Small, extensible, embeddable, intentionally sparse</td><td><span class="badge b-add">ADD AS ADAPTER</span></td></tr>
+      <tr><td>Roles &amp; composition</td><td><code>omp-config</code></td><td>Installed static authority plus deterministic <code>omp.launch-contract.v1</code> compiler</td><td><span class="badge b-keep">AUTHORITATIVE</span></td></tr>
+      <tr><td>Work coordination</td><td>Powder</td><td>Shipped cards, claims, leases, relations, proof, audit, events</td><td><span class="badge b-keep">AUTHORITATIVE</span></td></tr>
+      <tr><td>Durable workflows</td><td>Bitterblossom</td><td>Real runtime and recovery; new effect/approval/wait adapters not shipped</td><td><span class="badge b-build">BUILD THROUGH</span></td></tr>
+      <tr><td>Credential containment</td><td>Mint</td><td>Broker, policy binding, scrubbing, audit, fail-closed effects</td><td><span class="badge b-keep">AUTHORITATIVE</span></td></tr>
+      <tr><td>Fleet visibility</td><td>Overmind</td><td>Shipped observation appliance; automation is vision, not current behavior</td><td><span class="badge b-keep">READ MODEL</span></td></tr>
+      <tr><td>Health &amp; incidents</td><td>Canary</td><td>Health, errors, incidents, remediation claims, responder writeback</td><td><span class="badge b-keep">OPERATIONAL</span></td></tr>
+      <tr><td>Evaluation</td><td>Crucible</td><td>Authoring, validation, runners, calibrated judgment, comparison, adjudication</td><td><span class="badge b-keep">AUTHORITATIVE</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="grid2">
+    <article class="card">
+      <h4>Ghostty <span class="badge b-keep">KEEP</span></h4>
+      <p><code>libghostty-vt</code> makes eventual embedding possible, but it provides terminal state — not tabs, windows, splits, session management, configuration UI, or search UI. Rebuilding those layers does not improve agent governance or reliability.</p>
+      <div class="meta">terminal bytes · rendering · input</div>
+    </article>
+    <article class="card">
+      <h4>Herdr <span class="badge b-keep">KEEP + INTEGRATE</span></h4>
+      <p>Already exposes the first-class agent multiplexer API ordinary terminals lack: workspaces, worktrees, panes, tabs, agent status, metadata tokens, subscriptions, plugin actions, and handoff.</p>
+      <div class="meta">session · process · worktree</div>
+    </article>
+    <article class="card">
+      <h4>OMP <span class="badge b-keep">PRIMARY</span></h4>
+      <p>Expensive capabilities are already integrated: 32 built-in tools, 14 LSP operations, 28 debugger operations, stale-anchor-safe edits, isolated subagents, schema-validated yields, stream rules, and tool-calling execution kernels.</p>
+      <div class="meta">semantic execution · interactive primary</div>
+    </article>
+    <article class="card">
+      <h4>Pi <span class="badge b-add">COMPETITOR</span></h4>
+      <p>Its value is simplicity: four default tools, clean extensions, tree-structured sessions, and embeddable packages. It is the right reference substrate — not yet an evidence-backed replacement for OMP.</p>
+      <div class="meta">minimal core · controlled experiments</div>
+    </article>
+    <article class="card">
+      <h4>Powder <span class="badge b-keep">WORK AUTHORITY</span></h4>
+      <p>Cards, acceptance criteria, proof plans, dependency relations, claims, expiring leases, three-way identity, event outbox, signed webhooks, and SSE. It coordinates work but deliberately never calls a model.</p>
+      <div class="meta">card · claim · run · proof</div>
+    </article>
+    <article class="card">
+      <h4>Bitterblossom <span class="badge b-build">DURABLE ENGINE</span></h4>
+      <p>Immutable workflow revisions, idempotent trigger acceptance, sequential steps, typed outcomes, budget guards, crash classification, and explicit replay already ship. Typed effect, approval, wait, and complete Powder/GitHub adapters remain the critical gap.</p>
+      <div class="meta">workflow · transition · recovery · budget</div>
+    </article>
+    <article class="card">
+      <h4>Mint <span class="badge b-keep">CUSTODY</span></h4>
+      <p>Owns credential confidentiality: workload authentication, alias binding, destination policy, non-disclosing execution, response scrubbing, audit, rotation, and fail-closed reconciliation. It does not own semantic authorization.</p>
+      <div class="meta">credential · effect_id · audit</div>
+    </article>
+    <article class="card">
+      <h4>Overmind <span class="badge b-purple">PROJECTION</span></h4>
+      <p>Fleet observers and a bounded append-only Feed are shipped. The current product explicitly does not launch or control work. Broader automation in its Vision remains unshipped and should not silently absorb Bitterblossom.</p>
+      <div class="meta">observe · narrate · correlate</div>
+    </article>
+    <article class="card">
+      <h4>Crucible <span class="badge b-keep">MEASUREMENT</span></h4>
+      <p>Four runners, deterministic graders, calibrated agentic judges, operating-environment attribution, trusted comparisons, adjudication, and evidence export. Its central promise: refuse to report a delta it cannot defend.</p>
+      <div class="meta">eval · confidence · trust transition</div>
+    </article>
+    <article class="card">
+      <h4>omp-config <span class="badge b-keep">STATIC AUTHORITY</span></h4>
+      <p>Agent, instruction, model, skill, MCP, and tool declarations now compile into a sealed <code>omp.launch-contract.v1</code> bundle. The compiler records source digests, rejects undeclared project agents and unenforceable controls, and launches stock OMP without adding a service.</p>
+      <div class="meta">role · composition · digest · preflight</div>
+    </article>
+  </div>
+
+  <div class="pull"><strong>Roster and Paperclip are retired.</strong> Static composition now belongs to <code>omp-config</code>; Bitterblossom consumes sealed launch bundles; Powder preserves Roster history as an archived repository; Mint has no Roster aliases or credentials; Estate excludes both retired products from active authority. Active checkouts, runtimes, binaries, configuration, and the stale Roster GitHub Pages site are gone. The preserved source and state are <code>~/Development/_archives/roster-2026-07-22.tgz</code> (<code>sha256:463ad9c5…dcc930</code>).</div>
+</section>
+
+<!-- ============ 03 ARCHITECTURE ============ -->
+<section id="architecture">
+  <div class="sec-head">
+    <div class="sec-num">03</div>
+    <h2>Target Architecture</h2>
+    <p class="sec-lede">Unification is visual and semantic, not storage. Every mutable fact keeps exactly one writer.</p>
+  </div>
+
+  <div class="arch">
+    <div class="plane" style="--pc:var(--text-2)">
+      <div class="p-head"><span class="p-name">Operator plane</span><span class="p-desc">replaceable read and control faces; no shared hidden state</span></div>
+      <div class="p-nodes">
+        <span class="pnode hot">Ghostty</span><span class="pnode hot">Herdr</span><span class="pnode">Overmind Fleet / Feed</span><span class="pnode">Powder board</span><span class="pnode">future native shell</span>
+      </div>
+    </div>
+    <div class="flow"><span class="arrow">↓</span><span class="flabel">commands only through owning control APIs</span></div>
+
+    <div class="plane" style="--pc:var(--blue)">
+      <div class="p-head"><span class="p-name">Control plane</span><span class="p-desc">single writer per fact</span></div>
+      <div class="p-nodes">
+        <span class="pnode hot">Powder · work / claim</span><span class="pnode hot">Bitterblossom · workflow / recovery</span><span class="pnode hot">omp-config · static composition</span><span class="pnode">semantic grant issuer</span>
+      </div>
+    </div>
+    <div class="flow"><span class="arrow">↓</span><span class="flabel">pinned invocation · declared capability · trace context</span></div>
+
+    <div class="plane" style="--pc:var(--green)">
+      <div class="p-head"><span class="p-name">Execution data plane</span><span class="p-desc">sensitive, unbounded, replaceable</span></div>
+      <div class="p-nodes">
+        <span class="pnode hot">harness adapter</span><span class="pnode">OMP</span><span class="pnode">Pi</span><span class="pnode">Codex / Claude</span><span class="pnode">sandbox</span><span class="pnode">Herdr</span><span class="pnode">PTY / process</span>
+      </div>
+    </div>
+    <div class="flow"><span class="arrow">↓</span><span class="flabel">closed effect request · grant · idempotency key</span></div>
+
+    <div class="plane" style="--pc:var(--yellow)">
+      <div class="p-head"><span class="p-name">Credential &amp; effect plane</span><span class="p-desc">separate trust domain; secret bytes never return</span></div>
+      <div class="p-nodes">
+        <span class="pnode hot">typed effect adapter</span><span class="pnode">grant check</span><span class="pnode hot">Mint</span><span class="pnode">GitHub / vendor / service</span>
+      </div>
+    </div>
+    <div class="flow"><span class="arrow">↓</span><span class="flabel">bounded observations · receipts · artifact references</span></div>
+
+    <div class="plane" style="--pc:var(--purple)">
+      <div class="p-head"><span class="p-name">Evidence plane</span><span class="p-desc">append-only facts; never command authority</span></div>
+      <div class="p-nodes">
+        <span class="pnode hot">owner journals / outboxes</span><span class="pnode">Overmind projection</span><span class="pnode">Crucible import / eval</span><span class="pnode">Canary incidents</span><span class="pnode">owner artifact stores</span>
+      </div>
+    </div>
+
+    <div class="kernel-band">
+      <div class="p-head"><span class="p-name">Kernel — carried through every boundary, not a service</span></div>
+      <div class="p-nodes">
+        <span class="pnode">scoped IDs</span><span class="pnode">causation</span><span class="pnode">pinned digests</span><span class="pnode">capability negotiation</span><span class="pnode">grant receipts</span><span class="pnode">effect receipts</span><span class="pnode">privacy class</span><span class="pnode">schema versions</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>One writer for each fact</h3>
+  <table class="tbl">
+    <thead><tr><th>Fact</th><th>Sole authority</th></tr></thead>
+    <tbody>
+      <tr><td>What work exists and who holds it</td><td>Powder</td></tr>
+      <tr><td>Where a workflow is and how it resumes</td><td>Bitterblossom</td></tr>
+      <tr><td>What role, model policy, skills, and tools were requested</td><td><code>omp-config</code> launch contract</td></tr>
+      <tr><td>What the harness actually supports and did</td><td>Harness adapter and harness</td></tr>
+      <tr><td>Which process, pane, and worktree are live</td><td>Herdr</td></tr>
+      <tr><td>Whether credentialed execution proceeds without disclosure</td><td>Mint</td></tr>
+      <tr><td>Whether the fleet is healthy</td><td>Canary</td></tr>
+      <tr><td>What was observed across the system</td><td>Overmind</td></tr>
+      <tr><td>Whether experimental evidence supports a decision</td><td>Crucible</td></tr>
+      <tr><td>What bytes appeared in a terminal</td><td>Terminal/session owner, with bounded retention</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Data, control, and evidence are different planes</h3>
+  <div class="grid3">
+    <div class="card"><h4><span class="badge b-add">DATA</span> What flowed</h4><p>PTY bytes, model streams, tool output, artifacts, and external responses. Private by default. Never a cross-system control bus.</p></div>
+    <div class="card"><h4><span class="badge b-build">CONTROL</span> What changed</h4><p>Claims, grants, launches, transitions, approvals, budgets, cancellation, and effect requests. Every mutable fact has one owner.</p></div>
+    <div class="card"><h4><span class="badge b-purple">EVIDENCE</span> What was observed</h4><p>Immutable observations and receipts. A Feed row, event, trace, or model claim does not become proof merely by being stored.</p></div>
+  </div>
+
+  <p>An Overmind outage must not stop work. A Powder event does not become a workflow transition because it appeared in the Feed. A Crucible result is evidence, not authority, unless a Bitterblossom workflow explicitly declares a deterministic gate. Mint enforces custody and mechanical policy; it does not decide whether an operation is semantically appropriate.</p>
+</section>
+
+<!-- ============ 04 KERNEL ============ -->
+<section id="kernel">
+  <div class="sec-head">
+    <div class="sec-num">04</div>
+    <h2>The Small Stable Kernel</h2>
+    <p class="sec-lede">Begin with schemas, validation rules, fixtures, and adapter conformance tests — not another daemon.</p>
+  </div>
+
+  <p>The kernel contains only the cross-system facts needed for safe handoff and correlation. Domain semantics stay inside deep owners: panes in Herdr, execution in the harness, transitions in Bitterblossom, work in Powder, custody in Mint, measurement in Crucible, and projection in Overmind.</p>
+
+  <article class="kcard">
+    <div class="knum">01</div>
+    <div>
+      <h4>Scoped identity &amp; lineage</h4>
+      <p>Connect every run without confusing a role or model name for a security principal.</p>
+      <div class="kfields"><span>integration_principal</span><span>workload_identity</span><span>work_item_id</span><span>workflow_run_id</span><span>harness_session_id</span><span>mux_pane_id</span><span>root_trace_id</span><span>parent_id</span></div>
+    </div>
+  </article>
+
+  <article class="kcard">
+    <div class="knum">02</div>
+    <div>
+      <h4>Pinned invocation</h4>
+      <p>Turn “what ran?” into a reproducible fact instead of archaeology across configuration files.</p>
+      <div class="kfields"><span>composition_digest</span><span>repo_revision</span><span>context_digests</span><span>harness_version</span><span>model</span><span>tool_set</span><span>filesystem_policy</span><span>network_policy</span><span>limits</span><span>grant_handle</span><span>result_schema</span></div>
+    </div>
+  </article>
+
+  <article class="kcard">
+    <div class="knum">03</div>
+    <div>
+      <h4>Normalized occurrence</h4>
+      <p>A CloudEvents-compatible envelope with OpenTelemetry-compatible trace correlation. Domain payloads remain owned and versioned by their source.</p>
+      <div class="kfields"><span>source</span><span>source_local_id</span><span>type</span><span>schema_version</span><span>occurred_at</span><span>received_at</span><span>trace</span><span>causation</span><span>privacy_class</span><span>retention_class</span><span>payload_or_ref</span></div>
+    </div>
+  </article>
+
+  <article class="kcard">
+    <div class="knum">04</div>
+    <div>
+      <h4>Grant decision</h4>
+      <p>Authority narrows monotonically through delegation. A model cannot mint or expand its own authority.</p>
+      <div class="kfields"><span>subject</span><span>closed_action</span><span>resource</span><span>constraints</span><span>issuer</span><span>policy_revision</span><span>issued_at</span><span>expires_at</span><span>parent_grant</span><span>decision_receipt</span></div>
+    </div>
+  </article>
+
+  <article class="kcard">
+    <div class="knum">05</div>
+    <div>
+      <h4>Effect request &amp; receipt</h4>
+      <p>Every external effect is a named adapter operation with durable identity. An uncertain effect is probed, never blindly retried.</p>
+      <div class="kfields"><span>operation</span><span>request_digest</span><span>idempotency_key</span><span>grant_handle</span><span>safe_cancel_phase</span><span>result_class</span><span>authoritative_readback</span></div>
+    </div>
+  </article>
+
+  <article class="kcard">
+    <div class="knum">06</div>
+    <div>
+      <h4>Evidence reference</h4>
+      <p>Heavy evidence stays in its owner's store. The shared record is bounded, attributable, and privacy-aware.</p>
+      <div class="kfields"><span>content_digest</span><span>media_or_schema_type</span><span>owner</span><span>sensitivity</span><span>disclosure_state</span><span>retention</span><span>provenance</span></div>
+    </div>
+  </article>
+
+  <article class="kcard">
+    <div class="knum">07</div>
+    <div>
+      <h4>Capability negotiation</h4>
+      <p>Adapters declare what they actually enforce. Unsupported controls fail before execution instead of degrading into prompt instructions.</p>
+      <div class="kfields"><span>adapter_name</span><span>adapter_version</span><span>schema_versions</span><span>sandbox_strength</span><span>typed_results</span><span>cancellation</span><span>recovery</span><span>cost_reporting</span><span>network_enforcement</span><span>credential_containment</span></div>
+    </div>
+  </article>
+
+  <div class="pull">MCP remains the tool bus. It is not the whole kernel: it covers host/client/server isolation and capability negotiation, but not durable workflows, work claims, external-effect idempotency, cross-harness provenance, or trusted evaluation.</div>
+</section>
+
+<!-- ============ 05 BUILD VS INTEGRATE ============ -->
+<section id="decisions">
+  <div class="sec-head">
+    <div class="sec-num">05</div>
+    <h2>Build vs Integrate</h2>
+    <p class="sec-lede">Own the control contracts and the learning loop. Rent or reuse the undifferentiated substrate.</p>
+  </div>
+
+  <div class="grid2">
+    <article class="card">
+      <h4>Ghostty <span class="badge b-no">DO NOT REWRITE</span></h4>
+      <p>Keep the daily terminal. A future shell may embed <code>libghostty-vt</code>, but only after the higher-level data models stabilize. Rendering is not the current bottleneck.</p>
+    </article>
+    <article class="card">
+      <h4>Herdr <span class="badge b-keep">KEEP</span></h4>
+      <p>Build against its structured API rather than parsing screen contents. A future native UI can use Herdr as an out-of-process session backend and remain restartable.</p>
+    </article>
+    <article class="card">
+      <h4>OMP <span class="badge b-keep">PRIMARY</span></h4>
+      <p>Do not migrate on aesthetics. The integrated editing, language intelligence, debugging, subagents, schemas, and tools would be expensive to recreate.</p>
+    </article>
+    <article class="card">
+      <h4>Pi <span class="badge b-add">ADD + MEASURE</span></h4>
+      <p>Implement the same harness adapter for Pi. Let Crucible compare real task outcomes. Migrate individual lanes if Pi wins; no wholesale cutover is required.</p>
+    </article>
+    <article class="card">
+      <h4>Domain services <span class="badge b-keep">KEEP SEPARATE</span></h4>
+      <p>Powder, Bitterblossom, Mint, Crucible, Canary, and Overmind have different trust domains, retention policies, write authorities, and failure modes. One distribution can still make them feel like one product.</p>
+    </article>
+    <article class="card">
+      <h4>Native shell <span class="badge b-later">LATER</span></h4>
+      <p>Build it only after the APIs prove themselves in shadow mode. The UI must be a replaceable face over public contracts, never the process owner or hidden state store.</p>
+    </article>
+  </div>
+
+  <h3>The OMP versus Pi decision</h3>
+  <p>Make this an experiment, not a religion. Run the same task families through the same composition, worktree, sandbox, budget, and result schema. Compare success, edit correctness, recovery, instruction adherence, cost, context use, operator interventions, and adapter breakage. If Pi wins one task family, migrate that family. OMP can remain the interactive primary while Pi handles bounded unattended work.</p>
+
+  <h3>The missing execution boundary</h3>
+  <p>Worktrees separate edits; they do not isolate processes or networks. Unattended operation needs a declared sandbox with writable roots, network deny-by-default, brokered egress, and honest attestation of what the adapter can enforce. Mint contains credentials, not the entire filesystem or network.</p>
+</section>
+
+<!-- ============ 06 EXPERIMENTS ============ -->
+<section id="experiments">
+  <div class="sec-head">
+    <div class="sec-num">06</div>
+    <h2>The First Experiments</h2>
+    <p class="sec-lede">Build falsifiable vertical slices. Each one either reduces uncertainty or kills an attractive but wrong direction.</p>
+  </div>
+
+  <div class="timeline">
+    <article class="titem">
+      <div class="tmark">1</div>
+      <h4>Correlation spine</h4>
+      <p>Add one root trace ID and typed cross-references across Powder, Bitterblossom, the harness, Herdr metadata, Mint audit, Canary, Crucible, and Overmind — without changing behavior.</p>
+      <div class="crit">
+        <div class="pass"><b>PASS</b> · From any ID, reach every related owner record without database access or manual string matching.</div>
+        <div class="fail"><b>FAIL</b> · A central database becomes necessary, or one component must inspect another's private store.</div>
+      </div>
+    </article>
+
+    <article class="titem">
+      <div class="tmark">2</div>
+      <h4>Card-to-proof golden path</h4>
+      <p>One real Powder card is accepted idempotently by Bitterblossom, claimed, resolved to a pinned composition, launched through an adapter into a Herdr worktree, executed by OMP under declared limits, and completed with typed proof. External operations use Mint-backed named effects.</p>
+      <div class="crit">
+        <div class="pass"><b>PASS</b> · No duplicate claim, model call, commit, comment, or effect. No secret enters the child environment. Kill-and-resume produces one explainable outcome.</div>
+        <div class="fail"><b>FAIL</b> · The path still relies on prose parsing, shell glue, manual IDs, or blind retry.</div>
+      </div>
+    </article>
+
+    <article class="titem">
+      <div class="tmark">3</div>
+      <h4>OMP versus Pi tournament</h4>
+      <p>Run representative tasks across both harnesses with identical launch contracts, repository snapshots, tools, sandbox, budget, output schema, and graders. Crucible changes only the harness axis.</p>
+      <div class="crit">
+        <div class="pass"><b>PASS FOR PI</b> · Non-inferior outcomes, typed results, recovery, cost visibility, sandbox enforcement, and maintainable adapters across upgrades.</div>
+        <div class="fail"><b>FAIL FOR MIGRATION</b> · Pi's smaller core forces reconstruction of OMP's editing, LSP, debugger, subagent, or tool semantics.</div>
+      </div>
+    </article>
+
+    <article class="titem">
+      <div class="tmark">4</div>
+      <h4>Failure campaign</h4>
+      <p>Deliberately trigger terminal disconnect, Herdr restart, UI crash, harness crash after a paid response, Bitterblossom restart mid-step, Mint outage, prepared-without-terminal audit, ambiguous GitHub effect, Powder lease expiry, Overmind outage, and unavailable optional eval gate.</p>
+      <div class="crit">
+        <div class="pass"><b>PASS</b> · Work resumes safely or stops in a named recoverable state. Observation failure never grants authority. Credential failure has no direct fallback.</div>
+        <div class="fail"><b>FAIL</b> · “Unknown” is treated as success, zero, or permission to retry.</div>
+      </div>
+    </article>
+
+    <article class="titem">
+      <div class="tmark">5</div>
+      <h4>Native-shell shadow mode</h4>
+      <p>Prototype one read-only screen with workspace and agent list, active terminal, acceptance criteria, authority, budget, structured timeline, approval queue, evidence, and eval verdicts. Run beside Ghostty and Herdr.</p>
+      <div class="crit">
+        <div class="pass"><b>BUILD</b> · It materially reduces time spent locating state, switching tools, diagnosing blocks, or steering concurrent work.</div>
+        <div class="fail"><b>ABANDON UI</b> · The operator keeps returning to raw Ghostty. Preserve the protocol work and delete the shell.</div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 07 FLYWHEEL ============ -->
+<section id="flywheel">
+  <div class="sec-head">
+    <div class="sec-num">07</div>
+    <h2>The Learning Flywheel</h2>
+    <p class="sec-lede">The durable advantage is not the UI. It is a private, evidence-backed loop from real work to better execution policy.</p>
+  </div>
+
+  <div class="wheel">
+    <span class="wstep hi">real work</span><span class="warr">→</span>
+    <span class="wstep">bounded trajectory</span><span class="warr">→</span>
+    <span class="wstep">redacted corpus</span><span class="warr">→</span>
+    <span class="wstep hi">Crucible comparison</span><span class="warr">→</span>
+    <span class="wstep">evidence-backed policy</span><span class="warr">→</span>
+    <span class="wstep hi">pinned composition</span>
+    <span class="wloop">↺ new real work</span>
+  </div>
+
+  <p>This turns model and prompt selection from taste into measured engineering. Every production task can improve the system, while raw proprietary output remains owner-local and bounded.</p>
+
+  <div class="grid2">
+    <div class="card"><h4>Task-family routing</h4><p>Select models by demonstrated performance on the kind of work actually being attempted, not by global leaderboard.</p></div>
+    <div class="card"><h4>Configuration qualification</h4><p>Evaluate role, skill, tool, rule, and harness changes before rollout. Attribute one changed axis at a time.</p></div>
+    <div class="card"><h4>Counterfactual replay</h4><p>Replay one failed or expensive run with another model, tool set, reviewer team, or harness and measure which change helped.</p></div>
+    <div class="card"><h4>Complementary teams</h4><p>Pick reviewers based on measured disagreement and defect catch patterns rather than using the same model family twice.</p></div>
+    <div class="card"><h4>Cost versus success</h4><p>Optimize for verified outcomes per dollar and operator intervention, not token price in isolation.</p></div>
+    <div class="card"><h4>Gradual autonomy</h4><p>Promote workflows from supervised to unattended only after recorded evidence supports the authority increase.</p></div>
+  </div>
+
+  <div class="pull">Do not let the system auto-promote itself from a noisy comparison. Crucible's confidence, calibration, and trust transitions remain load-bearing.</div>
+</section>
+
+<!-- ============ 08 POSSIBILITIES ============ -->
+<section id="possibilities">
+  <div class="sec-head">
+    <div class="sec-num">08</div>
+    <h2>What Opens Up</h2>
+    <p class="sec-lede">Once the spine works, the machine stops being a collection of chats and becomes a software-defined engineering organization.</p>
+  </div>
+
+  <div class="grid2">
+    <article class="card"><h4><span class="badge b-build">01</span> Durable campaigns</h4><p>Cross-session, cross-agent work continues through disconnects, reboots, and model changes without replaying paid completed steps.</p></article>
+    <article class="card"><h4><span class="badge b-build">02</span> On-demand teams</h4><p>A card compiles into architect, builder, reviewers, verifier, and incident investigator with separate models, tools, grants, and worktrees.</p></article>
+    <article class="card"><h4><span class="badge b-build">03</span> Safe external action</h4><p>Agents deploy, open pull requests, update ledgers, and interact with production without ever possessing transferable vendor credentials.</p></article>
+    <article class="card"><h4><span class="badge b-build">04</span> Incident-to-fix loops</h4><p>Canary incident → Bitterblossom responder → Powder card → isolated run → proof → review → deployment → Canary readback.</p></article>
+    <article class="card"><h4><span class="badge b-build">05</span> Harness portability</h4><p>One composition runs through OMP, Pi, Codex, Claude, or a remote sandbox without changing work, authority, or evidence contracts.</p></article>
+    <article class="card"><h4><span class="badge b-build">06</span> Counterfactual engineering</h4><p>Replay a real failure under controlled changes and know whether the model, prompt, tool, sandbox, or reviewer altered the outcome.</p></article>
+    <article class="card"><h4><span class="badge b-build">07</span> Mobile mission control</h4><p>Overmind and Powder expose bounded status and approvals while source code, terminal streams, and credentials remain local.</p></article>
+    <article class="card"><h4><span class="badge b-build">08</span> Governed maintenance</h4><p>Dependency updates, flaky tests, documentation drift, incident follow-up, and backlog hygiene run continuously under leases and proof gates.</p></article>
+    <article class="card"><h4><span class="badge b-build">09</span> Replaceable model market</h4><p>Models become interchangeable cognitive engines, selected by evidence rather than architectural dependency or vendor habit.</p></article>
+    <article class="card"><h4><span class="badge b-purple">∞</span> Self-measuring organization</h4><p>The system gets better through evidence from its own work — not prompt folklore, marketing claims, or one benchmark score.</p></article>
+  </div>
+</section>
+
+<!-- ============ 09 HAZARDS ============ -->
+<section id="hazards">
+  <div class="sec-head">
+    <div class="sec-num">09</div>
+    <h2>Current Hazards</h2>
+    <p class="sec-lede">These gaps matter more than starting a new UI or replacing a terminal.</p>
+  </div>
+
+  <div class="hazard" style="--hz:var(--red)"><div class="hsev">HIGH</div><p><b>No common lineage.</b> Powder card IDs, Bitterblossom runs, harness sessions, Herdr panes, Mint effect IDs, Crucible runs, Canary incidents, and Overmind rows require manual joins.</p></div>
+  <div class="hazard" style="--hz:var(--red)"><div class="hsev">HIGH</div><p><b>Workflow authority is ahead of implementation.</b> Bitterblossom's target describes typed effects, approvals, and waits, but the shipped new WorkflowDoc runtime executes agent steps only. Draft lifecycle workflows can look more executable than they are.</p></div>
+  <div class="hazard" style="--hz:var(--red)"><div class="hsev">HIGH</div><p><b>No unified sandbox.</b> Worktrees separate Git changes, not process privileges or networks. OMP skill visibility is not an authority boundary, and “yolo” execution is unsuitable for unattended external effects.</p></div>
+  <div class="hazard" style="--hz:var(--red)"><div class="hsev">HIGH</div><p><b>Credential adoption remains incomplete.</b> Bitterblossom has a parked direct Powder path; Overmind's GitHub watcher reads <code>GITHUB_TOKEN</code> or <code>gh auth token</code> outside Mint's adoption inventory.</p></div>
+  <div class="hazard" style="--hz:var(--yellow)"><div class="hsev">MEDIUM</div><p><b>Shared Powder credential alias.</b> Multiple consumers use one alias, making rotation, revocation, and incident blast radius coarser than the worker identities suggest.</p></div>
+  <div class="hazard" style="--hz:var(--yellow)"><div class="hsev">MEDIUM</div><p><b>Mint self-health telemetry is noisy.</b> The live broker is healthy and the Roster credential retirement passed its zero-disclosure probe, but Mint's <code>tag:server</code> Canary event receives HTTP 422 and temporarily appears as an unresolved prepared effect. Powder card <code>mint-998</code> owns the separate contract repair.</p></div>
+  <div class="hazard" style="--hz:var(--yellow)"><div class="hsev">MEDIUM</div><p><b>Three human queues.</b> Powder request/input, Bitterblossom asks, and Crucible adjudication all need human judgment. Unify their projection, not their native semantics or writeback.</p></div>
+  <div class="hazard" style="--hz:var(--yellow)"><div class="hsev">MEDIUM</div><p><b>Vision exceeds shipped behavior.</b> Overmind's Vision describes automation and authority; its current README and doctor say observation-only. Several other product docs similarly lag or lead the code.</p></div>
+  <div class="hazard" style="--hz:var(--yellow)"><div class="hsev">MEDIUM</div><p><b>Raw terminal data is already persistent.</b> Local multiplexer configuration captures pane content. Copying raw ANSI or full transcripts into Overmind or Crucible would enlarge the disclosure and retention domain.</p></div>
+  <div class="hazard" style="--hz:var(--yellow)"><div class="hsev">MEDIUM</div><p><b>Audit IDs are isolated.</b> Mint, Powder, and Overmind each hold independent append-only records without a shared correlation envelope, making incident forensics manual.</p></div>
+  <div class="hazard" style="--hz:var(--muted)"><div class="hsev">LOW</div><p><b>Double narration.</b> If Powder events feed Overmind while agents also post milestones, the same work may appear twice unless correlation and deduplication are explicit.</p></div>
+</section>
+
+<!-- ============ 10 DECISION ============ -->
+<section id="decision">
+  <div class="sec-head">
+    <div class="sec-num">10</div>
+    <h2>The Decision</h2>
+    <p class="sec-lede">Build the narrow waist and the golden path. Let evidence decide everything above and below it.</p>
+  </div>
+
+  <table class="tbl matrix">
+    <thead><tr><th>Question</th><th>Answer</th></tr></thead>
+    <tbody>
+      <tr><td>Build a unified agentic engineering system?</td><td><span class="badge b-keep">YES</span></td></tr>
+      <tr><td>Rewrite Ghostty?</td><td><span class="badge b-no">NO</span></td></tr>
+      <tr><td>Replace Herdr now?</td><td><span class="badge b-no">NO</span></td></tr>
+      <tr><td>Move wholesale from OMP to Pi?</td><td><span class="badge b-no">NO</span></td></tr>
+      <tr><td>Add Pi as an evaluated execution adapter?</td><td><span class="badge b-keep">YES</span></td></tr>
+      <tr><td>Create a separate Poster publishing product?</td><td><span class="badge b-no">NO</span> · Overmind Feed already owns narrative projection</td></tr>
+      <tr><td>Merge services and databases?</td><td><span class="badge b-no">NO</span></td></tr>
+      <tr><td>Build a protocol kernel and conformance suite?</td><td><span class="badge b-keep">YES</span></td></tr>
+      <tr><td>Finish Bitterblossom's effect, approval, and recovery boundary?</td><td><span class="badge b-keep">YES</span></td></tr>
+      <tr><td>Build an integrated native shell eventually?</td><td><span class="badge b-warn">ONLY AFTER PROOF</span></td></tr>
+      <tr><td>Preserve raw Ghostty / Herdr / OMP as a fallback?</td><td><span class="badge b-keep">ABSOLUTELY</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="verdict-box" style="margin-top:2rem">
+    <div class="vlabel">Do first</div>
+    <p>The v0 launch slice now works end to end: <code>omp.launch-contract.v1</code> compiles and verifies a sealed bundle, Bitterblossom pins it, dispatches through the authority wrapper, records repository receipts, and refuses drift on resume. Next, add the shared lineage, grant, effect-receipt, and evidence-reference envelope around this proven path—without adding a central database or new control service.</p>
+  </div>
+</section>
+
+<!-- ============ 11 EVIDENCE ============ -->
+<section id="evidence">
+  <div class="sec-head">
+    <div class="sec-num">11</div>
+    <h2>Evidence &amp; Sources</h2>
+    <p class="sec-lede">Local product contracts were treated as primary. External claims were weighted toward official specifications and repositories.</p>
+  </div>
+
+  <div class="ev-cols">
+    <div>
+      <h4>Local authority</h4>
+      <ul>
+        <li><code>~/Development/omp-config/docs/terminal-rig.md</code></li>
+        <li><code>~/Development/omp-config/global/agents/</code></li>
+        <li><code>~/Development/omp-config/docs/launch-contract.md</code></li>
+        <li><code>~/Development/bitterblossom/README.md</code></li>
+        <li><code>~/Development/bitterblossom/VISION.md</code></li>
+        <li><code>~/Development/bitterblossom/docs/workflow-control-plane.md</code></li>
+        <li><code>~/Development/powder/VISION.md</code></li>
+        <li><code>~/Development/estate/decisions/0011-retire-roster-and-paperclip.md</code></li>
+        <li><code>~/Development/qmd/src/llm.ts</code>, <code>src/index.ts</code>, and source-backed MCP lifecycle proof</li>
+        <li><code>~/Development/overmind/README.md</code></li>
+        <li><code>~/Development/overmind/VISION.md</code></li>
+        <li><code>~/Development/mint/VISION.md</code></li>
+        <li><code>~/Development/crucible/README.md</code></li>
+        <li><code>~/Development/crucible/VISION.md</code></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Primary external references</h4>
+      <ul>
+        <li><a href="https://github.com/can1357/oh-my-pi">Oh My Pi</a></li>
+        <li><a href="https://github.com/badlogic/pi-mono">Pi</a></li>
+        <li><a href="https://github.com/ghostty-org/ghostling">Ghostling / libghostty reference</a></li>
+        <li><a href="https://modelcontextprotocol.io/specification/2025-11-25/architecture">MCP architecture</a></li>
+        <li><a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md">CloudEvents specification</a></li>
+        <li><a href="https://opentelemetry.io/docs/specs/otel/logs/data-model/">OpenTelemetry log model</a></li>
+        <li><a href="https://docs.temporal.io/workflow-execution">Temporal workflow execution</a></li>
+        <li><a href="https://inspect.aisi.org.uk/">UK AISI Inspect</a></li>
+        <li><a href="https://spiffe.io/docs/latest/spiffe-about/spiffe-concepts/">SPIFFE concepts</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <p style="margin-top:1.8rem;font-size:.84rem;color:var(--muted)">Scope note: the research inspected local source, product contracts, installed CLI surfaces, and public primary sources. The implementation phase also exercised the deployed Powder repository read model, a guarded Mint release with production health and zero-disclosure probes, a real sealed Bitterblossom workflow fixture, the live OMP launch path, and QMD's source-backed MCP idle-memory lifecycle—including a cold pure-BM25 query that bypasses model reload. Crucible comparisons and a full failure campaign remain future experiments, not claims in this artifact.</p>
+</section>
+
+<footer>
+  <span>AGENTIC ENGINEERING OPERATING ENVIRONMENT</span><span class="fsep">·</span><span>RESEARCH ARTIFACT</span><span class="fsep">·</span><span>2026-07-22</span>
+</footer>
+
+</div>
+</main>
+
+<button id="top-btn" aria-label="Back to top">↑</button>
+<script>
+const progress=document.getElementById('progress');
+const topBtn=document.getElementById('top-btn');
+const navLinks=[...document.querySelectorAll('#toc a')];
+const sections=[...document.querySelectorAll('main section')];
+
+function updateScroll(){
+  const max=document.documentElement.scrollHeight-innerHeight;
+  progress.style.width=(max>0?(scrollY/max)*100:0)+'%';
+  topBtn.classList.toggle('show',scrollY>600);
+}
+addEventListener('scroll',updateScroll,{passive:true});
+updateScroll();
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id));
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>observer.observe(s));
+
+topBtn.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+</script>
+</body>
+</html>
