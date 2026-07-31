@@ -1,0 +1,10 @@
+[Unit]
+Description=Run workbench development hygiene weekly
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+Unit=workbench-dev-hygiene.service
+
+[Install]
+WantedBy=timers.target

@@ -25,10 +25,11 @@ detect_config_path() {
 
 CONFIG_PATH="$(detect_config_path)"
 LOCAL_THEMES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../dotfiles/ghostty/themes" && pwd)"
-DEFAULT_LIGHT_THEME="$LOCAL_THEMES_DIR/Ember Dawn"
-DEFAULT_DARK_THEME="$LOCAL_THEMES_DIR/Ember"
+# Managed pair: Ghostty picks the variant from the system appearance.
+AUTO_THEME_PAIR="light:Ember Dawn,dark:Ember"
 USER_THEMES_DIR="$HOME/.config/ghostty/themes"
 APP_THEMES_DIR="/Applications/Ghostty.app/Contents/Resources/ghostty/themes"
+SYSTEM_THEMES_DIR="/usr/share/ghostty/themes"
 
 ensure_config() {
     mkdir -p "$(dirname "$CONFIG_PATH")"
@@ -85,9 +86,9 @@ PY
             echo "theme = \"$theme\"" >> "$CONFIG_PATH"
         fi
     else
-        # Fallback: BSD sed in-place replace or append
+        # Fallback: portable sed in-place replace or append
         if grep -q '^[[:space:]]*theme[[:space:]]*=' "$CONFIG_PATH"; then
-            sed -i '' "s|^[[:space:]]*theme[[:space:]]*=.*$|theme = \"$theme\"|" "$CONFIG_PATH"
+            sed -i.bak "s|^[[:space:]]*theme[[:space:]]*=.*$|theme = \"$theme\"|" "$CONFIG_PATH" && rm -f "$CONFIG_PATH.bak"
         else
             echo "theme = \"$theme\"" >> "$CONFIG_PATH"
         fi
@@ -105,14 +106,29 @@ ghostty_theme() {
     write_theme "$(resolve_theme "$1")"
 }
 
+ghostty_auto() {
+    write_theme "$AUTO_THEME_PAIR"
+    echo "Ghostty now follows the system appearance. Use dark-mode/light-mode to switch it."
+}
+
 ghostty_light() {
-    local theme="${1:-$DEFAULT_LIGHT_THEME}"
-    write_theme "$(resolve_theme "$theme")"
+    if [[ -z "${1:-}" ]]; then
+        echo "Ghostty follows the system appearance ($AUTO_THEME_PAIR)."
+        echo "Run 'light-mode' to switch the system, or pass an explicit theme to pin it."
+        ghostty_auto
+        return
+    fi
+    write_theme "$(resolve_theme "$1")"
 }
 
 ghostty_dark() {
-    local theme="${1:-$DEFAULT_DARK_THEME}"
-    write_theme "$(resolve_theme "$theme")"
+    if [[ -z "${1:-}" ]]; then
+        echo "Ghostty follows the system appearance ($AUTO_THEME_PAIR)."
+        echo "Run 'dark-mode' to switch the system, or pass an explicit theme to pin it."
+        ghostty_auto
+        return
+    fi
+    write_theme "$(resolve_theme "$1")"
 }
 
 list_dir() {
@@ -132,14 +148,16 @@ ghostty_list() {
     list_dir "Repo themes" "$LOCAL_THEMES_DIR"
     list_dir "User themes (~/.config/ghostty/themes)" "$USER_THEMES_DIR"
     list_dir "Built-in app themes" "$APP_THEMES_DIR"
+    list_dir "Built-in system themes" "$SYSTEM_THEMES_DIR"
 }
 
 if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
     case "${1:-}" in
+        auto) ghostty_auto ;;
         light) ghostty_light "${2:-}" ;;
         dark) ghostty_dark "${2:-}" ;;
         list) ghostty_list ;;
-        "") echo "Usage: $(basename "$0") {light|dark|list|<theme>}"; exit 1 ;;
+        "") echo "Usage: $(basename "$0") {auto|light|dark|list|<theme>}"; exit 1 ;;
         *) ghostty_theme "$1" ;;
     esac
 fi

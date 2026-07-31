@@ -5,11 +5,11 @@ Personal configuration repository for development environment setup, terminal pr
 ## Features
 
 - Shell configs (`.zshenv`, `.zshrc`, `.aliases`, `.env`)
-- Terminal configs for Alacritty, Ghostty, WezTerm, Zellij, tmux, and Starship
+- Terminal configs for Ghostty, tmux, and Starship
 - Project registry docs and naming notes
 - Utility scripts for local development workflows
 - Git hooks and automated quality checks
-- Ember/Kanagawa light/dark synchronization for Codex, Claude Code, Herdr, and Ghostty
+- Ember light/dark synchronization across Ghostty, Herdr, Codex, nen, and nvim
 
 ## Quality Gate
 
@@ -33,21 +33,27 @@ cd ~/Development/workbench
 
 ## Agent appearance
 
-The supported automatic path follows the macOS appearance setting: Claude Code
-uses its `auto` theme, Herdr uses the Rose Pine / Rose Pine Dawn pair with
-`auto_switch`, transparent chrome (`panel_bg = reset`), iris accent, cardier
-`pane_gaps`, and packed agent-aware sidebar layouts (`terminal_title_stripped`),
-Ghostty uses the Ember/Ember Dawn pair, and OMP uses the Kanagawa / Kanagawa
-Lotus pair for better statusline contrast on paper. On macOS the installer also
-removes Ghostty's generated empty `theme =` override, since the native config
-is loaded after the XDG config. Codex's custom syntax-highlighting themes live
-under `dotfiles/codex/themes`; `bin/sync-system-theme` updates only `[tui].theme`
-and keeps both themes linked under `~/.codex/themes`. Codex's surrounding TUI
-follows the active Ghostty terminal surface, and Starship resolves its prompt
-colors through Ghostty's ANSI palette so the shell follows the same light/dark
-switch.
-The installer registers a small LaunchAgent that checks the host appearance
-once a minute. Preview either state without changing anything with:
+One aesthetic: **Ember** (dark charcoal + copper) / **Ember Dawn** (parchment).
+
+| Surface | Dark | Light |
+| --- | --- | --- |
+| Ghostty | Ember | Ember Dawn |
+| Herdr | `terminal` + copper accent | same (rides Ghostty ANSI) |
+| Codex syntax | `ember.tmTheme` | `ember-dawn.tmTheme` |
+| nen (pi coat) | `nen-moon` | `nen-day` |
+| OMP / Hatchet | `dark-ember-ink` | `light-ember` |
+| nvim | `ember` (dark) | `ember` (light) |
+| Starship | Ghostty ANSI (inherits) | same |
+
+Claude Code uses its `auto` theme. Herdr keeps transparent chrome
+(`panel_bg = reset`) and agent-aware sidebars. On macOS, the installer
+removes Ghostty's generated empty `theme =` override and registers a launchd
+LaunchAgent that checks the host appearance once a minute. On Linux, the
+installer registers systemd user timers: the theme timer checks the host
+appearance once a minute, and the development hygiene timer runs weekly.
+`bin/sync-system-theme` updates Codex `[tui].theme` and links both Ember themes
+under `~/.codex/themes`. Starship resolves prompt colors through Ghostty's ANSI
+palette. Preview either state without changing anything with:
 
 ```bash
 bin/sync-system-theme --mode light --dry-run

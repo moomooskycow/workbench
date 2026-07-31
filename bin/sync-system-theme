@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Synchronize the non-native Codex TUI theme with macOS appearance.
+# Synchronize the non-native Codex TUI theme with the system appearance.
 # Claude Code, Herdr, and Ghostty have native automatic appearance settings;
 # this helper owns Codex's custom TextMate theme selection and links.
 
@@ -19,7 +19,7 @@ usage() {
     cat <<'EOF'
 Usage: sync-system-theme [--dry-run] [--mode auto|light|dark]
 
-Selects the tracked Ember Codex TUI theme for the current macOS
+Selects the tracked Ember Codex TUI theme for the current system
 appearance, installs safe symlinks under ~/.codex/themes, and updates only
 [tui].theme in ~/.codex/config.toml.
 EOF
@@ -58,16 +58,37 @@ esac
 
 mode="$requested_mode"
 if [ "$mode" = "auto" ]; then
-    if ! command -v defaults >/dev/null 2>&1; then
-        echo "error: macOS defaults command is required for --mode auto" >&2
-        exit 1
-    fi
-    appearance="$(defaults read -g AppleInterfaceStyle 2>/dev/null || true)"
-    if [ "$appearance" = "Dark" ]; then
-        mode=dark
-    else
-        mode=light
-    fi
+    system_name="$(uname -s)"
+    case "$system_name" in
+        Darwin)
+            if ! command -v defaults >/dev/null 2>&1; then
+                echo "error: macOS defaults command is required for --mode auto on Darwin" >&2
+                exit 1
+            fi
+            appearance="$(defaults read -g AppleInterfaceStyle 2>/dev/null || true)"
+            if [ "$appearance" = "Dark" ]; then
+                mode=dark
+            else
+                mode=light
+            fi
+            ;;
+        Linux)
+            if ! command -v gsettings >/dev/null 2>&1; then
+                echo "error: gsettings command is required for --mode auto on Linux" >&2
+                exit 1
+            fi
+            appearance="$(gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null || true)"
+            if [[ "$appearance" == *prefer-dark* ]]; then
+                mode=dark
+            else
+                mode=light
+            fi
+            ;;
+        *)
+            echo "error: --mode auto requires defaults on Darwin or gsettings on Linux; neither appearance tool is available for $system_name" >&2
+            exit 1
+            ;;
+    esac
 fi
 
 case "$mode" in
@@ -81,9 +102,11 @@ case "$mode" in
         ;;
 esac
 
+# No Codex on this host means there is nothing to manage. Exit 0 so the
+# scheduled 60s sync does not register a failing unit on Codex-free machines.
 if [ ! -f "$CODEX_CONFIG" ]; then
-    echo "error: Codex config not found: $CODEX_CONFIG" >&2
-    exit 1
+    echo "notice: Codex config not found ($CODEX_CONFIG); nothing to sync"
+    exit 0
 fi
 
 if [ ! -f "$THEME_SOURCE_DIR/$theme_file" ]; then
@@ -147,7 +170,7 @@ update_codex_config() {
 
     local temporary file_mode
     temporary="$(mktemp "$CODEX_CONFIG.theme.XXXXXX")"
-    file_mode="$(stat -f '%Lp' "$CODEX_CONFIG" 2>/dev/null || stat -c '%a' "$CODEX_CONFIG")"
+    file_mode="$(stat -c '%a' "$CODEX_CONFIG" 2>/dev/null || stat -f '%Lp' "$CODEX_CONFIG")"
     awk -v value="$theme_name" '
         BEGIN { in_tui = 0; saw_tui = 0; wrote_theme = 0 }
         /^\[/ {

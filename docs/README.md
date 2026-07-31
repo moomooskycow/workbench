@@ -7,7 +7,6 @@ This directory contains documentation for project tracking, terminal setup, and 
 - **[projects.md](projects.md)** - Project registry
 - **[project-names.md](project-names.md)** - Available and assigned project names
 - **[PROJECTS_GUIDE.md](PROJECTS_GUIDE.md)** - Workflow for maintaining the project registry
-- **[WEZTERM.md](WEZTERM.md)** - WezTerm configuration notes
 - **[professional/](professional/)** - Professional resources like resume and CV templates
 
 ## Purpose

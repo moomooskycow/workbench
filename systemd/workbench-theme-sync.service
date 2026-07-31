@@ -1,0 +1,7 @@
+[Unit]
+Description=Synchronize the workbench system theme
+
+[Service]
+Type=oneshot
+Environment="HOME=__HOME__"
+ExecStart="__WORKBENCH_DIR__/bin/sync-system-theme" --mode auto

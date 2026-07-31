@@ -1,132 +1,104 @@
-# ═══════════════════════════════════════════════
-#  G H O S T T Y
-#  ember ink · FiraCode ligatures · refined
-# ═══════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════════════════
+#  G H O S T T Y  ·  Ember workstation
+#  Warm ink, restrained translucency, dense agent-friendly ergonomics.
+# ══════════════════════════════════════════════════════════════════════════════
 
-# Theme — Ember, auto light/dark
-# Warm paper and dark charcoal keep the shell legible before an agent starts.
+# ── Color system ─────────────────────────────────────────────────────────────
 theme = light:Ember Dawn,dark:Ember
-window-theme = system
+window-theme = auto
+background-opacity = 0.96
+background-blur-radius = 22
+minimum-contrast = 1.2
+bold-color = bright
+faint-opacity = 0.62
 
-# ── macOS Chrome ──────────────────────────────
-macos-titlebar-style = tabs
-macos-option-as-alt = true
-macos-window-shadow = false
-window-step-resize = true
-window-save-state = always
-
-# ── Clarity ───────────────────────────────────
-# Opaque and shader-free by design: code and prompts should not compete with
-# the desktop or bloom into their background.
-background-opacity = 1.0
-background-blur-radius = 0
-
-# ── Bloom Shader ─────────────────────────────
-# Deliberately disabled for crisp light-mode text.
-
-# ── Typography ────────────────────────────────
-# FiraCode: beautiful ligatures (=> != >= -> |>)
-# Retina weight: optimized for screen rendering without synthetic emphasis
-font-family = FiraCode Nerd Font
-font-style = Retina
-font-style-bold = Retina
-font-style-italic = Medium
-font-style-bold-italic = Retina
-font-size = 15
-font-thicken = false
+# ── Typography ───────────────────────────────────────────────────────────────
+# Installed locally; carries the Nerd glyphs used by OMP's chrome/status line.
+font-family = JetBrainsMono Nerd Font Mono
+font-size = 14
+font-feature = +calt
+font-feature = +liga
 font-feature = +zero
-font-feature = +cv02
-font-feature = +ss03
-font-feature = +ss05
-adjust-cell-height = 0
-adjust-underline-position = 2
-adjust-cursor-thickness = 2
+adjust-cell-height = 4%
+adjust-underline-position = 1
+adjust-underline-thickness = 1
+adjust-cursor-thickness = 1
 adjust-box-thickness = 1
 
-# ── Visual Polish ─────────────────────────────
-minimum-contrast = 1.2
-bold-is-bright = false
-
-# ── Window ────────────────────────────────────
-window-padding-x = 10
-window-padding-y = 6
+# ── Window chrome ────────────────────────────────────────────────────────────
+gtk-single-instance = true
+gtk-titlebar = true
+gtk-titlebar-style = tabs
+gtk-toolbar-style = flat
+gtk-wide-tabs = false
+gtk-titlebar-hide-when-maximized = true
+window-save-state = always
+window-padding-x = 12
+window-padding-y = 8
 window-padding-balance = true
 window-padding-color = extend
 window-inherit-working-directory = true
 window-inherit-font-size = true
 window-new-tab-position = current
+window-step-resize = true
 resize-overlay = after-first
 resize-overlay-position = bottom-right
-resize-overlay-duration = 500ms
-macos-non-native-fullscreen = visible-menu
+resize-overlay-duration = 450ms
 
-# ── Splits ────────────────────────────────────
-unfocused-split-opacity = 0.7
+# ── Focus and input ──────────────────────────────────────────────────────────
+unfocused-split-opacity = 0.82
 focus-follows-mouse = true
-
-# ── Cursor & Mouse ───────────────────────────
 cursor-style = bar
 cursor-style-blink = false
-cursor-opacity = 0.9
+cursor-opacity = 0.92
 mouse-hide-while-typing = true
 cursor-click-to-move = true
 
-# ── Shell Integration ─────────────────────────
+# ── Shell, links, and clipboard ──────────────────────────────────────────────
+shell-integration = detect
 shell-integration-features = cursor,sudo,title,ssh-terminfo,ssh-env
-
-# ── Clipboard ─────────────────────────────────
 clipboard-read = allow
+clipboard-write = allow
 clipboard-trim-trailing-spaces = true
 copy-on-select = clipboard
+link-url = true
 
-# ── Quick Terminal (dropdown) ─────────────────
-keybind = global:ctrl+grave_accent=toggle_quick_terminal
+# ── Quick terminal ───────────────────────────────────────────────────────────
+# A 42%-high command deck on Super+grave. COSMIC/Wayland provides the global
+# shortcut backend; Ctrl+grave remains an in-app fallback.
+keybind = global:super+grave_accent=toggle_quick_terminal
+keybind = ctrl+grave_accent=toggle_quick_terminal
 quick-terminal-position = top
-quick-terminal-screen = main
-quick-terminal-animation-duration = 0.12
-quick-terminal-size = 40%
+quick-terminal-size = 42%
+gtk-quick-terminal-layer = overlay
+gtk-quick-terminal-namespace = ghostty-command-deck
+quick-terminal-keyboard-interactivity = on-demand
+quick-terminal-autohide = true
 
-# ── Dock Icon (Ember) ────────────────────────
-macos-icon = custom-style
-macos-icon-frame = aluminum
-macos-icon-ghost-color = #d5cec4
-macos-icon-screen-color = #131119,#e8a849
-
-# ═══════════════════════════════════════════════
-#  K E Y B I N D S
-# ═══════════════════════════════════════════════
-
-keybind = shift+enter=text:\n
-
-# Vim-style pane navigation (Ctrl+Shift)
+# ── Split workflow ───────────────────────────────────────────────────────────
+# Vim navigation, arrows for measured resizing, and a compact split lifecycle.
 keybind = ctrl+shift+h=goto_split:left
 keybind = ctrl+shift+j=goto_split:bottom
 keybind = ctrl+shift+k=goto_split:top
 keybind = ctrl+shift+l=goto_split:right
-
-# Pane resizing (Ctrl+Shift+Arrow)
 keybind = ctrl+shift+left=resize_split:left,10
 keybind = ctrl+shift+right=resize_split:right,10
 keybind = ctrl+shift+up=resize_split:up,10
 keybind = ctrl+shift+down=resize_split:down,10
+keybind = ctrl+alt+d=new_split:right
+keybind = ctrl+alt+shift+d=new_split:down
+keybind = ctrl+shift+equal=equalize_splits
+keybind = ctrl+shift+enter=toggle_split_zoom
 
-# Split management
-keybind = cmd+shift+equal=equalize_splits
-keybind = cmd+d=new_split:right
-keybind = cmd+shift+d=new_split:down
-keybind = cmd+shift+enter=toggle_split_zoom
+# OMP multiline input and shell-integration prompt jumps.
+keybind = shift+enter=text:\n
+keybind = ctrl+alt+up=jump_to_prompt:-1
+keybind = ctrl+alt+down=jump_to_prompt:1
 
-# Prompt navigation (shell integration)
-keybind = cmd+up=jump_to_prompt:-1
-keybind = cmd+down=jump_to_prompt:1
+# Smart copy falls through when no selection exists; scrollback opens as a file.
+keybind = performable:ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+e=write_scrollback_file:open
 
-# Smart copy (only fires when text is selected)
-keybind = performable:cmd+c=copy_to_clipboard
-
-# Scrollback
-keybind = cmd+shift+e=write_scrollback_file:open
-
-# ═══════════════════════════════════════════════
-#  N O T I F I C A T I O N S
-# ═══════════════════════════════════════════════
+# ── Signals, not noise ───────────────────────────────────────────────────────
+bell-features = no-system,no-audio,attention,title,border
 app-notifications = clipboard-copy,config-reload

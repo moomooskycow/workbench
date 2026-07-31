@@ -165,7 +165,7 @@ EOF
 sync_github() {
   # Check if gh CLI is installed
   if ! command -v gh &> /dev/null; then
-    echo -e "${RED}Error: gh CLI not found. Install with: brew install gh${NC}"
+    echo -e "${RED}Error: gh CLI not found. Install with: sudo apt install gh (Linux) or brew install gh (macOS)${NC}"
     exit 1
   fi
 

@@ -229,7 +229,18 @@ bind p previous-window
 # copy mode (vim-style)
 bind Escape copy-mode
 bind -T copy-mode-vi v send-keys -X begin-selection
-bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
+# Select the first available clipboard command.
+if-shell "command -v wl-copy >/dev/null 2>&1" {
+  bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "wl-copy"
+} {
+  if-shell "command -v xclip >/dev/null 2>&1" {
+    bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -selection clipboard"
+  } {
+    if-shell "command -v pbcopy >/dev/null 2>&1" {
+      bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
+    }
+  }
+}
 bind -T copy-mode-vi C-v send-keys -X rectangle-toggle
 bind P paste-buffer
 

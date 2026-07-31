@@ -5,7 +5,8 @@
 # so GitHub Push Protection (server-side, unbypassable on a normal push) is
 # the real backstop. Layer, don't rely on this alone.
 #
-# Requires gitleaks: `brew install gitleaks` (install.sh does this for you).
+# Requires gitleaks (install.sh warns when it is missing):
+# https://github.com/gitleaks/gitleaks/releases (or `brew install gitleaks`).
 
 if command -v gitleaks >/dev/null 2>&1; then
   if ! gitleaks git --staged --redact --no-banner 2>/dev/null; then
@@ -20,5 +21,5 @@ if command -v gitleaks >/dev/null 2>&1; then
   fi
 else
   echo "⚠ gitleaks not installed — local secret scan SKIPPED."
-  echo "  Install it: brew install gitleaks   (push protection still backstops)"
+  echo "  Install it: https://github.com/gitleaks/gitleaks/releases   (push protection still backstops)"
 fi

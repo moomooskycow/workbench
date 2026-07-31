@@ -1,24 +1,45 @@
 #!/bin/bash
 
-# Light Mode Script
-# Switches Alacritty and tmux to Rose Pine Dawn light theme.
-# Claude Code and Herdr follow the system appearance automatically.
+# Set the Linux system appearance and synchronize the Codex TUI theme.
+# On macOS, System Settings controls the appearance; this script still synchronizes Codex.
 # Usage: light-mode
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ALACRITTY_THEME_SCRIPT="$SCRIPT_DIR/alacritty-theme"
 
-if [[ ! -x "$ALACRITTY_THEME_SCRIPT" ]]; then
-    echo "Error: alacritty-theme script not found or not executable at $ALACRITTY_THEME_SCRIPT"
-    exit 1
-fi
+echo "Switching to light mode..."
 
-echo "Switching to light mode (Rose Pine Dawn)..."
-"$ALACRITTY_THEME_SCRIPT" rose_pine_dawn
+platform="$(uname -s)"
+case "$platform" in
+    Linux)
+        if ! command -v gsettings >/dev/null 2>&1; then
+            echo "✗ gsettings command not found; cannot set Linux appearance" >&2
+            exit 1
+        fi
+        if ! gsettings set org.gnome.desktop.interface color-scheme prefer-light; then
+            echo "✗ Failed to set Linux light appearance" >&2
+            exit 1
+        fi
+        ;;
+    Darwin)
+        echo "macOS appearance is controlled in System Settings."
+        ;;
+    *)
+        echo "✗ Unsupported platform: $platform" >&2
+        exit 1
+        ;;
+esac
 
-if [[ $? -eq 0 ]]; then
+sync_output=""
+if sync_output="$("$SCRIPT_DIR/sync-system-theme" --mode light 2>&1)"; then
+    [ -z "$sync_output" ] || printf '%s\n' "$sync_output"
     echo "✓ Light mode activated"
 else
-    echo "✗ Failed to switch to light mode"
-    exit 1
+    [ -z "$sync_output" ] || printf '%s\n' "$sync_output" >&2
+    if [[ "$sync_output" == *"Codex config not found:"* ]]; then
+        echo "Warning: Codex config not found; system appearance changed, but the Codex theme was not synchronized." >&2
+        echo "✓ Light mode activated"
+    else
+        echo "✗ Failed to synchronize the Codex theme" >&2
+        exit 1
+    fi
 fi

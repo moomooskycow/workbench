@@ -7,7 +7,7 @@ set -e
 # Check if project path is provided
 if [[ $# -eq 0 ]]; then
     echo "Usage: $0 <project-path>"
-    echo "Example: $0 /Users/phaedrus/Development/my-project"
+    echo "Example: $0 \$HOME/Development/my-project"
     exit 1
 fi
 

@@ -4,6 +4,14 @@
 
 set -euo pipefail
 
+wb_os() {
+    case "$(uname -s)" in
+        Darwin*) echo "darwin" ;;
+        Linux*)  echo "linux" ;;
+        *) echo "unknown" ;;
+    esac
+}
+
 # === Global Variables ===
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_FILE="${SCRIPT_DIR}/config.yaml"
@@ -704,12 +712,26 @@ check_critical_editors() {
 # VS Code unsaved work detection
 check_vscode_unsaved_work() {
     # Check for VS Code backup/workspace files that might indicate unsaved work
+    local os="$(wb_os)"
+    local data_home="${XDG_DATA_HOME:-$HOME/.local/share}"
     local vscode_dirs=(
-        "$HOME/Library/Application Support/Code/User/workspaceStorage"
-        "$HOME/Library/Application Support/Cursor/User/workspaceStorage"
         "$HOME/.vscode"
         "$HOME/.cursor"
     )
+
+    if [[ "$os" == "darwin" ]]; then
+        vscode_dirs=(
+            "$HOME/Library/Application Support/Code/User/workspaceStorage"
+            "$HOME/Library/Application Support/Cursor/User/workspaceStorage"
+            "${vscode_dirs[@]}"
+        )
+    elif [[ "$os" == "linux" ]]; then
+        vscode_dirs=(
+            "$data_home/Code/User/workspaceStorage"
+            "$data_home/Cursor/User/workspaceStorage"
+            "${vscode_dirs[@]}"
+        )
+    fi
     
     for dir in "${vscode_dirs[@]}"; do
         if [[ -d "$dir" ]]; then

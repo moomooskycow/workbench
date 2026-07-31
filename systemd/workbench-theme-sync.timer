@@ -1,0 +1,10 @@
+[Unit]
+Description=Run workbench theme synchronization every 60 seconds
+
+[Timer]
+OnBootSec=60
+OnUnitActiveSec=60
+Unit=workbench-theme-sync.service
+
+[Install]
+WantedBy=timers.target

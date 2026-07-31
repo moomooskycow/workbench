@@ -11,13 +11,13 @@ export PATH="$PATH:$HOME/Development/workbench/bin"
 
 ## Utilities
 
-- `alacritty-theme` - Theme switching for Alacritty
 - `ghostty-theme` - Theme switching for Ghostty
 - `image-shrink` - Backup + resize/recompress images for LLM-friendly galleries
 - `kill-ports-3000-3007.sh` - Clear common local dev server ports
 - `projects` - Project registry helper
 - `stripe-audit` - Stripe configuration audit helper
-- `toggle-theme`, `light-mode`, `dark-mode` - System theme control
+- `dark-mode` - Set the system and Codex theme to dark
+- `light-mode` - Set the system and Codex theme to light
+- `toggle-theme` - Toggle the system and Codex theme
 - `tmux-startup` - Development session startup
 - `adminifi` - Admin privilege escalation
-- `todo-stats` - TODO analysis
