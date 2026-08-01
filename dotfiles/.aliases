@@ -20,9 +20,6 @@ alias g='gemini'
 alias o='omp'
 alias oc='opencode'
 alias ompr='omp'
-alias rc='roster dispatch --default claude'
-alias rcx='roster dispatch --default codex'
-alias romp='roster dispatch --default omp'
 
 # OMP preset launchers (config overlays under ~/.omp/agent/presets)
 alias omp-lean='omp --config ~/.omp/agent/presets/lean.yml'
@@ -240,7 +237,7 @@ alias tu='td upcoming'
 alias q='~/Documents/daybook/scripts/quote-session.sh'
 
 # General shortcuts
-alias vtop='vtop --theme rose-pine'
+alias vtop='vtop --theme ember'
 alias s='speedtest'
 alias sz="exec zsh"
 alias v=nvim

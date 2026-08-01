@@ -1,0 +1,35 @@
+{
+  "name": "Ember",
+  "author": "phaedrus",
+  "description": "Ember charcoal + copper palette for vtop",
+  "title": {
+    "fg": "#e8a849"
+  },
+  "chart": {
+    "fg": "#7aab9c",
+    "border": {
+      "type": "line",
+      "fg": "#4a4458"
+    }
+  },
+  "table": {
+    "fg": "#d5cec4",
+    "items": {
+      "selected": {
+        "bg": "#3d2e1f",
+        "fg": "#e8a849"
+      },
+      "item": {
+        "bg": "#131119",
+        "fg": "#d5cec4"
+      }
+    },
+    "border": {
+      "type": "line",
+      "fg": "#4a4458"
+    }
+  },
+  "footer": {
+    "fg": "#9a9288"
+  }
+}

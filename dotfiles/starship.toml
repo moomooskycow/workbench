@@ -7,20 +7,15 @@ command_timeout = 2000
 palette = "terminal-ink"
 
 format = """
-[](foam)\
+$custom\
 $directory\
-[(fg:foam bg:overlay)](fg:foam bg:overlay)\
 $git_branch\
-$git_status\
 $git_state\
-[](fg:overlay)\
+$git_status\
 $fill\
-[](overlay)\
 $cmd_duration\
 $time\
-[](overlay)\
 $line_break\
-$custom\
 $python\
 $nodejs\
 $rust\
@@ -44,23 +39,25 @@ iris    = "magenta"
 symbol = " "
 style  = "overlay"
 [directory]
-style = "bg:foam fg:base"
+style = "bold foam"
 truncation_length = 3
 truncation_symbol = "…/"
 truncate_to_repo = false
 home_symbol = "~"
-read_only = "  "
+read_only = " 🔒"
 read_only_style = "love"
-format = "[ $path ]($style)[$read_only]($read_only_style)"
+format = "[$path]($style)[$read_only]($read_only_style) "
+
 [git_branch]
 symbol = " "
 format = "[$symbol$branch]($style) "
-style  = "bg:overlay fg:iris"
+style  = "iris"
 truncation_length = 32
 truncation_symbol = "…"
+
 [git_status]
 format = "([$all_status$ahead_behind]($style))"
-style  = "bg:overlay fg:gold"
+style  = "gold"
 conflicted = "[!](love)"
 ahead      = "[⇡${count}](foam) "
 behind     = "[⇣${count}](rose) "
@@ -74,16 +71,18 @@ stashed    = "[≡](iris) "
 
 [git_state]
 format = '\[[$state( $progress_current/$progress_total)]($style)\] '
-style  = "bg:overlay fg:love"
+style  = "love"
+
 [cmd_duration]
 min_time = 2000
-format = "[  $duration ]($style)"
-style  = "bg:overlay fg:gold"
+format = "[$duration]($style) "
+style  = "gold"
+
 [time]
 disabled = false
-format = "[ $time ]($style)"
+format = "[$time]($style)"
 time_format = "%H:%M"
-style = "bg:overlay fg:muted"
+style = "muted"
 
 [character]
 success_symbol = "[❯](iris)"

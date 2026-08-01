@@ -24,9 +24,6 @@ ln -sf "$CONFIG_SUBDIR/.aliases" "$HOME/.aliases" && echo -e "${GREEN}✓ .alias
 ln -sf "$CONFIG_SUBDIR/.env" "$HOME/.env" && echo -e "${GREEN}✓ .env${RESET}" || echo -e "${RED}✗ .env${RESET}"
 ln -sf "$CONFIG_SUBDIR/.fun" "$HOME/.fun" && echo -e "${GREEN}✓ .fun${RESET}" || echo -e "${RED}✗ .fun${RESET}"
 
-# Install value-free routes under Roster's namespace.
-mkdir -p "$HOME/.config/roster"
-ln -sf "$CONFIG_SUBDIR/roster/runtime.env" "$HOME/.config/roster/runtime.env" && echo -e "${GREEN}✓ Roster runtime routes${RESET}" || echo -e "${RED}✗ Roster runtime routes${RESET}"
 
 # Install vtop themes
 echo -e "${YELLOW}Installing vtop themes...${RESET}"

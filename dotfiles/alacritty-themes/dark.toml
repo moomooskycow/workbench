@@ -1,31 +1,29 @@
-# Dark theme (Tokyo Night Storm)
+# Ember — warm dark luxury (matches Ghostty Ember)
 [colors]
-# Default colors
-primary = { background = "#24283b", foreground = "#c0caf5" }
-
-# Cursor colors
-cursor = { text = "#24283b", cursor = "#c0caf5" }
-
-# Vi mode cursor colors
-vi_mode_cursor = { text = "#24283b", cursor = "#c0caf5" }
-
-# Search colors
-search = { matches = { foreground = "#24283b", background = "#a9b1d6" }, focused_match = { foreground = "#24283b", background = "#7aa2f7" } }
-
-# Keyboard regex hints
-hints = { start = { foreground = "#24283b", background = "#7aa2f7" }, end = { foreground = "#24283b", background = "#73daca" } }
-
-# Line indicator colors
+primary = { background = "#131119", foreground = "#d5cec4" }
+cursor = { text = "#131119", cursor = "#e8a849" }
+vi_mode_cursor = { text = "#131119", cursor = "#e8a849" }
+selection = { text = "#f0e4d4", background = "#3d2e1f" }
+search = { matches = { foreground = "#131119", background = "#d4a54c" }, focused_match = { foreground = "#131119", background = "#e8a849" } }
+hints = { start = { foreground = "#131119", background = "#e8a849" }, end = { foreground = "#131119", background = "#d4a54c" } }
 line_indicator = { foreground = "None", background = "None" }
 
-# Selection colors
-selection = { text = "CellForeground", background = "#364a82" }
+[colors.normal]
+black = "#1c1820"
+red = "#d46a6a"
+green = "#8aab7c"
+yellow = "#d4a54c"
+blue = "#7a9ec2"
+magenta = "#b08cb8"
+cyan = "#7aab9c"
+white = "#c8c0b4"
 
-# Normal colors
-normal = { black = "#15161e", red = "#f7768e", green = "#9ece6a", yellow = "#e0af68", blue = "#7aa2f7", magenta = "#bb9af7", cyan = "#7dcfff", white = "#a9b1d6" }
-
-# Bright colors
-bright = { black = "#414868", red = "#f7768e", green = "#9ece6a", yellow = "#e0af68", blue = "#7aa2f7", magenta = "#bb9af7", cyan = "#7dcfff", white = "#c0caf5" }
-
-# Dim colors
-dim = { black = "#15161e", red = "#f7768e", green = "#9ece6a", yellow = "#e0af68", blue = "#7aa2f7", magenta = "#bb9af7", cyan = "#7dcfff", white = "#a9b1d6" }
+[colors.bright]
+black = "#4a4458"
+red = "#e88888"
+green = "#a5c896"
+yellow = "#e8c36e"
+blue = "#94b8d8"
+magenta = "#c8a8d0"
+cyan = "#96c8b8"
+white = "#e8e0d4"
