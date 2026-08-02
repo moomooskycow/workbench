@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
-ROOT="$(git rev-parse --show-toplevel)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 git diff --cached --quiet --exit-code && exit 0
-git diff --cached --binary --no-ext-diff | "$ROOT/scripts/trufflehog-scan"
+git diff --cached --binary --no-ext-diff | "$SCRIPT_DIR/trufflehog-scan"

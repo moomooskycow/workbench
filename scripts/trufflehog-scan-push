@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-ROOT="$(git rev-parse --show-toplevel)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 INPUT="$(mktemp)"
 PATCH="$(mktemp)"
 trap 'rm -f "$INPUT" "$PATCH"' EXIT
@@ -16,4 +16,4 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
 done < "$INPUT"
 
 [ -s "$PATCH" ] || exit 0
-"$ROOT/scripts/trufflehog-scan" < "$PATCH"
+"$SCRIPT_DIR/trufflehog-scan" < "$PATCH"
