@@ -2,6 +2,14 @@
 
 set -euo pipefail
 
+SKIP_SECRET_SCAN=false
+if [ "${1:-}" = "--skip-secret-scan" ]; then
+  SKIP_SECRET_SCAN=true
+elif [ "$#" -gt 0 ]; then
+  echo "Usage: $0 [--skip-secret-scan]" >&2
+  exit 2
+fi
+
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
@@ -51,12 +59,16 @@ for manifest in config/hosts/*/manifest.tsv; do
   done < "$manifest"
 done
 
-echo "Scanning repository history with TruffleHog..."
-if ! command -v trufflehog >/dev/null 2>&1; then
-  echo "trufflehog is required for the full gate." >&2
-  exit 1
+if [ "$SKIP_SECRET_SCAN" = false ]; then
+  echo "Scanning repository history with TruffleHog..."
+  if ! command -v trufflehog >/dev/null 2>&1; then
+    echo "trufflehog is required for the full gate." >&2
+    exit 1
+  fi
+  trufflehog git "file://$ROOT_DIR" --no-update --fail --fail-on-scan-errors --results=verified
+else
+  echo "Skipping local secret scan; a dedicated CI job must provide it."
 fi
-trufflehog git "file://$ROOT_DIR" --no-update --fail --fail-on-scan-errors --results=verified
 
 
 echo "Workbench gate passed."
