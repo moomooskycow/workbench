@@ -22,7 +22,8 @@ jobs:
         uses: trufflesecurity/trufflehog@00155c9dc586f34d189adc83d3ac2698c2ec551f # v3.95.8
         with:
           path: ./
-          extra_args: --results=verified --fail --fail-on-scan-errors
+          version: 3.95.8
+          extra_args: --results=verified --fail-on-scan-errors
   check:
     runs-on: ubuntu-latest
     permissions:
@@ -30,4 +31,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: sudo apt-get update && sudo apt-get install -y shellcheck zsh
-      - run: scripts/check.sh
+      # The dedicated secrets job above owns the pinned TruffleHog scan.
+      - run: scripts/check.sh --skip-secret-scan
