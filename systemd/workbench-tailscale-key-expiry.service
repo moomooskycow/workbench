@@ -1,0 +1,6 @@
+[Unit]
+Description=Reconcile Tailscale node key expiry
+
+[Service]
+Type=oneshot
+ExecStart="__WORKBENCH_DIR__/scripts/tailscale-key-expiry-reconciler.sh"

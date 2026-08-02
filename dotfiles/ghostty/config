@@ -6,8 +6,8 @@
 # ── Color system ─────────────────────────────────────────────────────────────
 theme = light:Ember Dawn,dark:Ember
 window-theme = auto
-background-opacity = 0.96
-background-blur-radius = 22
+background-opacity = 0.55
+background-blur = 22
 minimum-contrast = 1.2
 bold-color = bright
 faint-opacity = 0.62

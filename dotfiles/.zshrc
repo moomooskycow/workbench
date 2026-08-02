@@ -1,5 +1,6 @@
 # Environment (PATH, DEVELOPMENT, tool homes). Keep this before interactive tools.
 [[ -r "$HOME/.env" ]] && source "$HOME/.env"
+[[ -r "$HOME/.config/powder/env.zsh" ]] && source "$HOME/.config/powder/env.zsh"
 
 # Completion
 fpath=(/usr/share/zsh/vendor-completions $fpath)
@@ -37,3 +38,16 @@ fi
 # Keep syntax highlighting last.
 [[ -r /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 [[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+
+# Register last so Mirrodin remains the sole owner of its terminal identity,
+# even if tool integrations loaded above install their own title hooks.
+autoload -Uz add-zsh-hook
+ghostty_mirrodin_style() {
+  [[ $TERM != dumb ]] || return
+  print -n $'\e]2;mirrodin · remote\e\\'
+}
+add-zsh-hook precmd ghostty_mirrodin_style

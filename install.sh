@@ -167,7 +167,9 @@ install_scheduler() {
         workbench-theme-sync.service \
         workbench-theme-sync.timer \
         workbench-dev-hygiene.service \
-        workbench-dev-hygiene.timer; do
+        workbench-dev-hygiene.timer \
+        workbench-tailscale-key-expiry.service \
+        workbench-tailscale-key-expiry.timer; do
         unit_template="$WORKBENCH_DIR/systemd/$unit_file"
         unit_path="$SYSTEMD_USER_DIR/$unit_file"
         if sed -e "s|__WORKBENCH_DIR__|$WORKBENCH_DIR|g" -e "s|__HOME__|$HOME|g" "$unit_template" > "$unit_path"; then
@@ -191,6 +193,11 @@ install_scheduler() {
           echo -e "${GREEN}✓ workbench hygiene timer enabled${RESET}"
         else
           echo -e "${YELLOW}workbench hygiene timer installed; enable it with systemctl --user${RESET}"
+        fi
+        if systemctl --user enable --now workbench-tailscale-key-expiry.timer >/dev/null 2>&1; then
+          echo -e "${GREEN}✓ workbench Tailscale key expiry timer enabled${RESET}"
+        else
+          echo -e "${YELLOW}workbench Tailscale key expiry timer installed; enable it with systemctl --user${RESET}"
         fi
       else
         echo -e "${YELLOW}systemctl not found; systemd user timers were not enabled${RESET}"
