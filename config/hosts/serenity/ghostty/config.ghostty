@@ -1,0 +1,40 @@
+# Serenity: deterministic, readable paper/ink pair following macOS appearance.
+theme = light:Flexoki Light,dark:Flexoki Dark
+font-family = JetBrainsMono Nerd Font Mono
+font-size = 14
+font-thicken = false
+font-feature = +calt
+font-feature = +liga
+font-feature = +zero
+adjust-cell-height = 4%
+adjust-underline-position = 1
+adjust-underline-thickness = 1
+adjust-cursor-thickness = 1
+
+window-theme = system
+window-colorspace = display-p3
+macos-titlebar-style = native
+window-decoration = auto
+window-padding-x = 14
+window-padding-y = 12
+window-padding-balance = true
+window-padding-color = extend
+background-opacity = 1.0
+background-blur = false
+background-opacity-cells = false
+minimum-contrast = 3.0
+bold-color = bright
+faint-opacity = 0.68
+
+cursor-style = bar
+cursor-style-blink = false
+cursor-opacity = 0.92
+mouse-hide-while-typing = true
+shell-integration = zsh
+shell-integration-features = ssh-env,ssh-terminfo
+window-inherit-working-directory = true
+tab-inherit-working-directory = true
+split-inherit-working-directory = true
+window-save-state = always
+macos-option-as-alt = left
+auto-update = check

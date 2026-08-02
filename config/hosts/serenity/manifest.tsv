@@ -1,0 +1,7 @@
+# id|source relative to repo|target relative to home
+env-public|config/shared/zsh/env.public.zsh|.config/workbench/env.public.zsh
+aliases|config/shared/zsh/aliases.zsh|.config/workbench/aliases.zsh
+functions|config/shared/zsh/functions.zsh|.config/workbench/functions.zsh
+zshrc|config/hosts/serenity/zshrc|.zshrc
+starship|config/hosts/serenity/starship.toml|.config/starship.toml
+ghostty|config/hosts/serenity/ghostty/config.ghostty|.config/ghostty/config.ghostty

@@ -8,7 +8,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WORKBENCH_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-THEME_SOURCE_DIR="$WORKBENCH_DIR/dotfiles/codex/themes"
+THEME_SOURCE_DIR="$WORKBENCH_DIR/config/shared/codex/themes"
 CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
 CODEX_CONFIG="$CODEX_HOME/config.toml"
 

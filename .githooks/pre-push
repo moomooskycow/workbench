@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+[ "${WORKBENCH_TRUFFLEHOG_ACTIVE:-}" = 1 ] && exit 0
+exec "$(git rev-parse --show-toplevel)/scripts/trufflehog-scan-push" "$@"

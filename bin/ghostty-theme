@@ -24,7 +24,7 @@ detect_config_path() {
 }
 
 CONFIG_PATH="$(detect_config_path)"
-LOCAL_THEMES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../dotfiles/ghostty/themes" && pwd)"
+LOCAL_THEMES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../config/shared/ghostty/themes" && pwd)"
 # Managed pair: Ghostty picks the variant from the system appearance.
 AUTO_THEME_PAIR="light:Ember Dawn,dark:Ember"
 USER_THEMES_DIR="$HOME/.config/ghostty/themes"
@@ -43,7 +43,7 @@ resolve_theme() {
         echo "$name"
         return
     fi
-    # Prefer local curated themes (dotfiles/ghostty/themes/<name>)
+    # Prefer local curated themes (config/shared/ghostty/themes/<name>)
     if [[ -f "$LOCAL_THEMES_DIR/$name" ]]; then
         echo "$LOCAL_THEMES_DIR/$name"
         return

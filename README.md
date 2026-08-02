@@ -1,75 +1,54 @@
 # workbench
 
-Personal configuration repository for development environment setup, terminal preferences, project registry docs, and utility scripts.
+Public, version-controlled workstation configuration with explicit shared,
+Mirrodin, and Serenity layers.
 
-## Features
+## Profiles
 
-- Shell configs (`.zshenv`, `.zshrc`, `.aliases`, `.env`)
-- Terminal configs for Ghostty, tmux, and Starship
-- Project registry docs and naming notes
-- Utility scripts for local development workflows
-- Git hooks and automated quality checks
-- Ember light/dark synchronization across Ghostty, Herdr, Codex, nen, and nvim
+- `config/shared/`: public-safe shell modules and cross-host application assets.
+- `config/hosts/serenity/`: the lightweight macOS daily-driver profile.
+- `config/hosts/mirrodin/`: the Linux engineering-workstation profile.
+- `~/.config/workbench/env.local.private.zsh`: optional untracked secrets and
+  machine-local overrides. It is never stored here.
 
-## Quality Gate
+Each host manifest is the source of truth for installed paths. Preview first:
 
-Run the repo-owned gate before opening or merging a change:
+```bash
+./install.sh --profile serenity
+./install.sh --profile serenity --apply --adopt
+```
+
+Applying creates an immutable release under `~/.local/share/workbench/releases`
+and backs up adopted files under `~/.local/state/workbench/backups`. It never
+links live configuration directly into the mutable checkout.
+
+## Secret scanning
+
+TruffleHog is the standard scanner. The repository hooks check staged content
+and outgoing commits, fail closed when scanning fails, and suppress raw values.
+To safely layer these checks in front of existing hooks across local repositories:
+
+```bash
+scripts/manage-trufflehog-hooks --root ~/Development
+scripts/manage-trufflehog-hooks --root ~/Development --apply
+```
+
+The manager records each repository's prior `core.hooksPath`, chains its existing
+hooks, deduplicates linked worktrees, and supports `--uninstall`. Do not set a
+global `core.hooksPath`; that silently bypasses repository-owned hook systems.
+
+## Quality gate
 
 ```bash
 scripts/check.sh
 ```
 
-The gate validates shell syntax for the tracked shell entrypoints and runs
-ShellCheck at error severity. GitHub Actions only installs ShellCheck and calls
-this same script.
+This validates shell syntax, ShellCheck error-level findings, profile manifests,
+and the full Git history with TruffleHog.
 
-## Installation
+## Appearance
 
-```bash
-git clone https://github.com/phrazzld/workbench.git ~/Development/workbench
-cd ~/Development/workbench
-./install.sh
-```
-
-## Agent appearance
-
-One aesthetic: **Ember** (dark charcoal + copper) / **Ember Dawn** (parchment).
-
-| Surface | Dark | Light |
-| --- | --- | --- |
-| Ghostty | Ember | Ember Dawn |
-| Herdr | `terminal` + copper accent | same (rides Ghostty ANSI) |
-| Codex syntax | `ember.tmTheme` | `ember-dawn.tmTheme` |
-| nen (pi coat) | `nen-moon` | `nen-day` |
-| OMP / Hatchet | `dark-ember-ink` | `light-ember` |
-| nvim | `ember` (dark) | `ember` (light) |
-| Starship | Ghostty ANSI (inherits) | same |
-
-Claude Code uses its `auto` theme. Herdr keeps transparent chrome
-(`panel_bg = reset`) and agent-aware sidebars. On macOS, the installer
-removes Ghostty's generated empty `theme =` override and registers a launchd
-LaunchAgent that checks the host appearance once a minute. On Linux, the
-installer registers systemd user timers: the theme timer checks the host
-appearance once a minute, and the development hygiene timer runs weekly.
-`bin/sync-system-theme` updates Codex `[tui].theme` and links both Ember themes
-under `~/.codex/themes`. Starship resolves prompt colors through Ghostty's ANSI
-palette. Preview either state without changing anything with:
-
-```bash
-bin/sync-system-theme --mode light --dry-run
-bin/sync-system-theme --mode dark --dry-run
-```
-
-
-## Structure
-
-- `/dotfiles/` - Shell configs (`.zshenv`, `.zshrc`, `.aliases`, `.env`)
-- `/bin/` - Local utility scripts
-- `/docs/` - Project registry, guides, and professional docs
-- `/scripts/` - System maintenance and setup
-
-
-
-## License
-
-MIT
+Serenity uses a calm, highly legible Flexoki light/dark Ghostty pairing and a
+cool-blue prompt. Mirrodin uses Ember/Ember Dawn and a warmer copper prompt, so
+remote context is visible without loud banners. `bin/sync-system-theme` handles
+the broader appearance synchronization where installed.

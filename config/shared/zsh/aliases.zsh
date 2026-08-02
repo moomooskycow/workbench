@@ -19,4 +19,4 @@ alias ll='eza --long --git --group-directories-first'
 alias la='eza --long --all --git --group-directories-first'
 alias lt='eza --tree --git --group-directories-first'
 
-alias q='~/Documents/daybook/scripts/quote-session.sh'
+alias q='~/Development/daybook/scripts/quote-session.sh'

@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="${HOME}/Development"
+MODE=plan
+
+usage() {
+  echo "Usage: $0 [--root DIR] [--apply|--uninstall]" >&2
+}
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --root) ROOT="${2:-}"; shift 2 ;;
+    --apply) MODE=apply; shift ;;
+    --uninstall) MODE=uninstall; shift ;;
+    -h|--help) usage; exit 0 ;;
+    *) usage; exit 2 ;;
+  esac
+done
+
+WORKBENCH="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+REGISTRY="$HOME/.local/state/workbench/trufflehog-hooks.tsv"
+mkdir -p "$(dirname "$REGISTRY")"
+touch "$REGISTRY"
+
+SEEN_FILE="$(mktemp)"
+trap 'rm -f "$SEEN_FILE"' EXIT
+while IFS= read -r marker; do
+  repo="$(dirname "$marker")"
+  git -C "$repo" rev-parse --is-inside-work-tree >/dev/null 2>&1 || continue
+  common="$(git -C "$repo" rev-parse --path-format=absolute --git-common-dir)"
+  grep -Fqx "$common" "$SEEN_FILE" && continue
+  printf '%s\n' "$common" >> "$SEEN_FILE"
+  hooks="$common/workbench-hooks"
+  state="$hooks/state.tsv"
+
+  if [ "$MODE" = plan ]; then
+    printf 'would manage\t%s\n' "$repo"
+    continue
+  fi
+
+  if [ "$MODE" = uninstall ]; then
+    [ -f "$state" ] || continue
+    IFS=$'\t' read -r was_set original < "$state"
+    if [ "$was_set" = yes ]; then
+      git -C "$repo" config --local core.hooksPath "$original"
+    else
+      git -C "$repo" config --local --unset-all core.hooksPath 2>/dev/null || true
+    fi
+    rm -f "$hooks/pre-commit" "$hooks/pre-push" "$state"
+    rmdir "$hooks" 2>/dev/null || true
+    printf 'restored\t%s\n' "$repo"
+    continue
+  fi
+
+  command -v trufflehog >/dev/null 2>&1 || {
+    echo "trufflehog is required before hook deployment" >&2
+    exit 1
+  }
+  [ ! -e "$state" ] || { printf 'already managed\t%s\n' "$repo"; continue; }
+
+  if original="$(git -C "$repo" config --local --get core.hooksPath 2>/dev/null)"; then
+    was_set=yes
+  else
+    was_set=no
+    original="$(git -C "$repo" rev-parse --git-path hooks)"
+  fi
+  case "$original" in
+    /*) original_abs="$original" ;;
+    *) original_abs="$repo/$original" ;;
+  esac
+
+  mkdir -p "$hooks"
+  printf '%s\t%s\n' "$was_set" "$original" > "$state"
+  chmod 600 "$state"
+
+  cat > "$hooks/pre-commit" <<EOF
+#!/bin/sh
+set -eu
+WORKBENCH_TRUFFLEHOG_ACTIVE=1; export WORKBENCH_TRUFFLEHOG_ACTIVE
+"$WORKBENCH/scripts/trufflehog-scan-staged"
+if [ -x "$original_abs/pre-commit" ]; then exec "$original_abs/pre-commit"; fi
+EOF
+  cat > "$hooks/pre-push" <<EOF
+#!/bin/sh
+set -eu
+input=\$(mktemp)
+trap 'rm -f "\$input"' EXIT
+cat > "\$input"
+WORKBENCH_TRUFFLEHOG_ACTIVE=1; export WORKBENCH_TRUFFLEHOG_ACTIVE
+"$WORKBENCH/scripts/trufflehog-scan-push" "\$@" < "\$input"
+if [ -x "$original_abs/pre-push" ]; then "$original_abs/pre-push" "\$@" < "\$input"; fi
+EOF
+  chmod 700 "$hooks/pre-commit" "$hooks/pre-push"
+  git -C "$repo" config --local core.hooksPath "$hooks"
+  printf '%s\t%s\n' "$repo" "$common" >> "$REGISTRY"
+  printf 'managed\t%s\n' "$repo"
+done < <(find "$ROOT" -name .git -prune 2>/dev/null | sort)

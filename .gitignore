@@ -12,12 +12,9 @@
 *_ed25519
 !**/.env.example
 
-# Managed dotfiles (force-include the specific tracked copies, rooted paths)
-!/dotfiles/.zshrc
-!/dotfiles/.aliases
-!/dotfiles/.env
-!/dotfiles/.fun
-!/dotfiles/.tmux.conf
+# Private per-machine overlay. Public-safe variables live in
+# config/shared/zsh/env.public.zsh; secrets never belong in this repository.
+**/env.local.private.zsh
 
 # Development tools
 .tool-versions

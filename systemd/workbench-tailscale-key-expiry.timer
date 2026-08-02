@@ -1,0 +1,11 @@
+[Unit]
+Description=Reconcile Tailscale node key expiry daily
+
+[Timer]
+OnCalendar=daily
+RandomizedDelaySec=2min
+Persistent=true
+Unit=workbench-tailscale-key-expiry.service
+
+[Install]
+WantedBy=timers.target

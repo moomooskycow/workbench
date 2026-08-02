@@ -1,0 +1,36 @@
+# Serenity: lightweight local shell and remote engineering cockpit.
+
+[[ -r "$HOME/.config/workbench/env.public.zsh" ]] && source "$HOME/.config/workbench/env.public.zsh"
+[[ -r "$HOME/.config/workbench/env.local.private.zsh" ]] && source "$HOME/.config/workbench/env.local.private.zsh"
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt APPEND_HISTORY SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_REDUCE_BLANKS EXTENDED_HISTORY
+setopt AUTO_CD INTERACTIVE_COMMENTS PROMPT_SUBST
+bindkey -e
+
+zmodload zsh/complist
+autoload -Uz compinit
+compinit -d "${ZDOTDIR:-$HOME}/.zcompdump"
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+(( $+commands[mise] )) && eval "$(mise activate zsh)"
+(( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
+(( $+commands[fzf] )) && source <(fzf --zsh)
+(( $+commands[atuin] )) && eval "$(atuin init zsh)"
+(( $+commands[direnv] )) && eval "$(direnv hook zsh)"
+(( $+commands[starship] )) && eval "$(starship init zsh)"
+
+[[ -r "$HOME/.config/workbench/aliases.zsh" ]] && source "$HOME/.config/workbench/aliases.zsh"
+[[ -r "$HOME/.config/workbench/functions.zsh" ]] && source "$HOME/.config/workbench/functions.zsh"
+
+alias mm='mosh mirrodin'
+
+autoload -Uz add-zsh-hook
+ghostty_serenity_style() {
+  [[ ${TERM_PROGRAM:-} == ghostty ]] || return
+  print -n $'\e]2;serenity · local\e\\'
+}
+add-zsh-hook precmd ghostty_serenity_style

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+INPUT="$(mktemp)"
+PATCH="$(mktemp)"
+trap 'rm -f "$INPUT" "$PATCH"' EXIT
+cat > "$INPUT"
+
+while read -r _local_ref local_sha _remote_ref remote_sha; do
+  [ "$local_sha" != 0000000000000000000000000000000000000000 ] || continue
+  if [ "$remote_sha" = 0000000000000000000000000000000000000000 ]; then
+    git log --format=fuller -p "$local_sha" --not --remotes >> "$PATCH"
+  else
+    git log --format=fuller -p "$remote_sha..$local_sha" >> "$PATCH"
+  fi
+done < "$INPUT"
+
+[ -s "$PATCH" ] || exit 0
+"$SCRIPT_DIR/trufflehog-scan" < "$PATCH"

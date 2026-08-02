@@ -1,7 +1,9 @@
-# ===================================================================
-# ENVIRONMENT CONFIGURATION
-# Core environment variables, PATH setup, and development tools
-# ===================================================================
+# PUBLIC, TRACKED ENVIRONMENT CONFIGURATION
+#
+# This file is intentionally safe to publish. It may contain PATH entries,
+# locale settings, and tool homes only. Credentials, tokens, private endpoints,
+# and machine identity belong in ~/.config/workbench/env.local.private.zsh,
+# which workbench never creates or tracks.
 
 # --- CORE SYSTEM SETTINGS ---
 # Primary editor and locale settings
@@ -12,8 +14,6 @@ export LC_ALL=en_US.UTF-8                                     # Locale settings
 # --- DEVELOPMENT DIRECTORIES ---
 # Standard development environment paths
 export DEVELOPMENT="$HOME/Development"                        # Main development directory
-export KEYS="$HOME/.ssh"                                      # SSH keys directory
-
 # --- CORE PATH CONFIGURATION ---
 # Essential binary directories (avoid duplicates with main PATH below)
 export PATH="$HOME/.cargo/bin:$PATH"                          # Rust cargo binaries
