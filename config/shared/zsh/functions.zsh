@@ -4,7 +4,7 @@ _journal_open() {
   local heading
   heading="$(date -d "$day" '+%B %-d, %Y: %A')" || return 1
 
-  local file="$HOME/Documents/daybook/journal/${day[1,4]}/${day[6,7]}/${day[9,10]}.md"
+  local file="$HOME/Development/daybook/journal/${day[1,4]}/${day[6,7]}/${day[9,10]}.md"
   mkdir -p "${file:h}"
   if [[ ! -e "$file" ]]; then
     cat > "$file" <<EOF
@@ -34,5 +34,5 @@ jy() {
 
 jl() {
   local count="${1:-10}"
-  command find "$HOME/Documents/daybook/journal" -type f -name '*.md' | sort -r | command head -n "$count"
+  command find "$HOME/Development/daybook/journal" -type f -name '*.md' | sort -r | command head -n "$count"
 }

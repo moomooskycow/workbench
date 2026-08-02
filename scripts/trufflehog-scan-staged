@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(git rev-parse --show-toplevel)"
+git diff --cached --quiet --exit-code && exit 0
+git diff --cached --binary --no-ext-diff | "$ROOT/scripts/trufflehog-scan"

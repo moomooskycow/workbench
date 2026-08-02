@@ -1,5 +1,6 @@
-# Environment (PATH, DEVELOPMENT, tool homes). Keep this before interactive tools.
-[[ -r "$HOME/.env" ]] && source "$HOME/.env"
+# Public portable environment first; optional private values remain local.
+[[ -r "$HOME/.config/workbench/env.public.zsh" ]] && source "$HOME/.config/workbench/env.public.zsh"
+[[ -r "$HOME/.config/workbench/env.local.private.zsh" ]] && source "$HOME/.config/workbench/env.local.private.zsh"
 [[ -r "$HOME/.config/powder/env.zsh" ]] && source "$HOME/.config/powder/env.zsh"
 
 # Completion
@@ -32,8 +33,8 @@ if [[ "$TERM" != dumb ]]; then
   (( $+commands[starship] )) && eval "$(starship init zsh)"
 fi
 
-[[ -r "$HOME/.aliases" ]] && source "$HOME/.aliases"
-[[ -r "$HOME/.fun" ]] && source "$HOME/.fun"
+[[ -r "$HOME/.config/workbench/aliases.zsh" ]] && source "$HOME/.config/workbench/aliases.zsh"
+[[ -r "$HOME/.config/workbench/functions.zsh" ]] && source "$HOME/.config/workbench/functions.zsh"
 
 # Keep syntax highlighting last.
 [[ -r /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
