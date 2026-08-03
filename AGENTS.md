@@ -36,3 +36,5 @@ CANNOT BE CALLED IN PARALLEL - one invocation at a time.
 
 Run `scripts/check.sh` before committing. It is the host-agnostic gate used by
 GitHub Actions and validates shell syntax plus ShellCheck error-level findings.
+
+Organization root context: @~/Development/misty-step/AGENTS.md
