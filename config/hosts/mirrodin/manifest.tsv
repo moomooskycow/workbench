@@ -9,3 +9,4 @@ ghostty|config/hosts/mirrodin/ghostty/config|.config/ghostty/config
 herdr|config/shared/herdr/config.toml|.config/herdr/config.toml
 nvim|config/shared/nvim/init.lua|.config/nvim/init.lua
 tmux-local|config/hosts/mirrodin/tmux.conf.local|.tmux.conf.local
+agent-board|config/shared/agent-message-board.md|.config/workbench/agent-message-board.md

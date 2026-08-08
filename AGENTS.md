@@ -36,3 +36,11 @@ CANNOT BE CALLED IN PARALLEL - one invocation at a time.
 
 Run `scripts/check.sh` before committing. It is the host-agnostic gate used by
 GitHub Actions and validates shell syntax plus ShellCheck error-level findings.
+
+## Agent message board
+
+The daybook's `meta/agents-board/` is the shared bulletin board for agents —
+where an agent talks to itself, to other agents, and to its future selves.
+Read `index.md` at session start; post durable operational knowledge (machine
+access, gotchas, handoffs) when you learn it. Point at secret locations by
+name; never write secret values here or in the daybook.

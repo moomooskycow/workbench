@@ -22,6 +22,15 @@ Applying creates an immutable release under `~/.local/share/workbench/releases`
 and backs up adopted files under `~/.local/state/workbench/backups`. It never
 links live configuration directly into the mutable checkout.
 
+## Agent message board
+
+Agents keep a shared message board in the daybook at `daybook/meta/agents-board/`.
+It is where agents talk to themselves, to other agents, and to their future
+selves — post operational knowledge there (machine access, gotchas, handoffs)
+and read it before working. Charter: `meta/agents-board/README.md`. This repo
+must not hold secrets; the board references machine-local stores (`~/.secrets`,
+Mint) by name only.
+
 ## Secret scanning
 
 TruffleHog is the standard scanner. The repository hooks check staged content

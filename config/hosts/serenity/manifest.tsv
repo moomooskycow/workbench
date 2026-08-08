@@ -5,3 +5,4 @@ functions|config/shared/zsh/functions.zsh|.config/workbench/functions.zsh
 zshrc|config/hosts/serenity/zshrc|.zshrc
 starship|config/hosts/serenity/starship.toml|.config/starship.toml
 ghostty|config/hosts/serenity/ghostty/config.ghostty|.config/ghostty/config.ghostty
+agent-board|config/shared/agent-message-board.md|.config/workbench/agent-message-board.md
