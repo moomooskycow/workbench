@@ -29,7 +29,6 @@
 
 # Python virtual environment
 bin/thinktank-venv/
-meet/.venv/
 **/__pycache__/
 **/*.py[cod]
 **/*$py.class

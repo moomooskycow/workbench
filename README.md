@@ -61,3 +61,23 @@ Serenity uses a calm, highly legible Flexoki light/dark Ghostty pairing and a
 cool-blue prompt. Mirrodin uses Ember/Ember Dawn and a warmer copper prompt, so
 remote context is visible without loud banners. `bin/sync-system-theme` handles
 the broader appearance synchronization where installed.
+
+## Meeting transcription (Mirrodin)
+
+Local meeting recording, transcription, and speaker diarization via `meet` (available on `PATH` via `bin/` or `~/.local/bin/meet`):
+
+```bash
+# First-time setup: installs whisper and diarization stack into ~/.local/share/meet-venv
+meet setup
+
+# Record a call, transcribe, diarize, and write note to ~/Documents/daybook/meetings/
+meet session
+
+# Transcribe and diarize an existing audio file
+meet all <audio-file>
+
+# Watch folder for incoming audio files to auto-transcribe
+meet watch [inbox-directory]
+```
+
+Capture requires Linux PulseAudio/PipeWire (`pactl`) and ffmpeg. GPU acceleration uses CUDA when available.

@@ -23,3 +23,4 @@ export PATH="$PATH:$HOME/Development/workbench/bin"
 - `toggle-theme` - Toggle the system and Codex theme
 - `tmux-startup` - Development session startup
 - `adminifi` - Admin privilege escalation
+- `meet` - Local meeting transcription + diarization launcher (record, session, watch, transcribe)
