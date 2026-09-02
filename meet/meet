@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# meet — local meeting transcription + diarization launcher.
+# `meet setup` bootstraps the venv on first use; everything else requires it.
+# The venv lives outside this repo tree (huge; keep the tree review-clean).
+set -euo pipefail
+DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+VENV_ROOT="$HOME/.local/share/meet-venv"
+PY="$VENV_ROOT/bin/python"
+if [ "${1:-}" = "setup" ] && [ ! -x "$PY" ]; then
+  echo "[meet] bootstrapping venv (first run)..." >&2
+  uv venv --python 3.12 "$VENV_ROOT"
+  uv pip install --python "$PY" faster-whisper pydub
+fi
+export LD_LIBRARY_PATH="$VENV_ROOT/lib/python3.12/site-packages/nvidia/cublas/lib:$VENV_ROOT/lib/python3.12/site-packages/nvidia/cudnn/lib:${LD_LIBRARY_PATH:-}"
+exec "$PY" "$DIR/meet.py" "$@"
