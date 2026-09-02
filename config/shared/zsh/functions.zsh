@@ -1,3 +1,10 @@
+# Fuzzy find files in the current directory and open in Neovim.
+f() {
+  local -a files
+  files=("${(@f)$(rg --files --hidden --glob '!.git' "${1:-.}" 2>/dev/null | fzf -m)}") || return
+  [[ ${#files[@]} -gt 0 && -n "${files[1]}" ]] && nvim -- "${files[@]}"
+}
+
 # Daybook journal helpers.
 _journal_open() {
   local day="${1:-$(date +%F)}"

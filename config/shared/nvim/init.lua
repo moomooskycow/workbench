@@ -27,6 +27,10 @@ end
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { silent = true })
 vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 vim.keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set("n", "H", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
+vim.keymap.set("n", "L", "<cmd>bnext<CR>", { desc = "Next buffer" })
+vim.keymap.set("n", "<M-h>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
+vim.keymap.set("n", "<M-l>", "<cmd>bnext<CR>", { desc = "Next buffer" })
 
 local function toggle_markdown_checkbox()
   local line = vim.api.nvim_get_current_line()
