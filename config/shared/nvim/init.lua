@@ -4,6 +4,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.opt.background = "light"
 vim.opt.breakindent = true
+vim.opt.clipboard = "unnamedplus"
 vim.opt.confirm = true
 vim.opt.cursorline = true
 vim.opt.ignorecase = true
