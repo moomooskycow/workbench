@@ -1,0 +1,6 @@
+# Mirrodin workbench bashrc (aligned with Omarchy)
+[[ -r "$HOME/.config/workbench/env.public.sh" ]] && source "$HOME/.config/workbench/env.public.sh"
+[[ -r "$HOME/.config/workbench/env.local.private.sh" ]] && source "$HOME/.config/workbench/env.local.private.sh"
+[[ -r "$HOME/.config/powder/env.bash" ]] && source "$HOME/.config/powder/env.bash"
+[[ -r "$HOME/.config/workbench/aliases.sh" ]] && source "$HOME/.config/workbench/aliases.sh"
+[[ -r "$HOME/.config/workbench/functions.bash" ]] && source "$HOME/.config/workbench/functions.bash"

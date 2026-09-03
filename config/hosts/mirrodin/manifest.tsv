@@ -1,12 +1,7 @@
 # id|source relative to repo|target relative to home
-env-public|config/shared/zsh/env.public.zsh|.config/workbench/env.public.zsh
-aliases|config/shared/zsh/aliases.zsh|.config/workbench/aliases.zsh
-functions|config/shared/zsh/functions.zsh|.config/workbench/functions.zsh
-zshenv|config/hosts/mirrodin/zshenv|.zshenv
-zshrc|config/hosts/mirrodin/zshrc|.zshrc
-starship|config/hosts/mirrodin/starship.toml|.config/starship.toml
-ghostty|config/hosts/mirrodin/ghostty/config|.config/ghostty/config
-herdr|config/shared/herdr/config.toml|.config/herdr/config.toml
+env-public|config/shared/shell/env.public.sh|.config/workbench/env.public.sh
+aliases|config/shared/shell/aliases.sh|.config/workbench/aliases.sh
+functions|config/shared/shell/functions.bash|.config/workbench/functions.bash
+bashrc|config/hosts/mirrodin/bashrc|.config/workbench/bashrc
 nvim|config/shared/nvim/init.lua|.config/nvim/init.lua
-tmux-local|config/hosts/mirrodin/tmux.conf.local|.tmux.conf.local
 agent-board|config/shared/agent-message-board.md|.config/workbench/agent-message-board.md
