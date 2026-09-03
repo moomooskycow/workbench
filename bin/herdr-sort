@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
 """
 herdr-sort: Sort and group Herdr workspaces cleanly without dragging.
-Groups spaces by namespace:
-  1. system
-  2. ms/* (Misty Step repos, alphabetical)
-  3. r90/* (R90 repos/services, alphabetical)
-  4. cow/* (Moomooskycow repos, alphabetical)
-  5. other namespaces
+Modes:
+  herdr-sort          One-shot sort and exit
+  herdr-sort --watch  Run continuously, re-sorting on workspace events
 """
 
 import json
 import os
 import socket
 import sys
+import time
 
 SOCKET_PATH = os.path.expanduser("~/.config/herdr/herdr.sock")
 
@@ -22,8 +20,7 @@ def rpc(method, params):
     try:
         s.connect(SOCKET_PATH)
     except FileNotFoundError:
-        print(f"Herdr socket not found at {SOCKET_PATH}", file=sys.stderr)
-        sys.exit(1)
+        return None
 
     req = json.dumps({"id": "sort", "method": method, "params": params}) + "\n"
     s.sendall(req.encode())
@@ -34,7 +31,12 @@ def rpc(method, params):
             break
         buf += chunk
     s.close()
-    return json.loads(buf)
+    if not buf:
+        return None
+    try:
+        return json.loads(buf)
+    except json.JSONDecodeError:
+        return None
 
 
 def sort_key(w):
@@ -50,23 +52,95 @@ def sort_key(w):
     return (4, label)
 
 
-def main():
+def run_sort():
     resp = rpc("session.snapshot", {})
+    if not resp:
+        return
     workspaces = resp.get("result", {}).get("snapshot", {}).get("workspaces", [])
     if not workspaces:
-        print("No active workspaces found.")
         return
 
     desired_order = sorted(workspaces, key=sort_key)
 
-    print("Reordering workspaces:")
+    needs_move = False
+    for idx, w in enumerate(desired_order):
+        if w.get("number") != idx + 1:
+            needs_move = True
+            break
+
+    if not needs_move:
+        return
+
     for target_idx, w in enumerate(desired_order):
         ws_id = w["workspace_id"]
-        label = w["label"]
-        print(f"  {target_idx + 1}: {label} ({ws_id})")
         rpc("workspace.move", {"workspace_id": ws_id, "insert_index": target_idx})
 
-    print("✓ Workspaces sorted cleanly.")
+
+def watch_loop():
+    run_sort()
+
+    while True:
+        try:
+            s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            s.connect(SOCKET_PATH)
+            sub_req = (
+                json.dumps({
+                    "id": "watch_sub",
+                    "method": "events.subscribe",
+                    "params": {
+                        "subscriptions": [
+                            {"type": "workspace.created"},
+                            {"type": "workspace.renamed"},
+                            {"type": "workspace.closed"},
+                            {"type": "worktree.created"},
+                            {"type": "worktree.opened"},
+                            {"type": "worktree.removed"},
+                        ]
+                    },
+                })
+                + "\n"
+            )
+            s.sendall(sub_req.encode())
+
+            buf = ""
+            while True:
+                chunk = s.recv(4096).decode()
+                if not chunk:
+                    break
+                buf += chunk
+                while "\n" in buf:
+                    line, buf = buf.split("\n", 1)
+                    if not line.strip():
+                        continue
+                    try:
+                        msg = json.loads(line)
+                        event_type = msg.get("data", {}).get("type") or msg.get("event")
+                        if event_type in (
+                            "workspace_created",
+                            "workspace_renamed",
+                            "workspace_closed",
+                            "worktree_created",
+                            "worktree_opened",
+                            "worktree_removed",
+                            "workspace.created",
+                            "workspace.renamed",
+                            "workspace.closed",
+                        ):
+                            time.sleep(0.05)
+                            run_sort()
+                    except Exception:
+                        pass
+            s.close()
+        except Exception:
+            time.sleep(2)
+
+
+def main():
+    if "--watch" in sys.argv or "--daemon" in sys.argv:
+        watch_loop()
+    else:
+        run_sort()
+        print("✓ Workspaces sorted.")
 
 
 if __name__ == "__main__":
