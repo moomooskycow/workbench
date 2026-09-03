@@ -4,9 +4,19 @@
 # Usage: toggle-theme
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if command -v omarchy >/dev/null 2>&1; then
+    current="$(omarchy theme current 2>/dev/null || echo '')"
+    if [[ "$current" =~ [Ll]ight|[Ll]atte ]]; then
+        echo "Current theme is light ($current); switching to dark mode..."
+        exec "$SCRIPT_DIR/dark-mode"
+    else
+        echo "Current theme is dark ($current); switching to light mode..."
+        exec "$SCRIPT_DIR/light-mode"
+    fi
+fi
 
 if ! command -v gsettings >/dev/null 2>&1; then
-    echo "✗ gsettings command not found; cannot read the current system appearance" >&2
+    echo "✗ Neither omarchy nor gsettings found; cannot read current system appearance" >&2
     exit 1
 fi
 

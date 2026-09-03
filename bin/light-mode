@@ -11,12 +11,15 @@ echo "Switching to light mode..."
 platform="$(uname -s)"
 case "$platform" in
     Linux)
-        if ! command -v gsettings >/dev/null 2>&1; then
-            echo "✗ gsettings command not found; cannot set Linux appearance" >&2
-            exit 1
-        fi
-        if ! gsettings set org.gnome.desktop.interface color-scheme prefer-light; then
-            echo "✗ Failed to set Linux light appearance" >&2
+        if command -v omarchy >/dev/null 2>&1; then
+            omarchy theme set "Catppuccin Latte"
+        elif command -v gsettings >/dev/null 2>&1; then
+            gsettings set org.gnome.desktop.interface color-scheme prefer-light || {
+                echo "✗ Failed to set Linux light appearance" >&2
+                exit 1
+            }
+        else
+            echo "✗ Neither omarchy nor gsettings found; cannot set Linux appearance" >&2
             exit 1
         fi
         ;;
