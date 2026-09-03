@@ -24,7 +24,7 @@ tags: [journal]
 # $heading
 EOF
   fi
-  nvim "$file"
+  NVIM_APPNAME=nvim-prose nvim "$file"
 }
 
 p() {

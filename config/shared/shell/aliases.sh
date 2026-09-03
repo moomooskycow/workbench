@@ -14,6 +14,7 @@ alias gds='git diff --staged'
 alias v='nvim'
 alias vz='nvim ~/.bashrc'
 alias vn='nvim ~/.config/nvim/init.lua'
+alias prose='NVIM_APPNAME=nvim-prose nvim'
 
 alias l='eza --long --all --git --group-directories-first'
 alias ll='eza --long --git --group-directories-first'
