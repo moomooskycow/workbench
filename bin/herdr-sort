@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+"""
+herdr-sort: Sort and group Herdr workspaces cleanly without dragging.
+Groups spaces by namespace:
+  1. system
+  2. ms/* (Misty Step repos, alphabetical)
+  3. r90/* (R90 repos/services, alphabetical)
+  4. cow/* (Moomooskycow repos, alphabetical)
+  5. other namespaces
+"""
+
+import json
+import os
+import socket
+import sys
+
+SOCKET_PATH = os.path.expanduser("~/.config/herdr/herdr.sock")
+
+
+def rpc(method, params):
+    s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    try:
+        s.connect(SOCKET_PATH)
+    except FileNotFoundError:
+        print(f"Herdr socket not found at {SOCKET_PATH}", file=sys.stderr)
+        sys.exit(1)
+
+    req = json.dumps({"id": "sort", "method": method, "params": params}) + "\n"
+    s.sendall(req.encode())
+    buf = ""
+    while "\n" not in buf:
+        chunk = s.recv(4096).decode()
+        if not chunk:
+            break
+        buf += chunk
+    s.close()
+    return json.loads(buf)
+
+
+def sort_key(w):
+    label = w.get("label", "")
+    if label == "system":
+        return (0, "")
+    if label.startswith("ms/"):
+        return (1, label)
+    if label.startswith("r90/"):
+        return (2, label)
+    if label.startswith("cow/"):
+        return (3, label)
+    return (4, label)
+
+
+def main():
+    resp = rpc("session.snapshot", {})
+    workspaces = resp.get("result", {}).get("snapshot", {}).get("workspaces", [])
+    if not workspaces:
+        print("No active workspaces found.")
+        return
+
+    desired_order = sorted(workspaces, key=sort_key)
+
+    print("Reordering workspaces:")
+    for target_idx, w in enumerate(desired_order):
+        ws_id = w["workspace_id"]
+        label = w["label"]
+        print(f"  {target_idx + 1}: {label} ({ws_id})")
+        rpc("workspace.move", {"workspace_id": ws_id, "insert_index": target_idx})
+
+    print("✓ Workspaces sorted cleanly.")
+
+
+if __name__ == "__main__":
+    main()

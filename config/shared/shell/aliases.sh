@@ -1,5 +1,6 @@
 # Short, unsurprising workflow aliases.
 alias o='omp'
+alias hs='herdr-sort'
 
 alias gs='git status --short'
 alias ga='git add'
