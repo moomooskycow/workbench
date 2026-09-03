@@ -3,5 +3,4 @@ env-public|config/shared/shell/env.public.sh|.config/workbench/env.public.sh
 aliases|config/shared/shell/aliases.sh|.config/workbench/aliases.sh
 functions|config/shared/shell/functions.bash|.config/workbench/functions.bash
 bashrc|config/hosts/mirrodin/bashrc|.config/workbench/bashrc
-nvim|config/shared/nvim/init.lua|.config/nvim/init.lua
 agent-board|config/shared/agent-message-board.md|.config/workbench/agent-message-board.md
