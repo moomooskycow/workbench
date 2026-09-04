@@ -41,47 +41,69 @@ manifest_check = true
 directory = "~/.herdr/worktrees"
 
 [keys]
-prefix = "ctrl+b"
-# Vim-style pane navigation in prefix mode.
-focus_pane_left = "prefix+h"
-focus_pane_down = "prefix+j"
-focus_pane_up = "prefix+k"
-focus_pane_right = "prefix+l"
-# Swap panes with shift
-swap_pane_left = "prefix+shift+h"
-swap_pane_down = "prefix+shift+j"
-swap_pane_up = "prefix+shift+k"
-swap_pane_right = "prefix+shift+l"
-# Fast navigation: alt+h/l for tabs, alt+shift+h/l for workspaces.
-# (keep prefix+n/p as fallback for terminal-ssh where alt chords may not pass through)
-next_tab = ["prefix+n", "alt+l"]
-previous_tab = ["prefix+p", "alt+h"]
-# Switch tabs directly: prefix+1..9
-switch_tab = "prefix+1..9"
-# Workspace switching
-previous_workspace = "alt+shift+h"
-next_workspace = "alt+shift+l"
-switch_workspace = "prefix+shift+1..9"
-# Agent focus
-focus_agent = "prefix+alt+1..9"
-# Cycle agents in attention order (pairs with alt+shift+h/l workspace nav:
-# h/l = workspaces, j/k = agents). Requires agent_panel_sort = "priority".
-next_agent = "alt+shift+j"
-previous_agent = "alt+shift+k"
-# Zoom, sidebar, copy mode
+prefix = "ctrl+space"
+
+# Config and help
+reload_config = "prefix+shift+r"
+help = "prefix+?"
+detach = "prefix+q"
+
+# Copy mode & Scrollback
+copy_mode = ["prefix+[", "alt+[", "prefix+u"]
+edit_scrollback = ["prefix+e", "alt+e"]
+
+# Panes — Dvorak DHTN (physical HJKL: D=left, H=down, T=up, N=right)
+focus_pane_left = ["prefix+d", "prefix+left"]
+focus_pane_down = ["prefix+h", "prefix+down"]
+focus_pane_up = ["prefix+t", "prefix+up"]
+focus_pane_right = ["prefix+n", "prefix+right"]
+
+split_horizontal = ["prefix+s", "prefix+minus"]
+split_vertical = ["prefix+v", "prefix+backslash"]
+close_pane = "prefix+x"
 zoom = "prefix+z"
 toggle_sidebar = "prefix+b"
-copy_mode = "prefix+["
-detach = "prefix+q"
-workspace_picker = "prefix+w"
-new_workspace = "prefix+shift+n"
-rename_workspace = "prefix+shift+w"
-close_workspace = "prefix+shift+d"
+last_pane = "prefix+;"
+
+# Pane resizing (DHTN with prefix+shift)
+resize_pane_left = "prefix+shift+d"
+resize_pane_down = "prefix+shift+h"
+resize_pane_up = "prefix+shift+t"
+resize_pane_right = "prefix+shift+n"
+resize_mode = "prefix+ctrl+r"
+
+# Windows -> tabs
+rename_tab = "prefix+r"
+close_tab = "prefix+shift+x"
+switch_tab = "prefix+1..9"
+previous_tab = ["prefix+p", "prefix+comma", "ctrl+shift+d"]
+next_tab = ["prefix+period", "ctrl+shift+n"]
 new_tab = "prefix+c"
-split_vertical = "prefix+v"
-split_horizontal = "prefix+minus"
-close_pane = "prefix+x"
-resize_mode = "prefix+r"
+move_tab_previous = "prefix+shift+comma"
+move_tab_next = "prefix+shift+period"
+
+# Sessions -> workspaces
+goto = "prefix+g"
+new_workspace = "prefix+shift+c"
+rename_workspace = "prefix+shift+w"
+close_workspace = "prefix+shift+q"
+previous_workspace = ["ctrl+shift+tab", "prefix+shift+p", "ctrl+shift+t"]
+next_workspace = ["ctrl+tab", "prefix+shift+o", "ctrl+shift+h"]
+switch_workspace = "prefix+shift+1..9"
+
+[[keys.command]]
+key = "ctrl+shift+space"
+type = "popup"
+command = "$HOME/.local/bin/herdr-fzf-workspace"
+width = "50%"
+height = "40%"
+
+[[keys.command]]
+key = "prefix+w"
+type = "popup"
+command = "$HOME/.local/bin/herdr-fzf-workspace"
+width = "50%"
+height = "40%"
 
 [ui]
 sidebar_width = 24
@@ -91,8 +113,7 @@ pane_gaps = true
 show_agent_labels_on_pane_borders = true
 # Cleaner single-agent workspaces.
 hide_tab_bar_when_single_tab = true
-# Attention queue: surface blocked/done agents ahead of working ones, so
-# next_agent/previous_agent (alt+shift+j/k) walk what needs attention first.
+# Attention queue: surface blocked/done agents ahead of working ones.
 agent_panel_sort = "priority"
 accent = "#50656c"
 # 0.7.5: ask for a workspace name at interactive creation - named spaces

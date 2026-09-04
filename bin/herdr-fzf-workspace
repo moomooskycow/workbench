@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -uo pipefail
+export PATH="$HOME/.local/bin:$HOME/Development/workbench/bin:/usr/local/bin:/usr/bin:$PATH"
+
+# Query Herdr workspaces and present an instant fuzzy search
+selected=$(herdr workspace list 2>/dev/null \
+  | jq -r '.result.workspaces[] | "\(.workspace_id)\t\(.label)"' \
+  | fzf --delimiter=$'\t' --with-nth=2 --reverse --prompt="Workspace > " --header="Jump to Herdr workspace" \
+  | cut -f1 || true)
+
+if [[ -n "${selected:-}" ]]; then
+  herdr workspace focus "$selected"
+fi

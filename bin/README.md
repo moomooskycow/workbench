@@ -11,8 +11,6 @@ export PATH="$PATH:$HOME/Development/workbench/bin"
 
 ## Utilities
 
-- `ghostty` - Launch the local Ghostty AppImage
-- `ghostty-theme` - Theme switching for Ghostty
 - `image-shrink` - Backup + resize/recompress images for LLM-friendly galleries
 - `kill-ports-3000-3007.sh` - Clear common local dev server ports
 - `power-mode` - System76 power profile helper (quiet|balanced|performance|status)
@@ -21,6 +19,5 @@ export PATH="$PATH:$HOME/Development/workbench/bin"
 - `dark-mode` - Set the system and Codex theme to dark
 - `light-mode` - Set the system and Codex theme to light
 - `toggle-theme` - Toggle the system and Codex theme
-- `tmux-startup` - Development session startup
-- `adminifi` - Admin privilege escalation
 - `meet` - Local meeting transcription + diarization launcher (record, session, watch, transcribe)
+- `herdr-fzf-workspace` - Instant fuzzy finder workspace switcher for Herdr popups

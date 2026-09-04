@@ -985,9 +985,12 @@ check_active_sessions() {
         active_sessions+=("$screen_sessions screen sessions")
     fi
     
-    local tmux_sessions=$(tmux list-sessions 2>/dev/null | wc -l | xargs || echo 0)
-    if [[ "$tmux_sessions" =~ ^[0-9]+$ ]] && [[ $tmux_sessions -gt 0 ]]; then
-        active_sessions+=("$tmux_sessions tmux sessions")
+    if command -v herdr >/dev/null 2>&1; then
+        local herdr_status
+        herdr_status=$(herdr status server 2>/dev/null || true)
+        if [[ "$herdr_status" =~ ^status:[[:space:]]*running ]]; then
+            active_sessions+=("herdr server active")
+        fi
     fi
     
     if [[ ${#active_sessions[@]} -gt 0 ]]; then
