@@ -15,7 +15,7 @@ _journal_open() {
   local y="${day:0:4}"
   local m="${day:5:2}"
   local d="${day:8:2}"
-  local file="$HOME/development/misty-step/daybook/journal/$y/$m/$d.md"
+  local file="$HOME/development/moomooskycow/daybook/journal/$y/$m/$d.md"
   mkdir -p "$(dirname "$file")"
   if [[ ! -e "$file" ]]; then
     cat > "$file" <<EOF
@@ -52,5 +52,5 @@ jy() {
 
 jl() {
   local count="${1:-10}"
-  find "$HOME/development/misty-step/daybook/journal" -type f -name '*.md' 2>/dev/null | sort -r | head -n "$count"
+  find "$HOME/development/moomooskycow/daybook/journal" -type f -name '*.md' 2>/dev/null | sort -r | head -n "$count"
 }
