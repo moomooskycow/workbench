@@ -9,6 +9,8 @@ export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
 export DEVELOPMENT="$HOME/development"
+export DAYBOOK_DIR="$DEVELOPMENT/moomooskycow/daybook"
+export DAYBOOK_QUOTES_DIR="$DAYBOOK_DIR/Quotes"
 
 export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$HOME/development/moomooskycow/workbench/bin:$PATH"
 
