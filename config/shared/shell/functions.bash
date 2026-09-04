@@ -8,13 +8,14 @@ f() {
 # Daybook journal helpers.
 _journal_open() {
   local day="${1:-$(date +%F)}"
+  local append_ts="${2:-false}"
   local heading
   heading="$(date -d "$day" '+%B %-d, %Y: %A')" || return 1
 
   local y="${day:0:4}"
   local m="${day:5:2}"
   local d="${day:8:2}"
-  local file="$HOME/Development/daybook/journal/$y/$m/$d.md"
+  local file="$HOME/development/misty-step/daybook/journal/$y/$m/$d.md"
   mkdir -p "$(dirname "$file")"
   if [[ ! -e "$file" ]]; then
     cat > "$file" <<EOF
@@ -27,22 +28,29 @@ tags: [journal]
 # $heading
 EOF
   fi
-  NVIM_APPNAME=nvim-prose nvim "$file"
+
+  local nvim_args=()
+  if [[ "$append_ts" == "true" ]]; then
+    printf '\n\n## %s\n\n' "$(date +%T)" >> "$file"
+    nvim_args=(+)
+  fi
+
+  NVIM_APPNAME=nvim-prose nvim "${nvim_args[@]}" "$file"
 }
 
 p() {
-  _journal_open
+  _journal_open "$(date +%F)" true
 }
 
 jd() {
-  _journal_open "${1:-$(date +%F)}"
+  _journal_open "${1:-$(date +%F)}" false
 }
 
 jy() {
-  _journal_open "$(date -d yesterday +%F)"
+  _journal_open "$(date -d yesterday +%F)" false
 }
 
 jl() {
   local count="${1:-10}"
-  find "$HOME/Development/daybook/journal" -type f -name '*.md' 2>/dev/null | sort -r | head -n "$count"
+  find "$HOME/development/misty-step/daybook/journal" -type f -name '*.md' 2>/dev/null | sort -r | head -n "$count"
 }
