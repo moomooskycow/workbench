@@ -1,0 +1,3 @@
+# Treat audio fixture files as binary and vendored so line counters and diff tools ignore them
+*.wav binary linguist-vendored=true
+meet/fixtures/*.wav binary linguist-vendored=true
