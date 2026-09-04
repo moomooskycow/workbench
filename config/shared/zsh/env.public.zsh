@@ -14,6 +14,8 @@ export LC_ALL=en_US.UTF-8                                     # Locale settings
 # --- DEVELOPMENT DIRECTORIES ---
 # Standard development environment paths
 export DEVELOPMENT="$HOME/Development"                        # Main development directory
+export DAYBOOK_DIR="$DEVELOPMENT/moomooskycow/daybook"
+export DAYBOOK_QUOTES_DIR="$DAYBOOK_DIR/Quotes"
 # --- CORE PATH CONFIGURATION ---
 # Essential binary directories (avoid duplicates with main PATH below)
 export PATH="$HOME/.cargo/bin:$PATH"                          # Rust cargo binaries
