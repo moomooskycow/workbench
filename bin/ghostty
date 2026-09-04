@@ -1,8 +1,0 @@
-#!/bin/sh
-# Launch the local Ghostty AppImage when present.
-app="${GHOSTTY_APPIMAGE:-$HOME/Applications/Ghostty.AppImage}"
-if [ ! -x "$app" ] && [ ! -f "$app" ]; then
-  echo "ghostty: AppImage not found at $app" >&2
-  exit 127
-fi
-exec "$app" "$@"

@@ -47,8 +47,8 @@ fi
 # Register last so Mirrodin remains the sole owner of its terminal identity,
 # even if tool integrations loaded above install their own title hooks.
 autoload -Uz add-zsh-hook
-ghostty_mirrodin_style() {
+mirrodin_title_style() {
   [[ $TERM != dumb ]] || return
   print -n $'\e]2;mirrodin · remote\e\\'
 }
-add-zsh-hook precmd ghostty_mirrodin_style
+add-zsh-hook precmd mirrodin_title_style
