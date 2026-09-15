@@ -4,3 +4,18 @@ aliases|config/shared/shell/aliases.sh|.config/workbench/aliases.sh
 functions|config/shared/shell/functions.bash|.config/workbench/functions.bash
 bashrc|config/hosts/mirrodin/bashrc|.config/workbench/bashrc
 agent-board|config/shared/agent-message-board.md|.config/workbench/agent-message-board.md
+# Omarchy Hyprland layer. Shared files work on any omarchy host; monitors.lua is
+# host-scoped (scale/output choices for this machine). Hyprland reads these paths
+# directly, so the symlinks are transparent, and omarchy only edits them rarely
+# (agent edits), making symlink deployment safe.
+hypr-input|config/shared/hypr/input.lua|.config/hypr/input.lua
+hypr-bindings|config/shared/hypr/bindings.lua|.config/hypr/bindings.lua
+hypr-windows|config/shared/hypr/windows.lua|.config/hypr/windows.lua
+hypr-hyprland|config/shared/hypr/hyprland.lua|.config/hypr/hyprland.lua
+hypr-autostart|config/shared/hypr/autostart.lua|.config/hypr/autostart.lua
+hypr-looknfeel|config/shared/hypr/looknfeel.lua|.config/hypr/looknfeel.lua
+hypr-switch-xkb|config/shared/hypr/switch-xkblayout.sh|.config/hypr/switch-xkblayout.sh
+hypr-sunset|config/shared/hypr/hyprsunset.conf|.config/hypr/hyprsunset.conf
+hypr-xdph|config/shared/hypr/xdph.conf|.config/hypr/xdph.conf
+hypr-luarc|config/shared/hypr/.luarc.json|.config/hypr/.luarc.json
+hypr-monitors|config/hosts/mirrodin/hypr/monitors.lua|.config/hypr/monitors.lua
