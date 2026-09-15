@@ -59,6 +59,9 @@ for manifest in config/hosts/*/manifest.tsv; do
   done < "$manifest"
 done
 
+echo "Checking managed config drift (skips on non-live hosts)..."
+bash scripts/omarchy-drift.sh
+
 if [ "$SKIP_SECRET_SCAN" = false ]; then
   echo "Scanning repository history with TruffleHog..."
   if ! command -v trufflehog >/dev/null 2>&1; then
