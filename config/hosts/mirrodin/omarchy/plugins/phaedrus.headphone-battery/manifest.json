@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "phaedrus.headphone-battery",
+  "name": "Headphone Battery",
+  "version": "1.0.0",
+  "author": "Phaedrus",
+  "description": "Ambient battery and charging status for headphones (Bluetooth and USB audio)",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Headphone Battery",
+    "description": "Ambient battery and charging status for headphones",
+    "category": "Audio",
+    "allowMultiple": false
+  }
+}
