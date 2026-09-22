@@ -2,6 +2,7 @@
 alias o='omp'
 alias c='codex --dangerously-bypass-approvals-and-sandbox'
 alias h='hermes'
+alias p='pantry'
 
 alias gs='git status --short'
 alias ga='git add'
