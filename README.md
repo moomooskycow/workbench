@@ -25,6 +25,38 @@ links live configuration directly into the mutable checkout.
 Source edits do not authorize applying profiles, granting privileges, activating
 timers, or administering a host. Those operations require explicit task scope.
 
+## Standalone applications (Mirrodin)
+
+The host manifest owns files deployed from immutable Workbench releases. Applications
+whose own installers manage several runtime artifacts stay outside that manifest;
+recording them here establishes provenance without making Workbench their installer.
+
+### AI Usage
+
+- **Source owner:** [`misty-step/ai-usage`](https://github.com/misty-step/ai-usage)
+  (private; authenticated repository access is required).
+- **Install owner:** that repository's `install.sh`. It owns the validated copied
+  Omarchy plugin directory, CLI wrapper, desktop launcher, and user collector units.
+  Workbench does not copy or symlink those artifacts; Omarchy rejects a symlinked
+  plugin directory during package validation.
+- **Fresh checkout:**
+
+  ```bash
+  gh repo clone misty-step/ai-usage "$HOME/development/misty-step/ai-usage"
+  ```
+
+- **Install / full reinstall from the checkout:**
+
+  ```bash
+  cd "$HOME/development/misty-step/ai-usage"
+  tests/run.sh
+  ./install.sh install
+  ```
+
+  For an app-only repair that must preserve the existing collector timer, run
+  `./install.sh install-app`. The repository documents the matching uninstall and
+  rollback commands.
+
 ## Agent message board
 
 The private Daybook board at `daybook/meta/agents-board/` can supply operational
