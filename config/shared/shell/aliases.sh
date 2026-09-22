@@ -1,6 +1,7 @@
 # Short, unsurprising workflow aliases.
 alias o='omp'
 alias c='codex --dangerously-bypass-approvals-and-sandbox'
+alias h='hermes'
 alias hs='herdr-sort'
 
 alias gs='git status --short'
