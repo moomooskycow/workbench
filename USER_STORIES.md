@@ -30,3 +30,16 @@ Criteria:
 No-gos: Do not let an environment variable replace the exclusion list. Do not follow symbolic links into content.
 
 Evidence: `test/file-finder-test.sh`, the installed `file-finder-index.timer`, a timed query for a probe file in a hidden folder, and the live shortcut list.
+
+## US-003 Type Dvorak in every application
+
+When I type on Mirrodin, I want Dvorak in every window, including Chromium and other clients that take keys through fcitx5, so the layout does not change with the application I am in.
+
+Criteria:
+1. WHEN the Workbench fcitx5 profile is installed and fcitx5 reloads, THE SYSTEM SHALL report `keyboard-us-dvorak` as fcitx5's current input method.
+2. WHEN Hyprland is on layout 0, THE SYSTEM SHALL produce Dvorak characters in Chromium text fields and in applications that bypass fcitx5.
+3. WHEN I switch Hyprland to layout 1, THE SYSTEM SHALL keep US QWERTY available for applications that read keys directly from Hyprland, such as games.
+
+No-gos: Do not remove Hyprland's QWERTY layout 1. Do not change Chromium flags to bypass the input method.
+
+Evidence: `config/shared/fcitx5/profile`, `config/shared/hypr/input.lua`, `fcitx5-remote -n` after reload, and typing in Chromium.

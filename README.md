@@ -22,6 +22,16 @@ Applying creates an immutable release under `~/.local/share/workbench/releases`
 and backs up adopted files under `~/.local/state/workbench/backups`. It never
 links live configuration directly into the mutable checkout.
 
+To install one manifest item without relinking the rest, add `--only ID` (for
+example `--only fcitx5-profile`). It leaves other targets and the
+current-release pointer untouched.
+
+fcitx5 (US-003) re-encodes keys for input-method clients such as Wayland
+Chromium through its own virtual keyboard, so `config/shared/fcitx5/profile`
+keeps its engine at `keyboard-us-dvorak`, matching Hyprland's layout 0. Apply it,
+then reload with `fcitx5-remote -r`. Hyprland's layout 1 (QWERTY) switches only
+keys that bypass fcitx5.
+
 Source edits do not authorize applying profiles, granting privileges, activating
 timers, or administering a host. Those operations require explicit task scope.
 
