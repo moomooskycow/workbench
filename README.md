@@ -95,6 +95,11 @@ cool-blue prompt. Mirrodin uses Ember/Ember Dawn and a warmer copper prompt, so
 remote context is visible without loud banners. `bin/sync-system-theme` handles
 the broader appearance synchronization where installed.
 
+Omarchy bindings load an optional `~/.config/hypr/bindings.local.lua` last. Keep
+host-only shortcuts and private application paths in that file rather than the
+public `config/shared/hypr/bindings.lua`. Workbench never installs or overwrites
+the local file; a present file must contain valid Lua for Hyprland to reload.
+
 ## Emergency recovery (Mirrodin)
 
 Linux recovery is separate from the HOME-relative profile installer:
