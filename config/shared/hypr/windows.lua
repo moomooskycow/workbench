@@ -92,3 +92,5 @@ local function recover_layout_after_start()
 end
 hl.on("hyprland.start", recover_layout_after_start)
 
+-- US-002: the file finder opens as a centered floating panel.
+o.window("^workbench\\.file-finder$", { float = true, center = true, size = { 1400, 800 } })

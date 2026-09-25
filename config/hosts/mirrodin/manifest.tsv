@@ -19,3 +19,8 @@ hypr-sunset|config/shared/hypr/hyprsunset.conf|.config/hypr/hyprsunset.conf
 hypr-xdph|config/shared/hypr/xdph.conf|.config/hypr/xdph.conf
 hypr-luarc|config/shared/hypr/.luarc.json|.config/hypr/.luarc.json
 hypr-monitors|config/hosts/mirrodin/hypr/monitors.lua|.config/hypr/monitors.lua
+# US-002 file finder. The script reads the excludes list beside its resolved
+# release path; the units run it from ~/.local/bin.
+file-finder|config/shared/file-finder/file-finder|.local/bin/file-finder
+file-finder-index-service|config/shared/file-finder/file-finder-index.service|.config/systemd/user/file-finder-index.service
+file-finder-index-timer|config/shared/file-finder/file-finder-index.timer|.config/systemd/user/file-finder-index.timer

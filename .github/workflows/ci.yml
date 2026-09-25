@@ -30,6 +30,12 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      - run: sudo apt-get update && sudo apt-get install -y shellcheck zsh
+      - run: sudo apt-get update && sudo apt-get install -y shellcheck zsh fd-find ripgrep fzf zstd bat jq
+      # Ubuntu ships fd and bat as fdfind and batcat.
+      - run: |
+          mkdir -p "$HOME/.local/bin"
+          ln -s "$(command -v fdfind)" "$HOME/.local/bin/fd"
+          ln -s "$(command -v batcat)" "$HOME/.local/bin/bat"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
       # The dedicated secrets job above owns the pinned TruffleHog scan.
       - run: scripts/check.sh --skip-secret-scan

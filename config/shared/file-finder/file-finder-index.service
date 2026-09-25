@@ -1,0 +1,8 @@
+[Unit]
+Description=Refresh the Workbench file finder index
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/file-finder index
+Nice=19
+IOSchedulingClass=idle

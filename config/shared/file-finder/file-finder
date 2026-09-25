@@ -1,0 +1,331 @@
+#!/usr/bin/env bash
+# Fuzzy file finder for the home folder (US-002).
+#
+#   file-finder launch        open the finder in a floating terminal (Hyprland binding)
+#   file-finder pick          run the finder in the current terminal
+#   file-finder index         rebuild the name index (systemd timer)
+#   file-finder query TEXT    print indexed paths matching TEXT, best first
+#
+# The "excludes" list shipped beside this script is the only exclusion source.
+# The walk and text search pass it to fd and ripgrep; every preview and action
+# re-checks the selected path against it, rejects symlinked parents, and vets
+# symlink targets. Without a valid list the finder refuses to run.
+
+set -euo pipefail
+
+readonly APP_ID="workbench.file-finder"
+readonly NAME_PROMPT="files> "
+readonly TEXT_PROMPT="text> "
+readonly TAB=$'\t'
+
+SELF="$(readlink -f -- "${BASH_SOURCE[0]}")"
+EXCLUDES="$(dirname -- "$SELF")/excludes"
+ROOT="${FILE_FINDER_ROOT:-$HOME}"
+INDEX="${FILE_FINDER_INDEX:-${XDG_RUNTIME_DIR:?XDG_RUNTIME_DIR is unset}/file-finder/paths.zst}"
+
+die() {
+  printf 'file-finder: %s\n' "$*" >&2
+  exit 1
+}
+
+usage() {
+  sed -n '2,7s/^# \{0,1\}//p' "$SELF"
+}
+
+# Parse the exclusion list. Only three shapes are accepted, because the same
+# entry must mean the same thing to fd, ripgrep, and excluded_entry below:
+#   name      a file or folder name at any depth; may use * and ?
+#   /a/b      a literal path anchored at ROOT
+#   **/a/b    a literal path at any depth
+load_excludes() {
+  [ -r "$EXCLUDES" ] || die "exclusion list missing: $EXCLUDES"
+  EXCLUDE_GLOBS=()
+  EXCLUDE_NAMES=()
+  EXCLUDE_ANCHORED=()
+  EXCLUDE_ANYWHERE=()
+  local line body
+  while IFS= read -r line || [ -n "$line" ]; do
+    [[ -z "$line" || "$line" == \#* ]] && continue
+    case "$line" in
+      /*) body="${line#/}" ;;
+      '**/'*) body="${line#'**/'}" ;;
+      */* | '!'* | *'['* | *']'* | *'\'*) die "unsupported exclusion pattern: $line" ;;
+      *) EXCLUDE_NAMES+=("$line"); EXCLUDE_GLOBS+=("$line"); continue ;;
+    esac
+    if [[ -z "$body" || "$body" == /* || "$body" == */ || "$body" == *[][*?\\!]* ]]; then
+      die "unsupported exclusion pattern: $line"
+    fi
+    if [[ "$line" == /* ]]; then EXCLUDE_ANCHORED+=("$body"); else EXCLUDE_ANYWHERE+=("$body"); fi
+    EXCLUDE_GLOBS+=("$line")
+  done < "$EXCLUDES"
+  [ "${#EXCLUDE_GLOBS[@]}" -gt 0 ] || die "exclusion list is empty: $EXCLUDES"
+}
+
+# Is ROOT-relative REL itself (not its parents) excluded?
+excluded_entry() {
+  local rel="$1" name="${1##*/}" pattern
+  for pattern in "${EXCLUDE_NAMES[@]}"; do
+    # shellcheck disable=SC2053 # the right side is a glob by design.
+    [[ "$name" == $pattern ]] && return 0
+  done
+  for pattern in "${EXCLUDE_ANCHORED[@]}"; do
+    [[ "$rel" == "$pattern" ]] && return 0
+  done
+  for pattern in "${EXCLUDE_ANYWHERE[@]}"; do
+    [[ "$rel" == "$pattern" || "$rel" == *"/$pattern" ]] && return 0
+  done
+  return 1
+}
+
+# May ROOT-relative REL be listed? Checks it and every parent.
+allowed() {
+  local rel="$1" prefix="" part parts
+  [[ -n "$rel" && "$rel" != *[[:cntrl:]]* && "$rel" != /* ]] || return 1
+  IFS=/ read -r -a parts <<< "$rel"
+  for part in "${parts[@]}"; do
+    [[ -n "$part" && "$part" != . && "$part" != .. ]] || return 1
+    prefix="${prefix:+$prefix/}$part"
+    excluded_entry "$prefix" && return 1
+  done
+  return 0
+}
+
+# Stream every allowed path under ROOT, one per line (folders end in /).
+# Paths containing control characters are dropped, so a newline inside a file
+# name can never forge a separate row.
+walk() {
+  load_excludes
+  local args=() glob
+  for glob in "${EXCLUDE_GLOBS[@]}"; do args+=(--exclude "$glob"); done
+  cd "$ROOT"
+  fd --hidden --no-ignore --no-follow --color=never --threads=8 --print0 --strip-cwd-prefix "${args[@]}" . |
+    LC_ALL=C grep -azv '[[:cntrl:]]' | tr '\0' '\n'
+}
+
+build_index() {
+  mkdir -p -- "$(dirname -- "$INDEX")"
+  local tmp
+  tmp="$(mktemp -- "$INDEX.XXXXXX")"
+  # shellcheck disable=SC2064 # expand now: the trap must remove this exact file.
+  trap "rm -f -- '$tmp'" EXIT
+  walk | zstd -q -1 -T0 > "$tmp"
+  mv -f -- "$tmp" "$INDEX"
+  trap - EXIT
+}
+
+names() {
+  if [ -s "$INDEX" ]; then
+    zstd -dcq -- "$INDEX"
+  else
+    walk
+  fi
+}
+
+# Print "path<TAB>line<TAB>text" rows for lines matching QUERY.
+text_search() {
+  local query="${1:-}"
+  load_excludes
+  [ -n "$query" ] || return 0
+  local args=() glob
+  for glob in "${EXCLUDE_GLOBS[@]}"; do args+=(--glob "!$glob"); done
+  cd "$ROOT"
+  { rg --json --hidden --no-ignore --no-follow --no-messages --smart-case \
+    --max-filesize 2M --threads 8 "${args[@]}" -e "$query" ./ || true; } |
+    jq -r --unbuffered '
+      select(.type == "match") | .data | select(.path.text != null)
+      | (.path.text | ltrimstr("./")) as $path
+      | select($path | test("[[:cntrl:]]") | not)
+      | (.lines.text // "" | rtrimstr("\n") | rtrimstr("\r") | gsub("[[:cntrl:]]"; " ") | .[0:240]) as $text
+      | "\($path)\t\(.line_number)\t\($text)"'
+}
+
+# Resolve an fzf row to REL, TARGET (absolute), and TARGET_LINE (text hits).
+resolve() {
+  local row="$1"
+  TARGET_LINE=""
+  if [ "${FZF_PROMPT:-}" = "$TEXT_PROMPT" ]; then
+    local rest="${row#*"$TAB"}"
+    [[ "$row" == *"$TAB"* && "${rest%%"$TAB"*}" =~ ^[0-9]+$ ]] || return 1
+    TARGET_LINE="${rest%%"$TAB"*}"
+    row="${row%%"$TAB"*}"
+  fi
+  REL="${row%/}"
+  TARGET="$ROOT/$REL"
+  [ -n "$REL" ]
+}
+
+# Refuse excluded paths, paths under a symlinked folder, and links into
+# excluded places. Sets LINK_TARGET when the entry itself is a symlink.
+vet_target() {
+  allowed "$REL" || return 1
+  local root_real parent_real
+  root_real="$(realpath -e -- "$ROOT")" || return 1
+  parent_real="$(realpath -e -- "$(dirname -- "$TARGET")")" || return 1
+  [ "$parent_real" = "$(dirname -- "$root_real/$REL")" ] || return 1
+  LINK_TARGET=""
+  if [ -L "$TARGET" ]; then
+    LINK_TARGET="$(realpath -m -- "$TARGET")"
+    case "$LINK_TARGET" in
+      "$root_real") ;;
+      "$root_real"/*) allowed "${LINK_TARGET#"$root_real"/}" || return 1 ;;
+      # Outside ROOT, name rules still apply to every component (/mnt/x/.ssh/...).
+      *) [ "$LINK_TARGET" = / ] || allowed "${LINK_TARGET#/}" || return 1 ;;
+    esac
+  fi
+  return 0
+}
+
+list_folder() {
+  local child name shown=0
+  shopt -s nullglob dotglob
+  for child in "$TARGET"/*; do
+    name="${child##*/}"
+    [[ "$name" != *[[:cntrl:]]* ]] && ! excluded_entry "$REL/$name" || continue
+    if [ -d "$child" ] && [ ! -L "$child" ]; then printf '%s/\n' "$name"; else printf '%s\n' "$name"; fi
+    shown=$((shown + 1))
+    [ "$shown" -lt 300 ] || break
+  done
+}
+
+preview() {
+  resolve "${1:-}" || return 0
+  load_excludes
+  if [ ! -e "$TARGET" ] && [ ! -L "$TARGET" ]; then
+    echo "No longer exists."
+  elif ! vet_target; then
+    echo "Excluded from the file finder."
+  elif [ -n "$LINK_TARGET" ]; then
+    printf 'Symbolic link to %s\n' "$LINK_TARGET"
+  elif [ -d "$TARGET" ]; then
+    list_folder
+  elif [ -f "$TARGET" ] && grep -Iq . -- "$TARGET" 2>/dev/null; then
+    local range=":400" highlight=()
+    if [ -n "$TARGET_LINE" ]; then
+      range="$((TARGET_LINE > 20 ? TARGET_LINE - 20 : 1)):+200"
+      highlight=(--highlight-line "$TARGET_LINE")
+    fi
+    bat --color=always --style=numbers --paging=never --line-range "$range" "${highlight[@]}" -- "$TARGET"
+  else
+    file -b -- "$TARGET"
+    stat -c 'Size %s bytes, modified %y' -- "$TARGET"
+  fi
+}
+
+file_uri() {
+  local LC_ALL=C path="$1" out="" char i
+  for ((i = 0; i < ${#path}; i++)); do
+    char="${path:i:1}"
+    case "$char" in
+      [a-zA-Z0-9/._~-]) out+="$char" ;;
+      *) printf -v char '%%%02X' "'$char"; out+="$char" ;;
+    esac
+  done
+  printf 'file://%s' "$out"
+}
+
+detach() {
+  if command -v uwsm-app >/dev/null 2>&1; then
+    setsid -f uwsm-app -- "$@" >/dev/null 2>&1
+  else
+    setsid -f "$@" >/dev/null 2>&1
+  fi
+}
+
+notify() {
+  notify-send -u low -a "File finder" "$1" "$2" >/dev/null 2>&1 || true
+}
+
+act() {
+  local action="$1"
+  resolve "${2:-}" || exit 0
+  load_excludes
+  if ! vet_target; then
+    notify "Excluded from the file finder" "$TARGET"
+    exit 1
+  fi
+  case "$action" in
+    open)
+      detach xdg-open "$TARGET"
+      ;;
+    reveal)
+      detach gdbus call --session --dest org.freedesktop.FileManager1 \
+        --object-path /org/freedesktop/FileManager1 \
+        --method org.freedesktop.FileManager1.ShowItems "['$(file_uri "$TARGET")']" ""
+      ;;
+    copy-path)
+      printf '%s' "$TARGET" | setsid -f wl-copy >/dev/null 2>&1
+      notify "Copied path" "$TARGET"
+      ;;
+    copy-file)
+      # A URI list is what file managers put on the clipboard; pasting it
+      # attaches the file in browsers, chat apps, and file managers.
+      printf '%s\r\n' "$(file_uri "$TARGET")" | setsid -f wl-copy --type text/uri-list >/dev/null 2>&1
+      notify "Copied file" "$TARGET"
+      ;;
+    *) die "unknown action: $action" ;;
+  esac
+}
+
+require_fzf() {
+  local version major minor
+  version="$(fzf --version)"
+  IFS=. read -r major minor _ <<< "${version%% *}"
+  if ((major == 0 && minor < 51)); then
+    die "fzf 0.51 or newer is required for the picker (found $version)"
+  fi
+}
+
+pick() {
+  require_fzf
+  load_excludes # Fail closed before anything is listed.
+  local self text_cmd
+  printf -v self '%q' "$SELF"
+  # Reloads read the query from fzf's exported FZF_QUERY, so no {q} placeholder
+  # is expanded inside the ctrl-t transform's own quoting.
+  text_cmd="$self _text \"\$FZF_QUERY\""
+  local to_text="change-prompt($TEXT_PROMPT)+disable-search+rebind(change)+reload($text_cmd)"
+  local to_names="change-prompt($NAME_PROMPT)+enable-search+unbind(change)+reload($self _names)"
+  local fzf_args=(
+    --scheme=path --layout=reverse --height=100% --border=none --info=inline-right
+    --prompt "$NAME_PROMPT" --with-shell "bash -c" --tabstop 2
+    --header "enter open · ctrl-o show in Files · ctrl-y copy path · ctrl-f copy file · ctrl-t text search"
+    --preview "$self _preview {}" --preview-window "right,50%,border-left"
+    --bind "start:unbind(change)"
+    --bind "change:reload(sleep 0.15; $text_cmd)"
+    --bind "ctrl-t:transform:[ \"\$FZF_PROMPT\" = '$NAME_PROMPT' ] && echo '$to_text' || echo '$to_names'"
+    --bind "enter:become($self _act open {})"
+    --bind "ctrl-o:become($self _act reveal {})"
+    --bind "ctrl-y:become($self _act copy-path {})"
+    --bind "ctrl-f:become($self _act copy-file {})"
+  )
+  if [ -s "$INDEX" ]; then
+    # Show the index at once, then swap in a fresh walk so files created since
+    # the last timer run appear about a second later.
+    fzf_args+=(--bind "load:unbind(load)+reload-sync($self _refresh)")
+    zstd -dcq -- "$INDEX" | fzf "${fzf_args[@]}"
+  else
+    systemctl --user start --no-block file-finder-index.service >/dev/null 2>&1 || true
+    walk | fzf "${fzf_args[@]}"
+  fi
+}
+
+case "${1:-}" in
+  launch)
+    exec omarchy-launch-or-focus-tui "--app-id=$APP_ID" "$SELF" pick
+    ;;
+  pick) pick ;;
+  index) build_index ;;
+  query)
+    shift
+    [ "$#" -gt 0 ] || die "usage: file-finder query TEXT"
+    load_excludes
+    names | fzf --scheme=path --filter "$*"
+    ;;
+  _names) names ;;
+  _refresh) build_index || true; names ;;
+  _text) text_search "${2:-}" ;;
+  _preview) preview "${2:-}" ;;
+  _act) act "${2:-}" "${3:-}" ;;
+  -h | --help) usage ;;
+  *) usage >&2; exit 2 ;;
+esac

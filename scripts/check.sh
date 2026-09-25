@@ -59,6 +59,9 @@ for manifest in config/hosts/*/manifest.tsv; do
   done < "$manifest"
 done
 
+echo "Checking file finder contracts..."
+bash test/file-finder-test.sh
+
 echo "Checking managed config drift (skips on non-live hosts)..."
 bash scripts/omarchy-drift.sh
 
