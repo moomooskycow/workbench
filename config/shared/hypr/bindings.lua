@@ -111,3 +111,11 @@ for workspace = 1, 10 do
   o.bind("SUPER + CTRL + " .. sym, "Move window silently to workspace " .. workspace, hl.dsp.window.move({ workspace = tostring(workspace), follow = false }))
   o.bind("SUPER + CTRL + SHIFT + " .. sym, "Move window silently to workspace " .. workspace, hl.dsp.window.move({ workspace = tostring(workspace), follow = false }))
 end
+
+-- US-001: host-only shortcuts live outside the public Workbench release.
+local private_bindings = os.getenv("HOME") .. "/.config/hypr/bindings.local.lua"
+local private_file = io.open(private_bindings, "r")
+if private_file then
+  private_file:close()
+  dofile(private_bindings)
+end
