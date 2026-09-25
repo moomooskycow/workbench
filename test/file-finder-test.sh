@@ -53,8 +53,9 @@ done
 printf 'MARKER-7431 forged\n' > "$FILE_FINDER_ROOT/work/app/notes"$'\n'".env"
 printf 'intro\nbody\nneedle-colon\n' > "$FILE_FINDER_ROOT/work/app/.env:1:notes"
 printf 'readme\n' > "$FILE_FINDER_ROOT/work/app/readme.md"
-# Links: a folder link into ~/.ssh, innocent-looking links to keys inside and
-# outside the home folder, and a link to an ordinary file outside it.
+# Links: a folder link into ~/.ssh, an innocent-looking link to a key, links
+# leaving the home folder (to a key and to an ordinary file), and a link to an
+# allowed file inside it.
 ln -s .ssh "$FILE_FINDER_ROOT/linked-keys"
 ln -s .ssh/id_ed25519 "$FILE_FINDER_ROOT/innocent"
 mkdir -p "$TMP_ROOT/vault/.ssh" "$TMP_ROOT/shared"
@@ -62,6 +63,7 @@ printf 'MARKER-7431 vault\n' > "$TMP_ROOT/vault/.ssh/id_rsa"
 printf 'shared\n' > "$TMP_ROOT/shared/report.txt"
 ln -s "$TMP_ROOT/vault/.ssh/id_rsa" "$FILE_FINDER_ROOT/vault-key"
 ln -s "$TMP_ROOT/shared/report.txt" "$FILE_FINDER_ROOT/report-link"
+ln -s work/app/readme.md "$FILE_FINDER_ROOT/readme-link"
 
 "$FINDER" index
 listing="$(zstd -dcq "$FILE_FINDER_CACHE"/paths-*.zst)"
@@ -100,10 +102,10 @@ fi
 for row in "work/app/.env" "linked-keys/id_ed25519" "innocent"; do
   if preview "files> " "$row" | grep -q MARKER-7431; then fail "preview of $row read a secret"; fi
 done
-for row in innocent vault-key; do
-  if "$FINDER" _act copy-path "$row" 2> /dev/null; then fail "copy-path accepted $row, a link to a key"; fi
+for row in innocent vault-key report-link; do
+  if "$FINDER" _act copy-path "$row" 2> /dev/null; then fail "copy-path accepted $row, a link to a secret or outside home"; fi
 done
-"$FINDER" _act copy-path report-link || fail "copy-path refused a link to an ordinary file"
+"$FINDER" _act copy-path readme-link || fail "copy-path refused a link to an allowed file in home"
 
 # An index built under an older exclusion list is never read: after the list
 # gains an entry, the finder stops listing it without waiting for a rebuild.

@@ -185,8 +185,8 @@ vet_target() {
     case "$LINK_TARGET" in
       "$root_real") ;;
       "$root_real"/*) allowed "${LINK_TARGET#"$root_real"/}" || return 1 ;;
-      # Outside ROOT, name rules still apply to every component (/mnt/x/.ssh/...).
-      *) [ "$LINK_TARGET" = / ] || allowed "${LINK_TARGET#/}" || return 1 ;;
+      # Outside ROOT nothing is known about the target, so never act on it.
+      *) return 1 ;;
     esac
   fi
   return 0
