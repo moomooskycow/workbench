@@ -25,9 +25,10 @@ Criteria:
 5. WHEN I press Enter, Ctrl+O, Ctrl+Y, or Ctrl+F on a result, THE SYSTEM SHALL open it with its default application, show it in the file manager, copy its absolute path, or copy it as a file (`text/uri-list`) respectively, then close the finder.
 6. THE SYSTEM SHALL never index, list, preview, or search the password store, `~/.gnupg`, `~/.ssh`, keyrings, `.env` or `.dev.vars` files, or the other secret files named in the exclusion list.
 7. THE SYSTEM SHALL skip version-control internals, dependency folders, caches, and package stores.
-8. WHEN the exclusion list is missing or empty, THE SYSTEM SHALL refuse to index or search.
+8. WHEN the exclusion list is missing, empty, or malformed, THE SYSTEM SHALL refuse to index or search.
+9. WHEN a result is a symbolic link, THE SYSTEM SHALL preview only its target path, and SHALL refuse every action unless the link resolves to an allowed path inside the home folder; results under a symlinked folder SHALL be refused.
 
-No-gos: Do not let an environment variable replace the exclusion list. Do not follow symbolic links into content.
+No-gos: Do not let an environment variable replace the exclusion list. Do not walk, search, or preview through symbolic links.
 
 Evidence: `test/file-finder-test.sh`, the installed `file-finder-index.timer`, a timed query for a probe file in a hidden folder, and the live shortcut list.
 
