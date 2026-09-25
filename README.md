@@ -135,11 +135,12 @@ stores (password store, `~/.gnupg`, `~/.ssh`, keyrings, `.env` and
 internals, dependency folders, caches, and package stores. fd and ripgrep
 apply it to the walk and text search, and every preview, folder listing, and
 action re-checks the selected path against it, refusing paths under a
-symlinked folder and links into excluded places. File names containing
-control characters are never listed. The script reads the list beside its own
-release copy, accepts only bare names, `/anchored/paths`, and `**/any/depth`
-paths, and refuses to run when the list is missing, empty, or malformed; no
-environment variable can replace it. The picker needs fzf 0.51 or newer.
+symlinked folder and links that leave the home folder or point into excluded
+places. File names containing control characters are never listed. The script
+reads the list beside its own release copy, accepts only bare names,
+`/anchored/paths`, and `**/any/depth` paths, and refuses to run when the list
+is missing, empty, or malformed; no environment variable can replace it. The
+picker needs fzf 0.51 or newer.
 
 The name index is a zstd-compressed path list in `$XDG_RUNTIME_DIR` (memory,
 about 15 MB), so refreshes cause no disk writes. Its file name is keyed by the
