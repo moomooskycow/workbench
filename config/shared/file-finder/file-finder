@@ -21,7 +21,7 @@ readonly TAB=$'\t'
 SELF="$(readlink -f -- "${BASH_SOURCE[0]}")"
 EXCLUDES="$(dirname -- "$SELF")/excludes"
 ROOT="${FILE_FINDER_ROOT:-$HOME}"
-INDEX="${FILE_FINDER_INDEX:-${XDG_RUNTIME_DIR:?XDG_RUNTIME_DIR is unset}/file-finder/paths.zst}"
+CACHE_DIR="${FILE_FINDER_CACHE:-${XDG_RUNTIME_DIR:?XDG_RUNTIME_DIR is unset}/file-finder}"
 
 die() {
   printf 'file-finder: %s\n' "$*" >&2
@@ -97,23 +97,40 @@ walk() {
   load_excludes
   local args=() glob
   for glob in "${EXCLUDE_GLOBS[@]}"; do args+=(--exclude "$glob"); done
-  cd "$ROOT"
+  cd "$ROOT" || return 1
   fd --hidden --no-ignore --no-follow --color=never --threads=8 --print0 --strip-cwd-prefix "${args[@]}" . |
-    LC_ALL=C grep -azv '[[:cntrl:]]' | tr '\0' '\n'
+    { LC_ALL=C grep -azv '[[:cntrl:]]' || [ "$?" -eq 1 ]; } | tr '\0' '\n'
+}
+
+# The index file is keyed by ROOT and the exclusion list's content, so an index
+# built under an older list is never read.
+index_file() {
+  load_excludes
+  local key
+  key="$({ printf '%s\0' "$ROOT"; cat -- "$EXCLUDES"; } | sha256sum)"
+  INDEX="$CACHE_DIR/paths-${key:0:16}.zst"
 }
 
 build_index() {
-  mkdir -p -- "$(dirname -- "$INDEX")"
+  index_file
+  mkdir -p -- "$CACHE_DIR"
   local tmp
   tmp="$(mktemp -- "$INDEX.XXXXXX")"
   # shellcheck disable=SC2064 # expand now: the trap must remove this exact file.
   trap "rm -f -- '$tmp'" EXIT
-  walk | zstd -q -1 -T0 > "$tmp"
+  # Checked explicitly: callers run this under ||, which disables errexit.
+  if ! walk | zstd -q -1 -T0 > "$tmp"; then
+    rm -f -- "$tmp"
+    trap - EXIT
+    return 1
+  fi
   mv -f -- "$tmp" "$INDEX"
   trap - EXIT
+  find "$CACHE_DIR" -maxdepth 1 -name 'paths-*.zst' ! -path "$INDEX" -delete
 }
 
 names() {
+  index_file
   if [ -s "$INDEX" ]; then
     zstd -dcq -- "$INDEX"
   else
@@ -277,7 +294,7 @@ require_fzf() {
 
 pick() {
   require_fzf
-  load_excludes # Fail closed before anything is listed.
+  index_file # Loads the exclusion list: fail closed before anything is listed.
   local self text_cmd
   printf -v self '%q' "$SELF"
   # Reloads read the query from fzf's exported FZF_QUERY, so no {q} placeholder

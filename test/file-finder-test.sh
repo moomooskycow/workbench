@@ -22,7 +22,7 @@ export FILE_FINDER_ROOT="$TMP_ROOT/home"
 export XDG_RUNTIME_DIR="$TMP_ROOT/runtime" WAYLAND_DISPLAY=file-finder-test-none
 unset DISPLAY
 export DBUS_SESSION_BUS_ADDRESS="unix:path=$TMP_ROOT/no-bus"
-export FILE_FINDER_INDEX="$TMP_ROOT/index/paths.zst"
+export FILE_FINDER_CACHE="$TMP_ROOT/index"
 
 secrets=(
   .password-store/web/example.gpg
@@ -64,7 +64,7 @@ ln -s "$TMP_ROOT/vault/.ssh/id_rsa" "$FILE_FINDER_ROOT/vault-key"
 ln -s "$TMP_ROOT/shared/report.txt" "$FILE_FINDER_ROOT/report-link"
 
 "$FINDER" index
-listing="$(zstd -dcq "$FILE_FINDER_INDEX")"
+listing="$(zstd -dcq "$FILE_FINDER_CACHE"/paths-*.zst)"
 text_hits="$("$FINDER" _text MARKER-7431)"
 
 hit_paths="$(cut -f1 <<< "$text_hits")"
@@ -105,12 +105,23 @@ for row in innocent vault-key; do
 done
 "$FINDER" _act copy-path report-link || fail "copy-path refused a link to an ordinary file"
 
+# An index built under an older exclusion list is never read: after the list
+# gains an entry, the finder stops listing it without waiting for a rebuild.
+mkdir -p "$TMP_ROOT/copy"
+cp "$FINDER" "$(dirname "$FINDER")/excludes" "$TMP_ROOT/copy/"
+"$TMP_ROOT/copy/file-finder" index
+grep -qxF "$visible" <<< "$("$TMP_ROOT/copy/file-finder" _names)" || fail "copied finder lost the probe"
+printf 'needle-probe.txt\n' >> "$TMP_ROOT/copy/excludes"
+if grep -qxF "$visible" <<< "$("$TMP_ROOT/copy/file-finder" _names)"; then
+  fail "names came from an index built under an older exclusion list"
+fi
+
 # The finder refuses to walk or search without a valid shipped exclusion list.
 mkdir -p "$TMP_ROOT/bare"
 cp "$FINDER" "$TMP_ROOT/bare/file-finder"
-rm -f "$FILE_FINDER_INDEX"
+rm -rf "$FILE_FINDER_CACHE"
 if "$TMP_ROOT/bare/file-finder" index 2> /dev/null; then fail "index ran without an exclusion list"; fi
-[ ! -e "$FILE_FINDER_INDEX" ] || fail "index was written without an exclusion list"
+[ ! -e "$FILE_FINDER_CACHE" ] || fail "index was written without an exclusion list"
 if "$TMP_ROOT/bare/file-finder" _text MARKER-7431 2> /dev/null; then
   fail "text search ran without an exclusion list"
 fi

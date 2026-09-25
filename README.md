@@ -132,10 +132,12 @@ paths, and refuses to run when the list is missing, empty, or malformed; no
 environment variable can replace it. The picker needs fzf 0.51 or newer.
 
 The name index is a zstd-compressed path list in `$XDG_RUNTIME_DIR` (memory,
-about 15 MB), so refreshes cause no disk writes. `file-finder-index.timer`
-rebuilds it every 15 minutes, and opening the finder also starts a refresh,
-swapping the fresh list in about a second later. Installing the profile
-deploys the script and units; enabling the timer is a separate, explicit step:
+about 15 MB), so refreshes cause no disk writes. Its file name is keyed by the
+exclusion list, so a changed list is never answered from an older index.
+`file-finder-index.timer` rebuilds it every 15 minutes, and opening the finder
+also starts a refresh, swapping the fresh list in about a second later.
+Installing the profile deploys the script and units; enabling the timer is a
+separate, explicit step:
 
 ```bash
 ./install.sh --profile mirrodin --apply
