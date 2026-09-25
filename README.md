@@ -28,9 +28,19 @@ current-release pointer untouched.
 
 fcitx5 (US-003) re-encodes keys for input-method clients such as Wayland
 Chromium through its own virtual keyboard, so `config/shared/fcitx5/profile`
-keeps its engine at `keyboard-us-dvorak`, matching Hyprland's layout 0. Apply it,
-then reload with `fcitx5-remote -r`. Hyprland's layout 1 (QWERTY) switches only
-keys that bypass fcitx5.
+keeps its engine at `keyboard-us-dvorak`, matching Hyprland's layout 0. fcitx5
+reads the profile only at startup; `fcitx5-remote -r` does not reload it. After
+applying, restart `omarchy-fcitx5.service` or set the running group over DBus:
+
+```bash
+busctl --user call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 \
+  SetInputMethodGroupInfo 'ssa(ss)' Default us-dvorak 1 keyboard-us-dvorak ""
+fcitx5-remote -n  # keyboard-us-dvorak
+```
+
+fcitx5 saves the profile through the release link with identical bytes;
+`scripts/omarchy-drift.sh` flags any other write-through. Hyprland's layout 1
+(QWERTY) switches only keys that bypass fcitx5.
 
 Source edits do not authorize applying profiles, granting privileges, activating
 timers, or administering a host. Those operations require explicit task scope.
