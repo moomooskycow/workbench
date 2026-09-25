@@ -6,14 +6,17 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROFILE=""
 APPLY=false
 ADOPT=false
+ONLY=""
 
 usage() {
   cat <<'EOF'
-Usage: ./install.sh --profile serenity|mirrodin [--apply] [--adopt]
+Usage: ./install.sh --profile serenity|mirrodin [--apply] [--adopt] [--only ID]
 
 The default is a read-only plan. --apply installs an immutable snapshot under
 ~/.local/share/workbench/releases. Existing unmanaged files are never replaced
 unless --adopt is also supplied; adopted files are backed up first.
+--only limits the plan or apply to one manifest item, leaving every other target
+and the current-release pointer untouched.
 EOF
 }
 
@@ -22,6 +25,7 @@ while [ "$#" -gt 0 ]; do
     --profile) PROFILE="${2:-}"; shift 2 ;;
     --apply) APPLY=true; shift ;;
     --adopt) ADOPT=true; shift ;;
+    --only) ONLY="${2:-}"; shift 2 ;;
     -h|--help) usage; exit 0 ;;
     *) echo "Unknown argument: $1" >&2; usage >&2; exit 2 ;;
   esac
@@ -30,14 +34,22 @@ done
 case "$PROFILE" in serenity|mirrodin) ;; *) usage >&2; exit 2 ;; esac
 
 MANIFEST="$ROOT_DIR/config/hosts/$PROFILE/manifest.tsv"
+
+if [ -n "$ONLY" ] && ! cut -d'|' -f1 "$MANIFEST" | grep -qxF -- "$ONLY"; then
+  echo "Unknown manifest item for $PROFILE: $ONLY" >&2
+  exit 2
+fi
+
+selected() {
+  [[ "$1" != \#* ]] && [ -n "$2" ] && { [ -z "$ONLY" ] || [ "$1" = "$ONLY" ]; }
+}
 STAMP="$(date +%Y%m%dT%H%M%S)"
 REVISION="$(git -C "$ROOT_DIR" rev-parse --short HEAD 2>/dev/null || printf snapshot)"
 RELEASE="$HOME/.local/share/workbench/releases/${REVISION}-${PROFILE}-${STAMP}"
 BACKUP="$HOME/.local/state/workbench/backups/${STAMP}-${PROFILE}"
 
 while IFS='|' read -r item source target; do
-  [[ "$item" == \#* ]] && continue
-  [ -n "$source" ] || continue
+  selected "$item" "$source" || continue
   target="$HOME/$target"
   printf '%-9s %-14s %s -> %s\n' "$PROFILE" "$item" "$source" "$target"
 done < "$MANIFEST"
@@ -51,8 +63,7 @@ mkdir -p "$RELEASE" "$BACKUP"
 cp -R "$ROOT_DIR/config/." "$RELEASE/config"
 
 while IFS='|' read -r item source target; do
-  [[ "$item" == \#* ]] && continue
-  [ -n "$source" ] || continue
+  selected "$item" "$source" || continue
   target="$HOME/$target"
   release_source="$RELEASE/$source"
   mkdir -p "$(dirname "$target")"
@@ -71,5 +82,9 @@ while IFS='|' read -r item source target; do
   ln -s "$release_source" "$target"
 done < "$MANIFEST"
 
+if [ -n "$ONLY" ]; then
+  echo "Installed $PROFILE item $ONLY from $RELEASE. Backup: $BACKUP"
+  exit 0
+fi
 printf '%s\n' "$RELEASE" > "$HOME/.local/state/workbench/current-$PROFILE"
 echo "Installed $PROFILE profile. Backup: $BACKUP"

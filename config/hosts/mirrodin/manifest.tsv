@@ -24,3 +24,7 @@ hypr-monitors|config/hosts/mirrodin/hypr/monitors.lua|.config/hypr/monitors.lua
 file-finder|config/shared/file-finder/file-finder|.local/bin/file-finder
 file-finder-index-service|config/shared/file-finder/file-finder-index.service|.config/systemd/user/file-finder-index.service
 file-finder-index-timer|config/shared/file-finder/file-finder-index.timer|.config/systemd/user/file-finder-index.timer
+# fcitx5 re-encodes keys for input-method clients (Chromium on Wayland) through
+# a virtual keyboard carrying its engine's layout, so the engine must match
+# Hyprland's layout 0 (Dvorak) in input.lua. fcitx5 autosaves this file.
+fcitx5-profile|config/shared/fcitx5/profile|.config/fcitx5/profile
