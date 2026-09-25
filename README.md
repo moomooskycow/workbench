@@ -100,6 +100,54 @@ last. Keep host-only shortcuts and private application paths there, rather than
 in the public `config/shared/hypr/bindings.lua`. Workbench never installs or
 overwrites the local file; a present file must be valid Lua for Hyprland reload.
 
+## File finder (Mirrodin)
+
+Super+Ctrl+/ opens a floating fuzzy finder over the whole home folder,
+hidden folders included (US-002). Omarchy 4 has no home-wide file search: it
+replaced Walker and Elephant, whose file indexer caused disk-I/O storms, with a
+menu that searches applications and commands, and `omarchy menu file` only
+lists chosen folders by extension, skipping hidden ones.
+
+| Key | Action |
+| --- | --- |
+| type | fuzzy-match file and folder names |
+| Ctrl+T | switch between name search and text search (ripgrep) |
+| Enter | open with the default application |
+| Ctrl+O | show in the file manager |
+| Ctrl+Y | copy the absolute path (paste it into an upload dialog's location field) |
+| Ctrl+F | copy the file itself as a `text/uri-list`, for pasting into browsers and chat apps |
+
+`file-finder query TEXT` prints the best matches from a shell.
+
+`config/shared/file-finder/excludes` is the single exclusion list: secret
+stores (password store, `~/.gnupg`, `~/.ssh`, keyrings, `.env` and
+`.dev.vars` files, and named credential files, at any depth), version-control
+internals, dependency folders, caches, and package stores. fd and ripgrep
+apply it to the walk and text search, and every preview, folder listing, and
+action re-checks the selected path against it, refusing paths under a
+symlinked folder and links into excluded places. File names containing
+control characters are never listed. The script reads the list beside its own
+release copy, accepts only bare names, `/anchored/paths`, and `**/any/depth`
+paths, and refuses to run when the list is missing, empty, or malformed; no
+environment variable can replace it. The picker needs fzf 0.51 or newer.
+
+The name index is a zstd-compressed path list in `$XDG_RUNTIME_DIR` (memory,
+about 15 MB), so refreshes cause no disk writes. Its file name is keyed by the
+exclusion list, so a changed list is never answered from an older index.
+`file-finder-index.timer` rebuilds it every 15 minutes, and opening the finder
+also starts a refresh, swapping the fresh list in about a second later.
+Installing the profile deploys the script and units; enabling the timer is a
+separate, explicit step:
+
+```bash
+./install.sh --profile mirrodin --apply
+systemctl --user daemon-reload
+systemctl --user enable --now file-finder-index.timer
+```
+
+Test the exclusion and lookup contracts with `test/file-finder-test.sh` (also
+run by `scripts/check.sh`).
+
 ## Emergency recovery (Mirrodin)
 
 Linux recovery is separate from the HOME-relative profile installer:

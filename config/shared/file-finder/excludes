@@ -1,0 +1,71 @@
+# File finder exclusions (US-002). One glob per line, gitignore syntax without
+# trailing slashes. A bare name matches a file or folder at any depth; a glob
+# containing "/" is anchored at the searched home folder unless it starts with
+# "**/". The same list drives the name index (fd --exclude) and text search
+# (rg --glob '!...'), so an entry here is never indexed, listed, previewed, or
+# searched by content.
+
+# Secret stores, matched at any depth so copies inside other homes, backups,
+# and agent profiles stay hidden too.
+.password-store
+.gnupg
+.ssh
+keyrings
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+.netrc
+.git-credentials
+.pgpass
+**/.codex/auth.json
+**/.claude/.credentials.json
+**/gh/hosts.yml
+**/.docker/config.json
+**/.kube/config
+
+# Version-control internals.
+.git
+.hg
+.svn
+
+# Dependencies, build caches, and virtual environments.
+node_modules
+bower_components
+__pycache__
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.venv
+site-packages
+.next
+.turbo
+.nuxt
+.svelte-kit
+.parcel-cache
+.gradle
+
+# Browser and Electron caches.
+Cache
+Code Cache
+GPUCache
+CacheStorage
+/.config/chromium-headless
+
+# Package stores, toolchains, trash, and games.
+/.cache
+/.local/share/Trash
+/.npm
+/.pnpm-store
+/.local/share/pnpm
+/.bun/install/cache
+/.cargo/registry
+/.cargo/git
+/.rustup
+/go/pkg
+/.go-modcache
+/.local/share/mise/installs
+/.local/share/uv
+/.local/share/Steam
+/.steam
+/.local/share/umu

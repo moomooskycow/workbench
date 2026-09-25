@@ -79,6 +79,9 @@ hl.unbind("SUPER + ALT + K")
 -- QWERTY for games (StarCraft auto-switches; this covers anything else)
 o.bind("SUPER + ALT + Q", "Toggle QWERTY for games", os.getenv("HOME") .. "/.config/hypr/switch-xkblayout.sh next")
 
+-- US-002: fuzzy file finder across the home folder ("/" = search; off the Dvorak home row)
+o.bind("SUPER + CTRL + SLASH", "Find files", os.getenv("HOME") .. "/.local/bin/file-finder launch")
+
 
 -- Workspace navigation & window movement (keys 1-9, 0)
 local shift_symbols = {

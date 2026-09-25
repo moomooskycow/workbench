@@ -18,7 +18,9 @@
 #                                  control). A match is "pending apply" — the
 #                                  normal pre-`./install.sh --apply` state.
 #   missing                      : fail (a hyprland config file that vanished
-#                                  is a silent breakage).
+#                                  is a silent breakage), unless the current
+#                                  release predates the entry: that is a new
+#                                  managed file awaiting its first apply.
 #   target outside this host's install scope, or no install on this machine   :
 #                                  skip cleanly, so CI and other hosts pass.
 #
@@ -56,6 +58,10 @@ while IFS='|' read -r item source target; do
   repo_source="$ROOT_DIR/$source"
 
   if [ ! -e "$target_path" ] && [ ! -L "$target_path" ]; then
+    if [ ! -e "$current_release/$source" ]; then
+      echo "pending    [$item] $target (new managed file; run ./install.sh --apply to install)"
+      continue
+    fi
     echo "MISSING    [$item] $target (managed file is absent)"
     fail=1
     continue
